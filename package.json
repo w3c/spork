@@ -4,9 +4,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "jsdom": "1.4.1",
-    "superagent": "0.21.0",
-    "tmp": "0.0.24",
+    "nightmare": "1.6.5",
     "winston": "0.8.3"
   },
   "main": "./spork",
