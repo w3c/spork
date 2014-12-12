@@ -3,20 +3,30 @@
 var fs = require("fs")
 ,   jn = require("path").join
 ,   sua = require("superagent")
+,   Response = require("superagent/lib/node/response")
 ,   jsdom = require("jsdom")
+,   winston = require("winston")
 ,   tmp = require("tmp")
+,   logger = new (winston.Logger)({
+                        transports: [
+                            new (winston.transports.Console)({
+                                    handleExceptions:   true
+                                ,   colorize:           true
+                                ,   maxsize:            200000000
+                                })
+                        ]
+                    }
+    )
 ,   die = function (str) {
-        console.error(str);
+        // XXX here is where reporting takes place if needed
+        logger.error(str);
         process.exit(1);
     }
 ;
 
 // XXX
-//  - grab the source
-//  - save it locally to a tmp dir of its own
-//  - load a profile, which applies some rules
 //  - possible profiles
-//      - master
+//      - html (master)
 //      - canvas
 //      - shipping (the subset whenever we want to ship)
 //  - rules:
@@ -39,8 +49,41 @@ var fs = require("fs")
 
 //  - in case jsdom doesn't work, use Nightmare
 
+exports.process = function (profile, file) {
+    logger.info("Processing " + file);
+    jsdom.env(  file
+            ,   function (errors, window) {
+                    var currentRule = 0
+                    ,   nextRule = function (err) {
+                            if (err) die(err);
+                            var rule = profile.rules[currentRule];
+                            if (!rule) return logger.info("Done.");
+                            currentRule++;
+                            rule.transform(window.document, { profile: profile, logger: logger }, nextRule);
+                        }
+                    ;
+                    nextRule();
+                }
+    );
+};
+
+
 exports.run = function (profile) {
-    console.log("yay!");
+    tmp.dir({ unsafeCleanup: true }, function (err, dir) {
+        logger.info("Using tmpdir " + dir);
+        if (err) die(err);
+        var outFile = jn(dir, "index.html")
+        ,   out = fs.createWriteStream(outFile);
+        logger.info("Fetching " + profile.url);
+        var request = sua.get(profile.url);
+        request
+            .on("error", function (err) { die(err.message); })
+            .on("end", function () {
+                var res = new Response(request);
+                if (res.error) die(res.error.message);
+                exports.process(profile, outFile); })
+            .pipe(out);
+    });
 };
 
 // running directly
