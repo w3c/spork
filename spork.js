@@ -44,35 +44,16 @@ var Nightmare = require("nightmare")
 
 //  - in case jsdom doesn't work, use Nightmare
 
-exports.process = function (profile, file) {
-    logger.info("Processing " + file);
-    // jsdom.env(  file
-    //         ,   function (errors, window) {
-    //                 var currentRule = 0
-    //                 ,   nextRule = function (err) {
-    //                         if (err) die(err);
-    //                         var rule = profile.rules[currentRule];
-    //                         if (!rule) return logger.info("Done.");
-    //                         currentRule++;
-    //                         rule.transform(window.document, { profile: profile, logger: logger }, nextRule);
-    //                     }
-    //                 ;
-    //                 nextRule();
-    //             }
-    // );
-};
-
-
 exports.run = function (profile) {
     logger.info("Loading " + profile.url);
     var nm = new Nightmare();
+    nm.on("callback", function (msg) {
+        if (msg.info) logger.info(msg.info);
+    });
     nm.goto(profile.url);
     profile.rules.forEach(function (rule) {
         nm.evaluate(
-            function () {
-                logger.info("Running rule " + rule.name);
-                return rule.transform();
-            }
+            rule.transform
         ,   function (res) {
                 if (res.error) die(res.error);
             }
@@ -82,24 +63,9 @@ exports.run = function (profile) {
     });
     nm.run(function (err) {
         if (err) die(err);
+        // XXX save the doc!
         logger.info("Ok!");
     });
-    
-    // tmp.dir({ unsafeCleanup: true }, function (err, dir) {
-    //     logger.info("Using tmpdir " + dir);
-    //     if (err) die(err);
-    //     var outFile = jn(dir, "index.html")
-    //     ,   out = fs.createWriteStream(outFile);
-    //     logger.info("Fetching " + profile.url);
-    //     var request = sua.get(profile.url);
-    //     request
-    //         .on("error", function (err) { die(err.message); })
-    //         .on("end", function () {
-    //             var res = new Response(request);
-    //             if (res.error) die(res.error.message);
-    //             exports.process(profile, outFile); })
-    //         .pipe(out);
-    // });
 };
 
 // running directly
