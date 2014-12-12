@@ -1,0 +1,11 @@
+{
+  "name": "spork",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "1.4.1",
+    "superagent": "0.21.0"
+  },
+  "main":   "./spork"
+}
