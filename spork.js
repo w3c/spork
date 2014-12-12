@@ -1,13 +1,17 @@
+#!/usr/bin/env node
 
 var fs = require("fs")
 ,   jn = require("path").join
 ,   sua = require("superagent")
 ,   jsdom = require("jsdom")
+,   tmp = require("tmp")
+,   die = function (str) {
+        console.error(str);
+        process.exit(1);
+    }
 ;
 
 // XXX
-//  - install self as bin too
-//  - detect if main, if so get opts and run
 //  - grab the source
 //  - save it locally to a tmp dir of its own
 //  - load a profile, which applies some rules
@@ -34,3 +38,20 @@ var fs = require("fs")
 //  - output is single-page only
 
 //  - in case jsdom doesn't work, use Nightmare
+
+exports.run = function (profile) {
+    console.log("yay!");
+};
+
+// running directly
+if (!module.parent) {
+    var profile = process.argv[2];
+    if (!profile) die("A profile name is required.");
+    try {
+        profile = require("./profiles/" + profile);
+    }
+    catch (e) {
+        die("Profile '" + profile + "' not found.");
+    }
+    exports.run(profile);
+}
