@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 var Nightmare = require("nightmare")
+,   fs = require("fs")
+,   jn = require("path").join
 ,   winston = require("winston")
 ,   logger = new (winston.Logger)({
                         transports: [
@@ -24,8 +26,8 @@ var Nightmare = require("nightmare")
 //      - html (master)
 //      - canvas
 //      - shipping (the subset whenever we want to ship)
+//
 //  - rules:
-//      - strip script and on*
 //      - run the outline algorithm (external module, check if exists) and turn content into sections
 //          - this may run into trouble with some of the div sections, we'll see
 //      - boilerplate
@@ -44,7 +46,7 @@ var Nightmare = require("nightmare")
 
 //  - in case jsdom doesn't work, use Nightmare
 
-exports.run = function (profile) {
+exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
     var nm = new Nightmare();
     nm.on("callback", function (msg) {
@@ -63,20 +65,21 @@ exports.run = function (profile) {
     });
     nm.run(function (err) {
         if (err) die(err);
-        // XXX save the doc!
-        logger.info("Ok!");
+        this.page.getContent(function (pageContent) {
+            fs.writeFileSync(jn(outDir, "index.html"), pageContent, "utf8");
+            logger.info("Ok!");
+        });
     });
 };
 
 // running directly
 if (!module.parent) {
-    var profile = process.argv[2];
-    if (!profile) die("A profile name is required.");
-    try {
-        profile = require("./profiles/" + profile);
-    }
-    catch (e) {
-        die("Profile '" + profile + "' not found.");
-    }
-    exports.run(profile);
+    var profile = process.argv[2]
+    ,   outDir = process.argv[3]
+    ;
+    if (!profile || !outDir) die("Usage: spork profile outdir");
+    try         { profile = require("./profiles/" + profile); }
+    catch (e)   { die("Profile '" + profile + "' not found."); }
+    if (!fs.existsSync(outDir)) die("Directory " + outDir + " not found.");
+    exports.run(profile, outDir);
 }
