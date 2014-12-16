@@ -264,5 +264,3 @@ function HTMLOutline(root) {
         }
     }
 }
-
-module.exports = HTMLOutline;

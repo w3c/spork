@@ -48,16 +48,22 @@ var Nightmare = require("nightmare")
 
 exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
-    var nm = new Nightmare();
+    var nm = new Nightmare({
+        cookieFile: jn(__dirname, "data/cookies.txt")
+    });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
     });
-    nm.goto(profile.url);
+    nm.goto(profile.url)
+        .inject("js", jn(__dirname, "vendor/HTMLOutliner.js"))
+    ;
+    
     profile.rules.forEach(function (rule) {
         nm.evaluate(
             rule.transform
         ,   function (res) {
-                if (res.error) die(res.error);
+                if (!res) die("Rule '" + rule.name + "' did not produce any result — this means it blew up.");
+                if (res && res.error) die(res.error);
             }
         );
         // set this to a selector to signal completion
@@ -65,7 +71,7 @@ exports.run = function (profile, outDir) {
     });
     nm.run(function (err) {
         if (err) die(err);
-        this.page.getContent(function (pageContent) {
+        nm.page.getContent(function (pageContent) {
             fs.writeFileSync(jn(outDir, "index.html"), pageContent, "utf8");
             logger.info("Ok!");
         });
