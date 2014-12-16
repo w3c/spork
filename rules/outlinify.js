@@ -12,7 +12,7 @@ exports.transform = function () {
                         .get()
                         .map(function (el) {
                             return {
-                                rank:   0 + el.localName.replace(/h/i, "")
+                                rank:   1 * el.localName.replace(/h/i, "")
                             ,   el:     el
                             };
                         })
