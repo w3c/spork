@@ -10,4 +10,5 @@ exports.rules = [
 ,   require("../rules/strip-script")
 ,   require("../rules/outlinify")
 // ,   require("../rules/show") // revert the hide
+,   require("../rules/report") // send the source
 ];

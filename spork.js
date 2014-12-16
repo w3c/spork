@@ -53,6 +53,9 @@ exports.run = function (profile, outDir) {
     });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
+        else if (msg.source) {
+            fs.writeFileSync(jn(outDir, "index.html"), msg.source, "utf8");
+        }
     });
     nm.goto(profile.url);
     
@@ -69,10 +72,13 @@ exports.run = function (profile, outDir) {
     });
     nm.run(function (err) {
         if (err) die(err);
-        nm.page.getContent(function (pageContent) {
-            fs.writeFileSync(jn(outDir, "index.html"), pageContent, "utf8");
-            logger.info("Ok!");
-        });
+        console.log("Ok!");
+        // fs.writeFileSync(jn(outDir, "index.html"), nm.page.content, "utf8");
+        // nm.page.getContent(function (err, pageContent) {
+        //     console.log("page content", arguments);
+        //     fs.writeFileSync(jn(outDir, "index.html"), pageContent, "utf8");
+        //     logger.info("Ok!");
+        // });
     });
 };
 
