@@ -28,23 +28,16 @@ var Nightmare = require("nightmare")
 //      - shipping (the subset whenever we want to ship)
 //
 //  - rules:
-//      - run the outline algorithm (external module, check if exists) and turn content into sections
-//          - this may run into trouble with some of the div sections, we'll see
-//      - boilerplate
 //      - drop sections 
-//      - change stuff
 //      - boilerplate
+//      - change stuff
+//      - "how this specification is produced" section
 //      - update refs
 //      - section renumbering, new ToC
-//      - "how this specification is produced" section
 //      - grab what images (and other dependencies) are needed
 //  - each rule has documentation about what it forks, this can be extracted to make the landscape
 //  - each rule has assertions that are reported as errors (which can get emailed) if there's a problem
 //  - profiles can specify things such as who to report to
-//  - hidden configuration
-//  - output is single-page only
-
-//  - in case jsdom doesn't work, use Nightmare
 
 exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
@@ -73,12 +66,6 @@ exports.run = function (profile, outDir) {
     nm.run(function (err) {
         if (err) die(err);
         console.log("Ok!");
-        // fs.writeFileSync(jn(outDir, "index.html"), nm.page.content, "utf8");
-        // nm.page.getContent(function (err, pageContent) {
-        //     console.log("page content", arguments);
-        //     fs.writeFileSync(jn(outDir, "index.html"), pageContent, "utf8");
-        //     logger.info("Ok!");
-        // });
     });
 };
 
