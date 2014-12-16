@@ -2,8 +2,8 @@
 exports.name = "strip-script";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
-    $("script").remove();
-    window.callPhantom({ info: "removed all script elements" });
+    $("script, style").remove();
+    window.callPhantom({ info: "removed all script and style elements" });
 
     // remove on*
     $("*").each(function () {

@@ -54,9 +54,7 @@ exports.run = function (profile, outDir) {
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
     });
-    nm.goto(profile.url)
-        .inject("js", jn(__dirname, "vendor/HTMLOutliner.js"))
-    ;
+    nm.goto(profile.url);
     
     profile.rules.forEach(function (rule) {
         nm.evaluate(

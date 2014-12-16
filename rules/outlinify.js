@@ -1,39 +1,46 @@
-/* global HTMLOutline */
 
 exports.name = "outlinify";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
     window.callPhantom({ info: "removing some useless elements" });
-    $("#configUI, #head").remove();
+    $("#configUI, #head, div.status, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
+    
+    // note that this is not the HTML outline algorithm but something a lot simpler
     window.callPhantom({ info: "running outliner" });
-    HTMLOutline(document.body);
-    window.callPhantom({ info: "outliner done" });
-    // window.callPhantom({ info: "OUTLINE LIST\n" + JSON.stringify(document.body.sectionList, function (k, v) {
-    //     if (k === "heading") return v ? v.textContent : v;
-    //     if (k === "parentSection" || k === "heading" || k === "associatedNodes") return undefined;
-    //     return v;
-    // }, 4) });
-
-    var wrap = function (sections) {
-        for (var i = 0, n = sections.length; i < n; i++) {
-            var s = sections[i]
-            ,   contents = s.associatedNodes
-            ;
-            // window.callPhantom({ info: "handling section " + (s.heading ? s.heading.textContent : "null") + " with contents " + contents.length + " ZERO=" + contents[0].toString() });
-            // the order in which HTMLOutline returns the contents is weird, so we skip this check for now
-            // if (contents[0] && contents[0].localName.toLowerCase() === "section") contents.shift();
-            window.callPhantom({ info: "wrapping section..." });
-            $(contents).wrapAll("<section></section>");
-            window.callPhantom({ info: "...section wrapped" });
-            if (s.childSections.length) wrap(s.childSections);
+    // find all h*
+    var headings = $("h2, h3, h4, h5, h6")
+                        .get()
+                        .map(function (el) {
+                            return {
+                                rank:   0 + el.localName.replace(/h/i, "")
+                            ,   el:     el
+                            };
+                        })
+    ;
+    // going from h6 down to h2
+    [6, 5, 4, 3, 2].forEach(function (rank) {
+        // for each one in the list, find the next item that is either same rank, or lower rank, or EODOC
+        // pick the previousSibling of that next item
+        for (var i = 0, n = headings.length; i < n; i++) {
+            var h = headings[i];
+            if (h.rank !== rank) continue;
+            var endPoint = null;
+            for (var j = i + 1, m = headings.length; j < m; j++) {
+                var next = headings[j];
+                if (next.rank <= rank) {
+                    endPoint = next.el.previousElementSibling;
+                    break;
+                }
+            }
+            // we hit the end of the body without finding anything
+            if (endPoint === null) endPoint = document.body.lastElementChild;
+            // create a Range from the h* to the previousSibling and wrap it
+            var range = document.createRange();
+            range.setStartBefore(h.el);
+            range.setEndAfter(endPoint);
+            range.surroundContents(document.createElement("section"));
         }
-    };
-    wrap(document.body.sectionList);
-
-    // XXX
-    //  - other exceptions to not wrap sectioning element than <section>?
-    //  - maybe check that the heading isn't implied (warn?)
-    //  - maybe check that we're not in a table, details, etc.
+    });
 
     window.callPhantom({ info: "outline built using <section> elements" });
     return {};
