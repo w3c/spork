@@ -65,7 +65,7 @@ exports.run = function (profile, outDir) {
     });
     nm.run(function (err) {
         if (err) die(err);
-        console.log("Ok!");
+        logger.info("Ok!");
     });
 };
 
@@ -76,7 +76,7 @@ if (!module.parent) {
     ;
     if (!profile || !outDir) die("Usage: spork profile outdir");
     try         { profile = require("./profiles/" + profile); }
-    catch (e)   { die("Profile '" + profile + "' not found."); }
+    catch (e)   { die("Profile '" + profile + "' failed to load."); }
     if (!fs.existsSync(outDir)) die("Directory " + outDir + " not found.");
     exports.run(profile, outDir);
 }
