@@ -10,5 +10,6 @@ exports.rules = [
 ,   require("../rules/outlinify")
 ,   require("../rules/drop-sections")
 ,   require("../rules/boilerplate")
+,   require("../rules/toc")
 ,   require("../rules/report") // send the source
 ];
