@@ -21,24 +21,6 @@ var Nightmare = require("nightmare")
     }
 ;
 
-// XXX
-//  - possible profiles
-//      - html (master)
-//      - canvas
-//      - shipping (the subset whenever we want to ship)
-//
-//  - rules:
-//      - drop sections 
-//      - boilerplate
-//      - change stuff
-//      - "how this specification is produced" section
-//      - update refs
-//      - section renumbering, new ToC
-//      - grab what images (and other dependencies) are needed
-//  - each rule has documentation about what it forks, this can be extracted to make the landscape
-//  - each rule has assertions that are reported as errors (which can get emailed) if there's a problem
-//  - profiles can specify things such as who to report to
-
 exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
     var nm = new Nightmare({

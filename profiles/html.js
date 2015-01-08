@@ -9,5 +9,6 @@ exports.rules = [
 ,   require("../rules/strip-script")
 ,   require("../rules/outlinify")
 ,   require("../rules/drop-sections")
+,   require("../rules/boilerplate")
 ,   require("../rules/report") // send the source
 ];

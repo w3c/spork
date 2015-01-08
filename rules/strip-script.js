@@ -2,7 +2,7 @@
 exports.name = "strip-script";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
-    $("script, style").remove();
+    $("script, link[rel='stylesheet'], link[rel='icon']").remove();
     window.callPhantom({ info: "removed all script and style elements" });
 
     // remove on*
