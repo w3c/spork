@@ -3,6 +3,7 @@
 var Nightmare = require("nightmare")
 ,   fs = require("fs")
 ,   jn = require("path").join
+,   spawn = require("child_process").spawn
 ,   winston = require("winston")
 ,   logger = new (winston.Logger)({
                         transports: [
@@ -31,20 +32,37 @@ exports.run = function (profile, outDir) {
         else if (msg.source) {
             fs.writeFileSync(jn(outDir, "index.html"), msg.source, "utf8");
         }
+        else if (msg.fetch) {
+            console.log("DEPENDENCIES:");
+            console.log(JSON.stringify(msg.fetch, null, 4));
+        }
     });
+    if (profile.resources) nm.on("resourceRequested", profile.resources);
     nm.goto(profile.url);
     
     profile.rules.forEach(function (rule) {
-        nm.evaluate(
+        var runArgs = [
             rule.transform
         ,   function (res) {
                 if (!res) die("Rule '" + rule.name + "' did not produce any result — this means it blew up.");
                 if (res && res.error) die(res.error);
             }
-        );
+        ];
+        if (rule.params) runArgs = runArgs.concat(rule.params(profile.configuration));
+        nm.evaluate.apply(nm, runArgs);
         // set this to a selector to signal completion
         if (rule.wait) nm.wait(rule.wait);
     });
+    // XXX run downloads here
+    if (Object.keys(profile.configuration.downloads).length) {
+        var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
+                        .map(function (it) {
+                            return  'url = "' + it + '"\n' +
+                                    'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"';
+                        }).join("\n\n")
+        ;
+        if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", 1, 2] }).stdin.end(config);
+    }
     nm.run(function (err) {
         if (err) die(err);
         logger.info("Ok!");
