@@ -33,6 +33,14 @@ exports.transform = function () {
                 $hn.html().replace(/^\s*?(?:[0-9]+\.)*[0-9]+\s+/, newNum)
             );
         }
+        // remove <a> from inside headers
+        $hn.find("a").each(function () {
+            var $a = $(this);
+            $a.replaceWith($a.contents());
+        });
+        $hn.find("[id]").each(function () {
+            $(this).removeAttr("id");
+        });
         var $li = $("<li><a></a></li>")
                     .find("a")
                         .attr("href", "#" + id)
