@@ -1,9 +1,10 @@
 #!/usr/bin/env node
+/*jshint -W054 */
 
 var Nightmare = require("nightmare")
 ,   fs = require("fs")
 ,   jn = require("path").join
-// ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
+,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
 ,   spawn = require("child_process").spawn
 ,   winston = require("winston")
@@ -29,27 +30,27 @@ exports.run = function (profile, outDir) {
     
     // building up the injection script
     var sporkCode = "";
-    // sporkCode += rfs("node_modules/jquery/dist/jquery.js") + "\n";
+    sporkCode += rfs("node_modules/jquery/dist/jquery.js") + "\n";
     sporkCode += "try {\n";
     sporkCode += "window.info = function (str) { window.callPhantom({ info: str }); };\n";
     sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };";
     
     profile.rules.forEach(function (rule) {
-        sporkCode += "window.info('Running " + rule.name + "');\n";
-        // sporkCode += rule.transform.toString();
-        // sporkCode += "(";
-        // if (rule.params) {
-        //     sporkCode += rule.params(profile.configuration)
-        //                     .map(function (prm) {
-        //                         return JSON.stringify(prm, null, 4);
-        //                     })
-        //                     .join(", ")
-        //     ;
-        // }
-        // sporkCode += ");\n";
-        sporkCode += "window.info('Done with " + rule.name + "');\n";
+        sporkCode += "window.info('~~~~~~~~~~~ " + rule.name + " ~~~~~~~~~~');\n";
+        sporkCode += "(";
+        sporkCode += rule.transform.toString();
+        sporkCode += ")(";
+        if (rule.params) {
+            sporkCode += rule.params(profile.configuration)
+                            .map(function (prm) {
+                                return JSON.stringify(prm, null, 4);
+                            })
+                            .join(", ")
+            ;
+        }
+        sporkCode += ");\n";
+        sporkCode += "window.info('___________ /" + rule.name + " ___________');\n";
     });
-    sporkCode += "window.info('this is a test');";
     sporkCode += "return { ok: true };\n";
     sporkCode += "} catch (e) { return { error: e }; }\n";
     
@@ -59,7 +60,7 @@ exports.run = function (profile, outDir) {
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
         else if (msg.source) {
-            console.log("Saving source");
+            logger.info("Saving source");
             wfs(jn(outDir, "index.html"), msg.source);
         }
     });
@@ -69,13 +70,13 @@ exports.run = function (profile, outDir) {
     nm.evaluate(
         new Function(sporkCode)
     ,   function (res) {
-            if (res.ok) console.log("Injection ok");
-            if (res.error) console.error("[ERROR]", res.error);
+            if (res.ok) logger.info("Injection ok");
+            if (res.error) logger.error(res.error);
         }
     );
     
     nm.run(function (err) {
-        console.log("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
+        logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
         // console.log(profile.configuration.downloads);
         if (Object.keys(profile.configuration.downloads).length) {
             var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
