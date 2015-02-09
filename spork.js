@@ -3,7 +3,8 @@
 var Nightmare = require("nightmare")
 ,   fs = require("fs")
 ,   jn = require("path").join
-,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
+// ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
+,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
 ,   spawn = require("child_process").spawn
 ,   winston = require("winston")
 ,   logger = new (winston.Logger)({
@@ -27,24 +28,30 @@ exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
     
     // building up the injection script
-    var script = rfs("node_modules/jquery/dist/jquery.js") + "\n";
-    script += "function info (str) { window.callPhantom({ info: info }); }\n";
-    script += "function saveSource () { window.callPhantom({ source: '<!DOCTYPE html>\n' + document.documentElement.outerHTML }); }\n";
+    var sporkCode = "";
+    // sporkCode += rfs("node_modules/jquery/dist/jquery.js") + "\n";
+    sporkCode += "try {\n";
+    sporkCode += "window.info = function (str) { window.callPhantom({ info: str }); };\n";
+    sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };";
+    
     profile.rules.forEach(function (rule) {
-        script += "info('Running " + rule.name + "');\n";
-        script += rule.transform.toString();
-        script += "(";
-        if (rule.params) {
-            script += rule.params(profile.configuration)
-                            .map(function (prm) {
-                                return JSON.stringify(prm, null, 4);
-                            })
-                            .join(", ")
-            ;
-        }
-        script += ")\n";
-        script += "info('Done with " + rule.name + "');\n";
+        sporkCode += "window.info('Running " + rule.name + "');\n";
+        // sporkCode += rule.transform.toString();
+        // sporkCode += "(";
+        // if (rule.params) {
+        //     sporkCode += rule.params(profile.configuration)
+        //                     .map(function (prm) {
+        //                         return JSON.stringify(prm, null, 4);
+        //                     })
+        //                     .join(", ")
+        //     ;
+        // }
+        // sporkCode += ");\n";
+        sporkCode += "window.info('Done with " + rule.name + "');\n";
     });
+    sporkCode += "window.info('this is a test');";
+    sporkCode += "return { ok: true };\n";
+    sporkCode += "} catch (e) { return { error: e }; }\n";
     
     var nm = new Nightmare({
         cookieFile: jn(__dirname, "data/cookies.txt")
@@ -52,23 +59,15 @@ exports.run = function (profile, outDir) {
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
         else if (msg.source) {
-            fs.writeFileSync(jn(outDir, "index.html"), msg.source, "utf8");
+            console.log("Saving source");
+            wfs(jn(outDir, "index.html"), msg.source);
         }
     });
     if (profile.resources) nm.on("resourceRequested", profile.resources);
     nm.goto(profile.url);
+    wfs(jn(__dirname, "debug-script.js"), sporkCode);
     nm.evaluate(
-        function () {
-            try {
-                var s = document.createElement("script");
-                s.textContent = script;
-                document.body.appendChild(s);
-                return { ok: true };
-            }
-            catch (e) {
-                return { error: e };
-            }
-        }
+        new Function(sporkCode)
     ,   function (res) {
             if (res.ok) console.log("Injection ok");
             if (res.error) console.error("[ERROR]", res.error);
@@ -77,7 +76,7 @@ exports.run = function (profile, outDir) {
     
     nm.run(function (err) {
         console.log("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
-        console.log(profile.configuration.downloads);
+        // console.log(profile.configuration.downloads);
         if (Object.keys(profile.configuration.downloads).length) {
             var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
                             .map(function (it) {
@@ -86,7 +85,8 @@ exports.run = function (profile, outDir) {
                                         'create-dirs';
                             }).join("\n\n")
             ;
-            if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", 1, 2] }).stdin.end(config);
+            // change the second and third "pipe" to 1, 2 to get stdout/stderr back out to the console
+            if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] }).stdin.end(config);
         }
         if (err) die(err);
         logger.info("Ok!");

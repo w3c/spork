@@ -1,4 +1,3 @@
-/* globals info */
 
 var fs = require("fs")
 ,   pth = require("path")
@@ -10,7 +9,7 @@ exports.landscape = "A different title and boilerplate suitable for W3C.";
 exports.transform = function (options) {
     // title
     $("title").text(options.title);
-    info("changed title");
+    window.info("changed title");
 
     // style
     $("<style></style>")
@@ -19,7 +18,7 @@ exports.transform = function (options) {
     ;
     $('<link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">')
         .appendTo($("head"));
-    info("injected style");
+    window.info("injected style");
 
     // boilerplate
     var date = new Date()
@@ -35,7 +34,7 @@ exports.transform = function (options) {
                     .replace(/\{\{year}}/g, date.getFullYear())
     ;
     $("body hr").first().before(bp);
-    info("updated boilerplate");
+    window.info("updated boilerplate");
 };
 exports.params = function (conf) {
     return [{
