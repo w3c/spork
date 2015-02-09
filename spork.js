@@ -32,10 +32,6 @@ exports.run = function (profile, outDir) {
         else if (msg.source) {
             fs.writeFileSync(jn(outDir, "index.html"), msg.source, "utf8");
         }
-        else if (msg.fetch) {
-            console.log("DEPENDENCIES:");
-            console.log(JSON.stringify(msg.fetch, null, 4));
-        }
     });
     if (profile.resources) nm.on("resourceRequested", profile.resources);
     nm.goto(profile.url);
@@ -53,17 +49,19 @@ exports.run = function (profile, outDir) {
         // set this to a selector to signal completion
         if (rule.wait) nm.wait(rule.wait);
     });
-    // XXX run downloads here
-    if (Object.keys(profile.configuration.downloads).length) {
-        var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
-                        .map(function (it) {
-                            return  'url = "' + it + '"\n' +
-                                    'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"';
-                        }).join("\n\n")
-        ;
-        if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", 1, 2] }).stdin.end(config);
-    }
     nm.run(function (err) {
+        console.log("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
+        console.log(profile.configuration.downloads);
+        if (Object.keys(profile.configuration.downloads).length) {
+            var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
+                            .map(function (it) {
+                                return  'url = "' + it + '"\n' +
+                                        'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"\n' +
+                                        'create-dirs';
+                            }).join("\n\n")
+            ;
+            if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", 1, 2] }).stdin.end(config);
+        }
         if (err) die(err);
         logger.info("Ok!");
     });

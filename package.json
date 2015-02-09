@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "nightmare": "1.6.5",
-    "winston": "0.8.3"
+    "nightmare":    "1.6.5",
+    "winston":      "0.8.3",
   },
   "main": "./spork",
   "bin": {

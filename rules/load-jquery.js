@@ -8,7 +8,7 @@ exports.transform = function () {
         document.body.classList.add("spork-jq-loaded");
     };
     document.body.appendChild(el);
-    window.callPhantom({ info: "loading jquery" });
+    window.callPhantom({ info: "loaded jquery" });
     return {};
 };
 // the next rule won't run before this is set
