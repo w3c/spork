@@ -17,8 +17,8 @@ exports.transform = function () {
                 this[field] = url.pathname(); // this just ensures that things stay relative
             }
             if (url.hostname() === "images.whatwg.org") {
-                window.info("Mapping " + this[field] + " to /img" + url.pathname());
-                this[field] = "/img" + url.pathname();
+                window.info("Mapping " + this[field] + " to img" + url.pathname());
+                this[field] = "img" + url.pathname();
             }
             if (url.hostname() === "whatwg.org" && /^\/demos/i.test(url.pathname())) {
                 window.info("Mapping " + this[field] + " to " + url.pathname());
