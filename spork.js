@@ -3,6 +3,7 @@
 var Nightmare = require("nightmare")
 ,   fs = require("fs")
 ,   jn = require("path").join
+,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   spawn = require("child_process").spawn
 ,   winston = require("winston")
 ,   logger = new (winston.Logger)({
@@ -24,6 +25,26 @@ var Nightmare = require("nightmare")
 
 exports.run = function (profile, outDir) {
     logger.info("Loading " + profile.url);
+    
+    // building up the injection script
+    var script = rfs("node_modules/jquery/dist/jquery.js") + "\n";
+    script += "function info (str) { window.callPhantom({ info: info }); }\n";
+    profile.rules.forEach(function (rule) {
+        script += "info('Running " + rule.name + "');\n";
+        script += rule.transform.toString();
+        script += "(";
+        if (rule.params) {
+            script += rule.params(profile.configuration)
+                            .map(function (prm) {
+                                return JSON.stringify(prm, null, 4);
+                            })
+                            .join(", ")
+            ;
+        }
+        script += ")\n";
+        script += "info('Done with " + rule.name + "');\n";
+    });
+    
     var nm = new Nightmare({
         cookieFile: jn(__dirname, "data/cookies.txt")
     });
@@ -35,20 +56,24 @@ exports.run = function (profile, outDir) {
     });
     if (profile.resources) nm.on("resourceRequested", profile.resources);
     nm.goto(profile.url);
-    
-    profile.rules.forEach(function (rule) {
-        var runArgs = [
-            rule.transform
-        ,   function (res) {
-                if (!res) die("Rule '" + rule.name + "' did not produce any result — this means it blew up.");
-                if (res && res.error) die(res.error);
+    nm.evaluate(
+        function () {
+            try {
+                var s = document.createElement("script");
+                s.textContent = script;
+                document.body.appendChild(s);
+                return { ok: true };
             }
-        ];
-        if (rule.params) runArgs = runArgs.concat(rule.params(profile.configuration));
-        nm.evaluate.apply(nm, runArgs);
-        // set this to a selector to signal completion
-        if (rule.wait) nm.wait(rule.wait);
-    });
+            catch (e) {
+                return { error: e };
+            }
+        }
+    ,   function (res) {
+            if (res.ok) console.log("Injection ok");
+            if (res.error) console.error("[ERROR]", res.error);
+        }
+    );
+    
     nm.run(function (err) {
         console.log("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
         console.log(profile.configuration.downloads);
