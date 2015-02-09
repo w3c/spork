@@ -29,6 +29,7 @@ exports.run = function (profile, outDir) {
     // building up the injection script
     var script = rfs("node_modules/jquery/dist/jquery.js") + "\n";
     script += "function info (str) { window.callPhantom({ info: info }); }\n";
+    script += "function saveSource () { window.callPhantom({ source: '<!DOCTYPE html>\n' + document.documentElement.outerHTML }); }\n";
     profile.rules.forEach(function (rule) {
         script += "info('Running " + rule.name + "');\n";
         script += rule.transform.toString();

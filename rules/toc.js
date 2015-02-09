@@ -1,3 +1,4 @@
+/* globals info */
 
 exports.name = "toc";
 exports.landscape = ""; // does nothing at that level
@@ -52,6 +53,5 @@ exports.transform = function () {
     $("ol.brief.toc").first().replaceWith($fullToC);
     $("ol.toc").not(".brief").first().replaceWith($toc);
 
-    window.callPhantom({ info: "updated ToC" });
-    return {};
+    info("updated ToC");
 };

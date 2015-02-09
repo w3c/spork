@@ -1,12 +1,13 @@
+/* globals info */
 
 exports.name = "outlinify";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
-    window.callPhantom({ info: "removing some useless elements" });
+    info("removing some useless elements");
     $("#configUI, #head, div.status, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
     
     // note that this is not the HTML outline algorithm but something a lot simpler
-    window.callPhantom({ info: "running outliner" });
+    info("running outliner");
     // find all h*
     var headings = $("h2, h3, h4, h5, h6")
                         .get()
@@ -42,6 +43,5 @@ exports.transform = function () {
         }
     });
 
-    window.callPhantom({ info: "outline built using <section> elements" });
-    return {};
+    info("outline built using <section> elements");
 };

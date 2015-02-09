@@ -1,7 +1,0 @@
-
-exports.name = "show";
-exports.landscape = ""; // does nothing at that level
-exports.transform = function () {
-    document.body.style.display = "block";
-    return {};
-};

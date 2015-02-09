@@ -1,9 +1,10 @@
+/* globals info */
 
 exports.name = "strip-script";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
     $("script, link[rel='stylesheet'], link[rel='icon']").remove();
-    window.callPhantom({ info: "removed all script and style elements" });
+    info("removed all script and style elements");
 
     // remove on*
     $("*").each(function () {
@@ -14,6 +15,5 @@ exports.transform = function () {
             if (att.indexOf("on") === 0) this.removeAttribute(att);
         }
     });
-    window.callPhantom({ info: "removed all on* attributes" });
-    return {};
+    info("removed all on* attributes");
 };

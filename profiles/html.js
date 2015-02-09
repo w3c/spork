@@ -37,8 +37,7 @@ exports.resources = function (res) {
 };
 
 exports.rules = [
-    require("../rules/load-jquery")
-,   require("../rules/strip-script")
+    require("../rules/strip-script")
 ,   require("../rules/outlinify")
 ,   require("../rules/drop-sections")
 ,   require("../rules/boilerplate")
