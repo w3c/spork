@@ -7,6 +7,9 @@ var fs = require("fs")
 exports.name = "boilerplate";
 exports.landscape = "A different title and boilerplate suitable for W3C.";
 exports.transform = function (options) {
+    // charset
+    $("head").prepend($("<meta charset='utf8'>"));
+
     // title
     $("title").text(options.title);
     window.info("changed title");
