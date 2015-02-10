@@ -11,3 +11,7 @@ body > .toc.brief > li { margin-top: 0.35em; margin-bottom: 0.35em; }
 body > .toc > li > * { margin-bottom: 0.5em; }
 body > .toc > li > * > li > * { margin-bottom: 0.25em; }
 .toc, .toc li { list-style: none; }
+
+pre {
+    white-space: pre-wrap;
+}
