@@ -44,6 +44,7 @@ exports.rules = [
 ,   require("../rules/toc")
 ,   require("../rules/aria-steve")
 ,   require("../rules/fork-link-rel-url")
+,   require("../rules/fork-no-ping")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
