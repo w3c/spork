@@ -42,6 +42,7 @@ exports.rules = [
 ,   require("../rules/drop-sections")
 ,   require("../rules/boilerplate")
 ,   require("../rules/toc")
+,   require("../rules/aria-steve")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
