@@ -2,7 +2,7 @@
 /*jshint -W054 */
 
 var Nightmare = require("nightmare")
-,   fs = require("fs")
+,   fs = require("fs-extra")
 ,   jn = require("path").join
 ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
@@ -26,7 +26,9 @@ var Nightmare = require("nightmare")
 ;
 
 exports.run = function (profile, outDir) {
-    var processResources = true;
+    var processResources = true
+    ,   copy = {}
+    ;
     logger.info("Loading " + profile.url);
     
     // building up the injection script
@@ -54,6 +56,7 @@ exports.run = function (profile, outDir) {
         }
         sporkCode += ");\n";
         sporkCode += "window.info('___________ /" + rule.name + " ___________');\n";
+        if (rule.copy) for (var k in rule.copy) copy[k] = rule.copy[k];
     });
     sporkCode += "return { ok: true };\n";
     sporkCode += "} catch (e) { return { error: e }; }\n";
@@ -83,21 +86,25 @@ exports.run = function (profile, outDir) {
     );
     
     nm.run(function (err) {
-        logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
-        // console.log(profile.configuration.downloads);
-        if (Object.keys(profile.configuration.downloads).length) {
-            var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
-                            .map(function (it) {
-                                return  'url = "' + it + '"\n' +
-                                        'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"\n' +
-                                        'create-dirs';
-                            }).join("\n\n")
-            ;
-            // change the second and third "pipe" to 1, 2 to get stdout/stderr back out to the console
-            if (config) spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] }).stdin.end(config);
-        }
         if (err) die(err);
-        logger.info("Ok!");
+        logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
+        var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
+                        .map(function (it) {
+                            return  'url = "' + it + '"\n' +
+                                    'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"\n' +
+                                    'create-dirs';
+                        }).join("\n\n")
+        ;
+        // change the second and third "pipe" to 1, 2 to get stdout/stderr back out to the console
+        if (config) {
+            var curl = spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] }).stdin.end(config);
+            curl.on("exit", function () {
+                logger.info("Copying");
+                for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(outDir, copy[k]));
+                logger.info("Ok!");
+            });
+        }
+        else logger.info("Ok!");
     });
 };
 
