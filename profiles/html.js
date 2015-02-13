@@ -50,6 +50,7 @@ exports.rules = [
 ,   require("../rules/fork-ruby")
 ,   require("../rules/fork-longdesc")
 ,   require("../rules/fork-table-layout")
+,   require("../rules/fork-main-element")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
