@@ -48,6 +48,7 @@ exports.rules = [
 ,   require("../rules/fork-obsolete-hgroup")
 ,   require("../rules/fork-metaextensions")
 ,   require("../rules/fork-ruby")
+,   require("../rules/fork-longdesc")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
