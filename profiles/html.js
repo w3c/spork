@@ -52,6 +52,7 @@ exports.rules = [
 ,   require("../rules/fork-table-layout")
 ,   require("../rules/fork-table-border")
 ,   require("../rules/fork-main-element")
+,   require("../rules/fork-nav-list")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
