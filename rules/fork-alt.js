@@ -1,8 +1,5 @@
 
-var fs = require("fs")
-,   pth = require("path")
-,   rfs = function (file) { return fs.readFileSync(pth.join(__dirname, "..", file), "utf8"); }
-;
+var rfs = require("../lib/rfs");
 
 exports.name = "fork-alt";
 exports.landscape = "Different advice for image alternative text.";

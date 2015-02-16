@@ -1,9 +1,4 @@
 
-// var fs = require("fs")
-// ,   pth = require("path")
-// ,   rfs = function (file) { return fs.readFileSync(pth.join(__dirname, "..", file), "utf8"); }
-// ;
-
 exports.name = "references";
 exports.landscape = "Unused references are dropped; some are changed to match W3C preferences.";
 exports.transform = function () {
@@ -21,10 +16,3 @@ exports.transform = function () {
     });
     window.info("dropped unused references");
 };
-// exports.params = function (conf) {
-//     return [{
-//         boilerplate:    conf.boilerplate ? rfs(conf.boilerplate) : ""
-//     ,   style:          conf.style ? rfs(conf.style) : ""
-//     ,   title:          conf.title || ""
-//     }];
-// };

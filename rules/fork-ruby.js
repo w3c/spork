@@ -1,8 +1,5 @@
 
-var fs = require("fs")
-,   pth = require("path")
-,   rfs = function (file) { return fs.readFileSync(pth.join(__dirname, "..", file), "utf8"); }
-;
+var rfs = require("../lib/rfs");
 
 exports.name = "fork-ruby";
 exports.landscape = "W3C HTML has a ruby model that matches both users' needs and implementations.";

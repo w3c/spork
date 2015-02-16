@@ -1,11 +1,8 @@
 
-var fs = require("fs")
-,   pth = require("path")
-,   rfs = function (file) { return fs.readFileSync(pth.join(__dirname, "..", file), "utf8"); }
-;
+var rfs = require("../lib/rfs");
 
 exports.name = "fork-datacue";
-exports.landscape = "DataCue in text tracks.";
+exports.landscape = "W3C HTML has DataCue in text tracks.";
 exports.transform = function (tmpl) {
     // § at end of guidelines-for-exposing-cues-in-various-formats-as-text-track-cues
     $("#guidelines-for-exposing-cues-in-various-formats-as-text-track-cues")
