@@ -62,6 +62,7 @@ exports.rules = [
 ,   require("../rules/fork-pattern-title")
 ,   require("../rules/fork-placeholder-label")
 ,   require("../rules/fork-focus-ring-css")
+,   require("../rules/fork-input-bidi-plaintext")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
