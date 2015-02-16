@@ -55,6 +55,7 @@ exports.rules = [
 ,   require("../rules/fork-nav-list")
 ,   require("../rules/fork-section-headings")
 ,   require("../rules/fork-blockquote-cite")
+,   require("../rules/fork-alt")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
