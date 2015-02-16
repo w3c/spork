@@ -27,5 +27,3 @@ exports.copy = {};
         exports.copy["alt/" + it] = "images/" + it;
     })
 ;
-
-            
