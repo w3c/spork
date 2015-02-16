@@ -58,6 +58,7 @@ exports.rules = [
 ,   require("../rules/fork-alt")
 ,   require("../rules/fork-datacue")
 ,   require("../rules/fork-link-types")
+,   require("../rules/fork-links-in-labels")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
