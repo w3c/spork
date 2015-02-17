@@ -1,7 +1,9 @@
 
+var rfs = require("../lib/rfs");
+
 exports.name = "fork-obsolete-hgroup";
 exports.landscape = "In W3C HTML, the hgroup element is obsolete.";
-exports.transform = function () {
+exports.transform = function (data) {
     // drop section #the-hgroup-element
     $("#the-hgroup-element").remove();
     
@@ -70,31 +72,11 @@ exports.transform = function () {
 
     // add listing under #non-conforming-features
     var $dti = $("#non-conforming-features").parent().find("dl > dt:contains('isindex')");
-    $dti.before('<dt><dfn id="hgroup"><code>hgroup</code></dfn></dt>');
-    $dti.before('<dd><p>To mark up subheadings, consider putting the subheading into a ' +
-                '<code><a href="#the-p-element">p</a></code> element after the ' +
-                '<code><a href="#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>-' +
-                '<code><a href="#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code> element ' +
-                'containing the main heading, or putting the subheading directly within the ' +
-                '<code><a href="#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>-' +
-                '<code><a href="#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code> element ' +
-                'containing the main heading, but separated from the main heading by punctuation ' +
-                'and/or within, for example, a <code>span class="subheading"</code> element with ' +
-                'differentiated styling.</p><p>Headings and subheadings, alternative titles, or ' +
-                'taglines can be grouped using the <code><a href="#the-header-element">header</a></code> ' +
-                'or <code><a href="#the-div-element">div</a></code> elements.</p></dd>')
-    ;
+    $dti.before(data.dt);
+    $dti.before(data.dd);
 
     // add § at the end of other-elements,-attributes-and-apis
-    $("#other-elements\\,-attributes-and-apis")
-        .parent()
-        .append('<p>The <code><a href="#hgroup" style="">hgroup</a></code> element does not have ' +
-                '<a href="#strong-native-semantics">strong native semantics</a> or ' +
-                '<a href="#default-implicit-aria-semantics">default implicit ARIA semantics</a>. ' +
-                'User agents must not implement accessibility layer semantics for the <code><a ' +
-                'href="#hgroup" style="">hgroup</a></code> element that obfuscates or modifies the ' +
-                'semantics of its children.</p>')
-    ;
+    $("#other-elements\\,-attributes-and-apis").parent().append(data.semantics);
     
     // drop the SVG Venn diagram (plus mention of it)
     var $venn = $("object[data$='content-venn.svg']");
@@ -102,4 +84,11 @@ exports.transform = function () {
     $venn.remove();
     
     window.info("FORK: " + exports.landscape);
+};
+exports.params = function () {
+    return [{
+        dt:         rfs("res/the-hgroup-element/dt.html")
+    ,   dd:         rfs("res/the-hgroup-element/dd.html")
+    ,   semantics:  rfs("res/the-hgroup-element/semantics.html")
+    }];
 };

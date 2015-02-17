@@ -2,8 +2,8 @@
 exports.name = "outlinify";
 exports.landscape = ""; // does nothing at that level
 exports.transform = function () {
-    window.info("removing some useless elements");
     $("#configUI, #head, div.status, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
+    window.info("Removed some useless elements");
     
     // note that this is not the HTML outline algorithm but something a lot simpler
     window.info("running outliner");
@@ -42,5 +42,5 @@ exports.transform = function () {
         }
     });
 
-    window.info("outline built using <section> elements");
+    window.info("Outline built using <section> elements");
 };

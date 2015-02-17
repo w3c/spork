@@ -7,8 +7,8 @@ exports.url = "https://html.spec.whatwg.org/";
 // exports.url = "http://multifarious.dev/empty-html/"; // local emptied version for optimal dev
 
 exports.configuration = {
-    boilerplate:    "res/html-ed.html"
-,   style:          "res/html.css"
+    boilerplate:    "res/boilerplate/html-ed.html"
+,   style:          "res/boilerplate/html.css"
 ,   title:          "HTML 5.1 Nightly"
 ,   downloads:      {}
 };
@@ -37,18 +37,22 @@ exports.resources = function (res) {
 };
 
 exports.rules = [
+    // basic processing
     require("../rules/strip-script")
 ,   require("../rules/outlinify")
+
+    // mostly removing stuff
 ,   require("../rules/drop-sections")
-,   require("../rules/boilerplate")
-,   require("../rules/toc")
-,   require("../rules/aria-steve")
-,   require("../rules/fork-link-rel-url")
-,   require("../rules/fork-no-ping")
+,   require("../rules/fork-link-types")
+,   require("../rules/fork-datetime-local")
 ,   require("../rules/fork-obsolete-hgroup")
+,   require("../rules/fork-no-ping")
+,   require("../rules/fork-longdesc")
+
+    // actual changes - ideally this is the list that most needs to be reduced
+,   require("../rules/fork-link-rel-url")
 ,   require("../rules/fork-metaextensions")
 ,   require("../rules/fork-ruby")
-,   require("../rules/fork-longdesc")
 ,   require("../rules/fork-table-layout")
 ,   require("../rules/fork-table-border")
 ,   require("../rules/fork-main-element")
@@ -57,17 +61,21 @@ exports.rules = [
 ,   require("../rules/fork-blockquote-cite")
 ,   require("../rules/fork-alt")
 ,   require("../rules/fork-datacue")
-,   require("../rules/fork-link-types")
 ,   require("../rules/fork-links-in-labels")
 ,   require("../rules/fork-pattern-title")
 ,   require("../rules/fork-placeholder-label")
 ,   require("../rules/fork-focus-ring-css")
 ,   require("../rules/fork-input-bidi-plaintext")
 ,   require("../rules/fork-license-main")
+,   require("../rules/fork-header")
 ,   require("../rules/fork-tz-warning")
 ,   require("../rules/fork-local-floating")
-,   require("../rules/fork-datetime-local")
+
+    // make this a W3C spec and finalise basics
 ,   require("../rules/references")
+,   require("../rules/aria-steve")
+,   require("../rules/boilerplate")
+,   require("../rules/toc")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
 ];
