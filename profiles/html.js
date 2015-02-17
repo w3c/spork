@@ -66,6 +66,7 @@ exports.rules = [
 ,   require("../rules/fork-license-main")
 ,   require("../rules/fork-tz-warning")
 ,   require("../rules/fork-local-floating")
+,   require("../rules/fork-datetime-local")
 ,   require("../rules/references")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
