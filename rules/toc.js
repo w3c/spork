@@ -30,9 +30,14 @@ exports.transform = function () {
         numStack[depth]++;
         if (!noNum) {
             var newNum = numStack.join(".") + " ";
-            $hn.html(
-                $hn.html().replace(/^\s*?(?:[0-9]+\.)*[0-9]+\s+/, newNum)
-            );
+            if (/^\s*?(?:[0-9]+\.)*[0-9]+\s+/.test($hn.html())) {
+                $hn.html(
+                    $hn.html().replace(/^\s*?(?:[0-9]+\.)*[0-9]+\s+/, newNum)
+                );
+            }
+            else {
+                $hn.html(newNum + $hn.html());
+            }
         }
         // remove <a> and <dfn> from inside headers
         var $hnClone = $hn.clone();
