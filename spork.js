@@ -38,6 +38,7 @@ exports.run = function (profile, outDir) {
     sporkCode += rfs("node_modules/URIjs/src/URI.js") + "\n";
     sporkCode += "try {\n";
     sporkCode += "window.info = function (str) { window.callPhantom({ info: str }); };\n";
+    sporkCode += "window.warn = function (str) { window.callPhantom({ warn: str }); };\n";
     sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };";
     sporkCode += "window.unplugResources = function () { window.callPhantom({ unplug: true }); };";
     
@@ -66,6 +67,7 @@ exports.run = function (profile, outDir) {
     });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
+        if (msg.warn) logger.warn(msg.warn);
         else if (msg.source) {
             logger.info("Saving source");
             wfs(jn(outDir, "index.html"), msg.source);

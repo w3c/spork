@@ -76,6 +76,7 @@ exports.rules = [
 ,   require("../rules/aria-steve")
 ,   require("../rules/boilerplate")
 ,   require("../rules/toc")
+,   require("../rules/id")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
 ];
