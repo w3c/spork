@@ -7,6 +7,4 @@ exports.transform = function () {
                 .find("p:contains('layout aids')")
     ;
     $p.html($p.html().replace(/must\s+not/, "should not"));
-    
-    window.info("FORK: " + exports.landscape);
 };

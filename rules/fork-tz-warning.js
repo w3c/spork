@@ -8,8 +8,6 @@ exports.transform = function (data) {
         .parent()
         .before(data.warning)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

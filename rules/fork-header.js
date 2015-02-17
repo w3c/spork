@@ -9,8 +9,6 @@ exports.transform = function (data) {
         .find("> p:first")
         .replaceWith(data.header)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

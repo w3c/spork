@@ -88,6 +88,4 @@ exports.transform = function () {
     ;
     $dt.next("dd").remove();
     $dt.remove();
-
-    window.info("FORK: " + exports.landscape);
 };

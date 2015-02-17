@@ -6,6 +6,4 @@ exports.transform = function () {
         var $p = $(this).parent().find("p:contains('Conformance checkers must use')");
         $p.text($p.text().replace(/must/, "may"));
     });
-    
-    window.info("FORK: " + exports.landscape);
 };

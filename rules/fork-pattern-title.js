@@ -9,8 +9,6 @@ exports.transform = function (data) {
         .find("div.example:first")
         .before(data.warning)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

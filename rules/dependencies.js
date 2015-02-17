@@ -1,7 +1,7 @@
 /* globals URI */
 
 exports.name = "dependencies";
-exports.landscape = ""; // does nothing at that level
+exports.landscape = null;
 exports.transform = function () {
     window.unplugResources();
     $("img[src], iframe[src], object[data]").each(function () {

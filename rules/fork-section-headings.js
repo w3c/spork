@@ -12,7 +12,6 @@ exports.transform = function (data) {
         .find("div.example")
         .before(data.subheadings)
     ;
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

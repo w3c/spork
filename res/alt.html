@@ -169,11 +169,11 @@
 
   &lt;div <strong>id="desc"</strong>&gt;
   &lt;h2&gt;Dealing with a broken lamp&lt;/h2&gt;
-  <strong data-anolis-xref="">&lt;ol&gt;</strong>
-  <strong data-anolis-xref="">&lt;li&gt;</strong>Check if it's plugged in, if not, plug it in.<strong>&lt;/li&gt;</strong>
-  <strong data-anolis-xref="">&lt;li&gt;</strong>If it still doesn't work; check if the bulb is burned out. If it is, replace the bulb.<strong>&lt;/li&gt;</strong>
-  <strong data-anolis-xref="">&lt;li&gt;</strong>If it still doesn't work; buy a new lamp.<strong>&lt;/li&gt;</strong>
-  <strong data-anolis-xref="">&lt;/ol&gt;</strong>
+  <strong>&lt;ol&gt;</strong>
+  <strong>&lt;li&gt;</strong>Check if it's plugged in, if not, plug it in.<strong>&lt;/li&gt;</strong>
+  <strong>&lt;li&gt;</strong>If it still doesn't work; check if the bulb is burned out. If it is, replace the bulb.<strong>&lt;/li&gt;</strong>
+  <strong>&lt;li&gt;</strong>If it still doesn't work; buy a new lamp.<strong>&lt;/li&gt;</strong>
+  <strong>&lt;/ol&gt;</strong>
   &lt;/div&gt;</pre>
   </div>  
 
@@ -228,7 +228,7 @@
   &lt;li&gt;If it still doesn't work; check if the bulb is burned out. If it is, replace the bulb.&lt;/li&gt;
   &lt;li&gt;If it still doesn't work; buy a new lamp.&lt;/li&gt;
   &lt;/ol&gt;
-  <strong data-anolis-xref="">&lt;/details&gt;</strong>
+  <strong>&lt;/details&gt;</strong>
   &lt;/figure&gt;
   </pre>
   <p class="note">The <code><a href="#the-details-element">details</a></code> and <code><a href="#the-summary-element">summary</a></code> elements are not currently well supported by browsers, until such times they are supported, if used, you will need to use scripting to provide the functionality. There are a number of scripted Polyfills and scripted custom controls available, in popular JavaScript UI widget libraries, which provide similar functionality.</p>
@@ -240,7 +240,7 @@
   <p>Sometimes, an image only contains  text, and the purpose of the image 
   is to display text  using visual effects and /or fonts.  It is <em>strongly</em> 
   recommended that text styled using CSS be used, but if this is not possible, provide 
-  the same text in the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute as is in the image.</p>
+  the same text in the <code><a href="#attr-img-alt">alt</a></code> attribute as is in the image.</p>
 
   <div class="example">
   <p>This example shows an image of the text "Get Happy!" written in a fancy multi colored freehand style.
@@ -351,7 +351,7 @@
   The following snippet shows an example. The image is a painting titled the "Lady of Shallot", it is 
   inspired by the poem and its subject matter is derived from the poem. Therefore it is strongly 
   recommended that a text alternative is provided. There is a short description of the content of 
-  the image in the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute and
+  the image in the <code><a href="#attr-img-alt">alt</a></code> attribute and
   a link below the image to a longer description located at the bottom of the document. At the end 
   of the longer description there is also a link to further information about the painting.</p>
   <p><img alt="A painting inspired by Alfred Tennyson's poem The Lady of Shalott" height="234" src="images/shalott.jpg" width="338"></p>
@@ -389,7 +389,7 @@
   <h6 id="a-graphical-representation-of-some-of-the-surrounding-text">A graphical representation of some of the surrounding text</h6>
 
   <p>In many cases, the image is actually just supplementary, and its presence merely reinforces the
-  surrounding text. In these cases, the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute must be
+  surrounding text. In these cases, the <code><a href="#attr-img-alt">alt</a></code> attribute must be
   present but its value must be the empty string.</p>
 
   <p>In general, an image falls into this category if removing the image doesn't make the page any
@@ -531,11 +531,11 @@
 <section>
   <h6 id="a-group-of-images-that-form-a-single-larger-picture-with-links">A group of images that form a single larger picture with links</h6>
 
-  <p class="note">Generally, <a data-anolis-xref="image map" href="#image-map">image maps</a> should be
+  <p class="note">Generally, <a href="#image-map">image maps</a> should be
   used instead of slicing an image for links.</p>
 
   <p>Sometimes, when you create a composite picture from multiple images, you may wish to 
-  link one or more of the images. Provide an <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute 
+  link one or more of the images. Provide an <code><a href="#attr-img-alt">alt</a></code> attribute 
   for each linked image to describe the purpose of the link.
   </p>
 
@@ -660,7 +660,7 @@
   <p class="note">Such cases are to be kept to an absolute
     minimum. If there is even the slightest possibility of the author
     having the ability to provide real alternative text, then it would
-    not be acceptable to omit the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code>
+    not be acceptable to omit the <code><a href="#attr-img-alt">alt</a></code>
     attribute.</p>
   
   <div class="example">
@@ -723,7 +723,7 @@
   </div>
 
   <p class="note">Since some users cannot use images at all (e.g. because they are blind) the 
-  <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute is only allowed to be omitted when no text 
+  <code><a href="#attr-img-alt">alt</a></code> attribute is only allowed to be omitted when no text 
   alternative is available and none can be made available, as in the above examples.</p>
 </section>  
 <section>
@@ -734,7 +734,7 @@
 
   <p>If an <code><a href="#the-img-element">img</a></code> element is being used for purposes other
   than showing an image, e.g. as part of a service to count page
-  views, use an empty <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute.</p>
+  views, use an empty <code><a href="#attr-img-alt">alt</a></code> attribute.</p>
 
   <div class="example">
   <p>An example of an <code><a href="#the-img-element">img</a></code> element used to collect web page statistics.
@@ -744,8 +744,8 @@
   </pre>
   </div>
   
-  <p class="note">It is recommended for the example use above the <code data-anolis-xref="attr-dim-width"><a href="#attr-dim-width">width</a></code> and
-  <code data-anolis-xref="attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes  be set to zero.</p>
+  <p class="note">It is recommended for the example use above the <code><a href="#attr-dim-width">width</a></code> and
+  <code><a href="#attr-dim-height">height</a></code> attributes  be set to zero.</p>
   
   <div class="example">
   <p>Another example use is when an image such as a <i>spacer.gif</i> is used to aid positioning of content. 
@@ -939,24 +939,24 @@ or the appropriateness of the <code>alt</code> text.</p>
   <p>For images that have captions, markup generators should use the
   <code><a href="#the-figure-element">figure</a></code> and <code><a href="#the-figcaption-element">figcaption</a></code> elements to provide the
   image's caption.</p>
-    <p>As a last resort, implementors should either set the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute to the empty string, under
+    <p>As a last resort, implementors should either set the <code><a href="#attr-img-alt">alt</a></code> attribute to the empty string, under
   the assumption that the image is a purely decorative image that
   doesn't add any information but is still specific to the surrounding
-  content, or omit the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute
+  content, or omit the <code><a href="#attr-img-alt">alt</a></code> attribute
   altogether, under the assumption that the image is a key part of the
   content.</p>
 
-  <p>Markup generators may specify a <dfn data-anolis-xref="attr-img-generator-unable-to-provide-required-alt" id="attr-img-generator-unable-to-provide-required-alt"><code>generator-unable-to-provide-required-alt</code></dfn>
+  <p>Markup generators may specify a <dfn id="attr-img-generator-unable-to-provide-required-alt"><code>generator-unable-to-provide-required-alt</code></dfn>
   attribute on <code><a href="#the-img-element">img</a></code> elements for which they have been
   unable to obtain a text alternative and for which they have therefore
-  omitted the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute. The
+  omitted the <code><a href="#attr-img-alt">alt</a></code> attribute. The
   value of this attribute must be the empty string. Documents
   containing such attributes are not conforming, but conformance
   checkers will <a href="#guidance-for-conformance-checkers">silently
   ignore</a> this error.</p>
 
   <p class="note">This is intended to avoid markup generators from
-  being pressured into replacing the error of omitting the <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute with the even more
+  being pressured into replacing the error of omitting the <code><a href="#attr-img-alt">alt</a></code> attribute with the even more
   egregious error of providing phony text alternatives, because
   state-of-the-art automated conformance checkers cannot distinguish
   phony text alternatives from correct text alternatives.</p>
@@ -976,7 +976,7 @@ or the appropriateness of the <code>alt</code> text.</p>
 <section>
   <h6 id="guidance-for-conformance-checkers">Guidance for conformance checkers</h6>
 
-  <p>A conformance checker must report the lack of an <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute as an error unless one of
+  <p>A conformance checker must report the lack of an <code><a href="#attr-img-alt">alt</a></code> attribute as an error unless one of
   the conditions listed below applies:</p>
 
   <ul>
@@ -994,18 +994,18 @@ or the appropriateness of the <code>alt</code> text.</p>
    aforementioned list, as they apply only to conformance checkers -->
 
 
-   <li><p>The <code><a href="#the-img-element">img</a></code> element has a (non-conforming) <code data-anolis-xref="attr-img-generator-unable-to-provide-required-alt"><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
+   <li><p>The <code><a href="#the-img-element">img</a></code> element has a (non-conforming) <code><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
    attribute whose value is the empty string. A conformance checker
-   that is not reporting the lack of an <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute as an error must also not
-   report the presence of the empty <code data-anolis-xref="attr-img-generator-unable-to-provide-required-alt"><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
+   that is not reporting the lack of an <code><a href="#attr-img-alt">alt</a></code> attribute as an error must also not
+   report the presence of the empty <code><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
    attribute as an error. (This case does not represent a case where
    the document is conforming, only that the generator could not
    determine appropriate alternative text — validators are not
    required to show an error in this case, because such an error might
    encourage markup generators to include bogus alternative text
    purely in an attempt to silence validators. Naturally, conformance
-   checkers <em>may</em> report the lack of an <code data-anolis-xref="attr-img-alt"><a href="#attr-img-alt">alt</a></code> attribute as an error even in the
-   presence of the <code data-anolis-xref="attr-img-generator-unable-to-provide-required-alt"><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
+   checkers <em>may</em> report the lack of an <code><a href="#attr-img-alt">alt</a></code> attribute as an error even in the
+   presence of the <code><a href="#attr-img-generator-unable-to-provide-required-alt">generator-unable-to-provide-required-alt</a></code>
    attribute; for example, there could be a user option to report
    <em>all</em> conformance errors even those that might be the more
    or less inevitable result of using a markup generator.)</p></li>

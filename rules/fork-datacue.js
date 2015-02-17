@@ -15,8 +15,6 @@ exports.transform = function (data) {
         .parent()
         .before(data.datacue)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

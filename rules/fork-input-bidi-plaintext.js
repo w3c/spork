@@ -9,8 +9,6 @@ exports.transform = function (data) {
                     .find("pre.css:first")
     ;
     $pre.html($pre.html().replace(/texarea[\s\S]+?};/, data.input));
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

@@ -56,6 +56,7 @@ exports.run = function (profile, outDir) {
             ;
         }
         sporkCode += ");\n";
+        if (rule.landscape) sporkCode += "window.info(\"" + rule.landscape + "\");\n";
         sporkCode += "window.info('___________ /" + rule.name + " ___________');\n";
         if (rule.copy) for (var k in rule.copy) copy[k] = rule.copy[k];
     });
@@ -99,7 +100,8 @@ exports.run = function (profile, outDir) {
         ;
         // change the second and third "pipe" to 1, 2 to get stdout/stderr back out to the console
         if (config) {
-            var curl = spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] }).stdin.end(config);
+            var curl = spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] });
+            curl.stdin.end(config);
             curl.on("exit", function () {
                 logger.info("Copying");
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(outDir, copy[k]));

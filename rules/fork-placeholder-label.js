@@ -9,8 +9,6 @@ exports.transform = function (data) {
         .find("p:eq(1)")
         .replaceWith(data.warning)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

@@ -10,8 +10,6 @@ exports.transform = function (data) {
 
     // append a § stating that floating can also be called <dfn>local</dfn> (for all dfns)
     $sec.append(data.map);
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

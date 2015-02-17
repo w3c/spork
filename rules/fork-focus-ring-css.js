@@ -12,8 +12,6 @@ exports.transform = function (data) {
         .find("p:last")
         .replaceWith(data.hide)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

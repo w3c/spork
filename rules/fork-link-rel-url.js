@@ -13,7 +13,6 @@ exports.transform = function (data) {
     $p.html($p.html().replace(/"Effect\s+on\.\.\."\sfield.*?Conformance\s+checkers\s+may\s+cache\s+this/
                             , data.effect));
     $p.after(data.note);
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

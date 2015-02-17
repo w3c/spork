@@ -5,7 +5,6 @@ exports.name = "fork-alt";
 exports.landscape = "Different advice for image alternative text.";
 exports.transform = function (tmpl) {
     $("#alt").parent().replaceWith(tmpl.alt);
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

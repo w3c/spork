@@ -10,8 +10,6 @@ exports.transform = function (tmpl) {
         .find("div.example:first")
         .after(tmpl.links)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

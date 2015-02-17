@@ -46,8 +46,6 @@ exports.transform = function (data) {
         .append(document.createTextNode("; "))
         .append('<code><a href="#attr-table-border">border</a></code>')
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

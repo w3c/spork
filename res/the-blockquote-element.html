@@ -2,28 +2,28 @@
   <h4 id="the-blockquote-element">The <dfn><code>blockquote</code></dfn> element</h4>
 
   <dl class="element">
-   <dt><a data-anolis-xref="concept-element-categories" href="#concept-element-categories">Categories</a>:</dt>
+   <dt><a href="#concept-element-categories">Categories</a>:</dt>
    <dd><a href="#flow-content-1">Flow content</a>.</dd>
    <dd><a href="#sectioning-root">Sectioning root</a>.</dd>
    <dd><a href="#palpable-content-0">Palpable content</a>.</dd>
-   <dt><a data-anolis-xref="concept-element-contexts" href="#concept-element-contexts">Contexts in which this element can be used</a>:</dt>
+   <dt><a href="#concept-element-contexts">Contexts in which this element can be used</a>:</dt>
    <dd>Where <a href="#flow-content-1">flow content</a> is expected.</dd>
-   <dt><a data-anolis-xref="concept-element-content-model" href="#concept-element-content-model">Content model</a>:</dt>
+   <dt><a href="#concept-element-content-model">Content model</a>:</dt>
    <dd><a href="#flow-content-1">Flow content</a>.</dd>
-   <dt><a data-anolis-xref="concept-element-attributes" href="#concept-element-attributes">Content attributes</a>:</dt>
+   <dt><a href="#concept-element-attributes">Content attributes</a>:</dt>
    <dd><a href="#global-attributes">Global attributes</a></dd>
-   <dd><code data-anolis-xref="attr-blockquote-cite"><a href="#attr-blockquote-cite">cite</a></code> - Link to the source of the quotation.</dd>
-   <dt><a data-anolis-xref="concept-element-tag-omission" href="#concept-element-tag-omission">Tag omission in text/html</a>:</dt>
+   <dd><code><a href="#attr-blockquote-cite">cite</a></code> - Link to the source of the quotation.</dd>
+   <dt><a href="#concept-element-tag-omission">Tag omission in text/html</a>:</dt>
    <dd>Neither tag is omissible</dd>
    <dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt>
    <dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd>
    <dt>Allowed <a href="#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
    <dd><a href="#index-aria-global">Global aria-* attributes</a></dd>
    <dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd>
-   <dt><a data-anolis-xref="concept-element-dom" href="#concept-element-dom">DOM interface</a>:</dt><!--TOPIC:DOM APIs-->
+   <dt><a href="#concept-element-dom">DOM interface</a>:</dt><!--TOPIC:DOM APIs-->
    <dd>
 <pre class="idl">interface <dfn id="htmlquoteelement">HTMLQuoteElement</dfn> : <a href="#htmlelement">HTMLElement</a> {
-           attribute DOMString <a data-anolis-xref="dom-quote-cite" href="#dom-quote-cite">cite</a>;
+           attribute DOMString <a href="#dom-quote-cite">cite</a>;
 };</pre>
     <p class="note">The <code><a href="#htmlquoteelement">HTMLQuoteElement</a></code> interface is
     also used by the <code><a href="#the-q-element">q</a></code> element.</p>
@@ -32,21 +32,18 @@
   <p class="rep">The <code><a href="#the-blockquote-element">blockquote</a></code> element <a href="#represents">represents</a> content that is quoted from another source, optionally with a citation which must be within a <code><a href="#the-footer-element">footer</a></code> or <code><a href="#the-cite-element">cite</a></code> element, and optionally 
   with in-line changes such as annotations and abbreviations.</p>
 
-  <p class="auth">Content inside a <code><a href="#the-blockquote-element">blockquote</a></code> other than citations and in-line changes must be quoted from another source, whose address, if it has one, may be cited in the <dfn data-anolis-xref="attr-blockquote-cite" id="attr-blockquote-cite"><code>cite</code></dfn> attribute.</p>
+  <p class="auth">Content inside a <code><a href="#the-blockquote-element">blockquote</a></code> other than citations and in-line changes must be quoted from another source, whose address, if it has one, may be cited in the <dfn id="attr-blockquote-cite"><code>cite</code></dfn> attribute.</p>
   
  <p class="note">In cases where a page contains contributions from multiple people, such as comments on a blog post, 
  '<i>another source</i>' can include text from the same page, written by another person.</p>
  
-  <p class="auth">If the <code data-anolis-xref="attr-blockquote-cite"><a href="#attr-blockquote-cite">cite</a></code> attribute is present, it must be a
-  <a href="#valid-url-potentially-surrounded-by-spaces">valid URL potentially surrounded by spaces</a>. <span class="impl">To obtain the
-  corresponding citation link, the value of the attribute must be <a data-anolis-xref="resolve a
-  url" href="#resolve-a-url">resolved</a> relative to the element.</span> User agents may allow users to follow such
+  <p class="auth">If the <code><a href="#attr-blockquote-cite">cite</a></code> attribute is present, it must be a
+  <a href="#valid-url-potentially-surrounded-by-spaces">valid URL potentially surrounded by spaces</a>. To obtain the
+  corresponding citation link, the value of the attribute must be <a href="#resolve-a-url">resolved</a> relative to the element. User agents may allow users to follow such
   citation links, but they are primarily intended for private use (e.g. by server-side scripts
   collecting statistics about a site's use of quotations), not for readers.</p>
-<div class="impl">
-<p>The <dfn data-anolis-xref="dom-quote-cite" id="dom-quote-cite"><code>cite</code></dfn> IDL
-  attribute must <a href="#reflect">reflect</a> the element's <code data-anolis-xref="">cite</code> content attribute.</p>
-  </div>
+<p>The <dfn id="dom-quote-cite"><code>cite</code></dfn> IDL
+  attribute must <a href="#reflect">reflect</a> the element's <code>cite</code> content attribute.</p>
   <p class="auth">The content of a <code><a href="#the-blockquote-element">blockquote</a></code> may be abbreviated, may have context added or may have annotations. Any such additions or changes to quoted text must be indicated in the text (at the text level). This may mean the use of notational conventions or explicit remarks, such as "emphasis mine".</p>
 
   <div class="example">

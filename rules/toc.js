@@ -1,6 +1,6 @@
 
 exports.name = "toc";
-exports.landscape = ""; // does nothing at that level
+exports.landscape = null;
 exports.transform = function () {
     var numStack = [0]
     ,   $fullToC = $("<ol class='brief toc'></ol>")
@@ -15,6 +15,7 @@ exports.transform = function () {
         ,   noNum = $hn.hasClass("no-num")
         ,   noToC = $hn.hasClass("no-toc")
         ;
+        if (!$hn.length) window.warn("Found section with no heading!\n" + $s.find("*:first").html());
         if (noToC) return;
         if (depth + 1 > numStack.length) {
             var $ol = $("<ol></ol>");

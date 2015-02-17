@@ -11,7 +11,6 @@ exports.transform = function (tmpl) {
     // body isn't the main content
     var $p = $("#the-body-element").parent().find("> p:contains('main'):first");
     $p.html($p.html().replace("main", ""));
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

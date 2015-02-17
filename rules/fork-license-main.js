@@ -10,8 +10,6 @@ exports.transform = function (data) {
         .find("p:eq(2)")
         .replaceWith(data.main)
     ;
-
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

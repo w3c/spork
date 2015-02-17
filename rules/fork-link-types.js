@@ -19,6 +19,4 @@ exports.transform = function () {
 
     // drop p.note in #secondary-browsing-contexts
     $("#secondary-browsing-contexts").parent().find("p.note:first").remove();
-
-    window.info("FORK: " + exports.landscape);
 };

@@ -1,6 +1,6 @@
 
 exports.name = "id";
-exports.landscape = "";
+exports.landscape = null;
 exports.transform = function () {
     // check for stray IDs
     var seen = {}
@@ -21,5 +21,4 @@ exports.transform = function () {
     // remap IDs where it makes sense
     // do that by indexing the stuff we drop before dropping it
     
-    window.info("FORK: " + exports.landscape);
 };

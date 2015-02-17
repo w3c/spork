@@ -7,6 +7,4 @@ exports.transform = function () {
     var $ldDT = $("#attr-img-longdesc").parent();
     $ldDT.next("dd").remove();
     $ldDT.remove();
-    
-    window.info("FORK: " + exports.landscape);
 };

@@ -31,6 +31,4 @@ exports.transform = function () {
         .find("p:contains('input-datetime-local')")
         .remove()
     ;
-
-    window.info("FORK: " + exports.landscape);
 };

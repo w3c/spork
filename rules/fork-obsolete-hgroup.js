@@ -5,7 +5,7 @@ exports.name = "fork-obsolete-hgroup";
 exports.landscape = "In W3C HTML, the hgroup element is obsolete.";
 exports.transform = function (data) {
     // drop section #the-hgroup-element
-    $("#the-hgroup-element").remove();
+    $("#the-hgroup-element").parent().remove();
     
     // example with hgroup in #semantics-2, #the-section-element x2, #the-footer-element, 
     //      #sample-outlines, #the-iframe-element, #the-main-part-of-the-content
@@ -82,8 +82,6 @@ exports.transform = function (data) {
     var $venn = $("object[data$='content-venn.svg']");
     $venn.prev("p").remove();
     $venn.remove();
-    
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{

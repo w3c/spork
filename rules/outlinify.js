@@ -1,6 +1,6 @@
 
 exports.name = "outlinify";
-exports.landscape = ""; // does nothing at that level
+exports.landscape = null;
 exports.transform = function () {
     $("#configUI, #head, div.status, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
     window.info("Removed some useless elements");

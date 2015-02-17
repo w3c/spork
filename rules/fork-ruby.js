@@ -98,39 +98,37 @@ exports.transform = function (data) {
     $ogp.before(data.optionalRT);
     $ogp.before(data.optionalRTC);
     $ogp.before(data.optionalRP);
-    
-    window.info("FORK: " + exports.landscape);
 };
 exports.params = function () {
     return [{
     // sections
-        "closing-elements-that-have-implied-end-tags":  rfs("res/closing-elements-that-have-implied-end-tags.html")
-    ,   "the-rb-element":       rfs("res/the-rb-element.html")
-    ,   "the-rp-element":       rfs("res/the-rp-element.html")
-    ,   "the-rt-element":       rfs("res/the-rt-element.html")
-    ,   "the-rtc-element":      rfs("res/the-rtc-element.html")
-    ,   "the-ruby-element":     rfs("res/the-ruby-element.html")
+        "closing-elements-that-have-implied-end-tags":  rfs("res/ruby/closing-elements-that-have-implied-end-tags.html")
+    ,   "the-rb-element":       rfs("res/ruby/the-rb-element.html")
+    ,   "the-rp-element":       rfs("res/ruby/the-rp-element.html")
+    ,   "the-rt-element":       rfs("res/ruby/the-rt-element.html")
+    ,   "the-rtc-element":      rfs("res/ruby/the-rtc-element.html")
+    ,   "the-ruby-element":     rfs("res/ruby/the-ruby-element.html")
     // parsing
-    ,   stRbRtc:        rfs("res/st-rb-rtc.html")
-    ,   stRbRtcDD:      rfs("res/st-rb-rtc-dd.html")
-    ,   stRtRp:         rfs("res/st-rt-rp.html")
-    ,   stRtRpDD:       rfs("res/st-rt-rp-dd.html")
+    ,   stRbRtc:        rfs("res/ruby/st-rb-rtc.html")
+    ,   stRbRtcDD:      rfs("res/ruby/st-rb-rtc-dd.html")
+    ,   stRtRp:         rfs("res/ruby/st-rt-rp.html")
+    ,   stRtRpDD:       rfs("res/ruby/st-rt-rp-dd.html")
     // optional tags
-    ,   optionalRB:     rfs("res/optional-rb.html")
-    ,   optionalRT:     rfs("res/optional-rt.html")
-    ,   optionalRTC:    rfs("res/optional-rtc.html")
-    ,   optionalRP:     rfs("res/optional-rp.html")
+    ,   optionalRB:     rfs("res/ruby/optional-rb.html")
+    ,   optionalRT:     rfs("res/ruby/optional-rt.html")
+    ,   optionalRTC:    rfs("res/ruby/optional-rtc.html")
+    ,   optionalRP:     rfs("res/ruby/optional-rp.html")
     // end-of-file
-    ,   eof:            rfs("res/eof.html")
-    ,   eofOtherwise:   rfs("res/eof-otherwise.html")
+    ,   eof:            rfs("res/ruby/eof.html")
+    ,   eofOtherwise:   rfs("res/ruby/eof-otherwise.html")
     // tables
-    ,   usage:          rfs("res/usage.html")
-    ,   ifRB:           rfs("res/if-rb.html")
-    ,   ifRTC:          rfs("res/if-rtc.html")
-    ,   elRB:           rfs("res/el-rb.html")
-    ,   elRTC:          rfs("res/el-rtc.html")
+    ,   usage:          rfs("res/ruby/usage.html")
+    ,   ifRB:           rfs("res/ruby/if-rb.html")
+    ,   ifRTC:          rfs("res/ruby/if-rtc.html")
+    ,   elRB:           rfs("res/ruby/el-rb.html")
+    ,   elRTC:          rfs("res/ruby/el-rtc.html")
     // rendering
-    ,   css:            rfs("res/ruby.css")
+    ,   css:            rfs("res/ruby/ruby.css")
     }];
 };
 exports.copy = {
