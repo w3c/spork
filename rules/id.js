@@ -46,6 +46,7 @@ exports.transform = function () {
 // warn: Dangling ID reference:#index-aria-navigation
 // warn: Dangling ID reference:#index-aria-complementary
 // warn: Dangling ID reference:#index-aria-note
+// warn: Dangling ID reference:#allowed-aria-roles,-states-and-properties
 
 
 // warn: Dangling ID reference:#names:-the-itemprop-attribute
@@ -54,27 +55,21 @@ exports.transform = function () {
 // warn: Dangling ID reference:#comms
 //  - drop parts of #structure-of-this-specification
 
-// warn: Dangling ID reference:#xhtml
-//  - problem with dfn@id in hN
-
 // warn: Dangling ID reference:#refsTIMEZONES
-// warn: Dangling ID reference:#local-date-and-time-state-(type=datetime-local)
-// warn: Dangling ID reference:#sectioning-content-0
-// warn: Dangling ID reference:#the-body-element-0
-// warn: Dangling ID reference:#the-hgroup-element
-// warn: Dangling ID reference:#flow-content-1
-// warn: Dangling ID reference:#palpable-content-0
-// warn: Dangling ID reference:#allowed-aria-roles,-states-and-properties
-// warn: Dangling ID reference:#phrasing-content-1
 // warn: Dangling ID reference:#refsRUBY-UC
+// warn: Dangling ID reference:#refsINBANDTRACKS
+//  - add references
+
+// warn: Dangling ID reference:#local-date-and-time-state-(type=datetime-local)
+//  - need to drop all mentions
+
+// warn: Dangling ID reference:#the-hgroup-element
 // warn: Dangling ID reference:#the-rb-element
 // warn: Dangling ID reference:#the-rtc-element
 // warn: Dangling ID reference:#process-an-rtc-element
 // warn: Dangling ID reference:#hyperlink-auditing
 // warn: Dangling ID reference:#webvtt
-// warn: Dangling ID reference:#refsINBANDTRACKS
 // warn: Dangling ID reference:#text-track-cue-data
-// warn: Dangling ID reference:#dom-table-border-0
 // warn: Dangling ID reference:#text/ping
 // warn: Dangling ID reference:#attr-iframe-longdesc
 // warn: Dangling ID reference:#attr-img-longdesc
