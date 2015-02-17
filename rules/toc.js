@@ -34,25 +34,26 @@ exports.transform = function () {
                 $hn.html().replace(/^\s*?(?:[0-9]+\.)*[0-9]+\s+/, newNum)
             );
         }
-        // remove <a> from inside headers
-        $hn.find("a").each(function () {
-            var $a = $(this);
-            $a.replaceWith($a.contents());
+        // remove <a> and <dfn> from inside headers
+        var $hnClone = $hn.clone();
+        $hnClone.find("a, dfn").each(function () {
+            var $el = $(this);
+            $el.replaceWith($el.contents());
         });
-        $hn.find("[id]").each(function () {
+        $hnClone.find("[id]").each(function () {
             $(this).removeAttr("id");
         });
         var $li = $("<li><a></a></li>")
                     .find("a")
                         .attr("href", "#" + id)
-                    .html($hn.html())
+                    .html($hnClone.html())
                     .end()
                     .appendTo(tocStack[0]);
         if (depth === 0) {
             $("<li><a></a></li>")
                 .find("a")
                     .attr("href", "#toc-" + id)
-                    .html($hn.html())
+                    .html($hnClone.html())
                 .end()
                 .appendTo($fullToC);
             $li.attr("id", "toc-" + id);

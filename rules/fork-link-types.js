@@ -4,9 +4,9 @@ exports.name = "fork-link-types";
 exports.landscape = "W3C HTML has no link types: sidebar, external, pingback.";
 exports.transform = function () {
     // drop sections: link-type-{sidebar,external,pingback}
-    $("#link-type-sidebar").remove();
-    $("#link-type-external").remove();
-    $("#link-type-pingback").remove();
+    $("#link-type-sidebar").parent().remove();
+    $("#link-type-external").parent().remove();
+    $("#link-type-pingback").parent().remove();
 
     // drop § about "sidebar" in #following-hyperlinks
     $("#following-hyperlinks").parent().find("p:contains('sidebar')").remove();

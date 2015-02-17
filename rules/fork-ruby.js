@@ -17,7 +17,7 @@ exports.transform = function (data) {
     ,   "the-rt-element"
     ,   "the-rtc-element"
     ,   "the-ruby-element"
-    ].forEach(function (sec) { $("#" + sec).replaceWith(data[sec]); });
+    ].forEach(function (sec) { $("#" + sec).parent().replaceWith(data[sec]); });
 
     // various changes to the parsing algorithm
     var $og = $("#parsing-main-inbody")

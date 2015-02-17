@@ -40,6 +40,7 @@ exports.rules = [
     // basic processing
     require("../rules/strip-script")
 ,   require("../rules/outlinify")
+,   require("../rules/id-cache")
 
     // mostly removing stuff
 ,   require("../rules/drop-sections")
