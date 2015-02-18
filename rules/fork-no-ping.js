@@ -8,12 +8,18 @@ exports.transform = function () {
         .parent("section")
         .find("p:contains('If the hyperlink has a ping')")
         .remove();
+        
+    // drop paragraph with the dfn
+    $("#ping").parent().remove();
+    
+    // paragraph about informing about ping
+    $("#links\\,-forms\\,-and-navigation\\:hyperlink-auditing").parent().remove();
 
     // <a> and <area> are quite similar
     var elDesc = function (id) {
             $("#" + id + " + dl.element > dd:contains('URLs to ping')").remove();
             var $idl = $("#" + id + " + dl.element pre.idl");
-            $idl.html($idl.html().replace(/\[PutForwards.*?;\s+/, ""));
+            $idl.html($idl.html().replace(/\[PutForwards[\s\S]*?;\s+/, ""));
         }
     ,   linkList = function (id, removalType) {
             $("#" + id)

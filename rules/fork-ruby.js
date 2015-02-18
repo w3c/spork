@@ -12,12 +12,12 @@ exports.transform = function (data) {
     // replace element sections
     [
         "closing-elements-that-have-implied-end-tags"
-    ,   "the-rb-element"
     ,   "the-rp-element"
     ,   "the-rt-element"
-    ,   "the-rtc-element"
     ,   "the-ruby-element"
     ].forEach(function (sec) { $("#" + sec).parent().replaceWith(data[sec]); });
+    $("#the-ruby-element").parent().after(data["the-rb-element"]);
+    $("#the-rt-element").parent().after(data["the-rtc-element"]);
 
     // various changes to the parsing algorithm
     var $og = $("#parsing-main-inbody")
@@ -98,6 +98,13 @@ exports.transform = function (data) {
     $ogp.before(data.optionalRT);
     $ogp.before(data.optionalRTC);
     $ogp.before(data.optionalRP);
+    
+    // HTMLUnknownElement
+    var $rb = $("#other-elements,-attributes-and-apis:rb")
+    ,   $rbParent = $rb.parent()
+    ;
+    $rb.remove();
+    $rbParent.html($rbParent.html().replace(/,[\s\S]+,/, ", "));
 };
 exports.params = function () {
     return [{

@@ -2,10 +2,20 @@
 exports.name = "id-cache";
 exports.landscape = null;
 exports.transform = function () {
-    window.idCache = {};
+    window.idCache = {
+        // this is a bug that doesn't resolve in the WHATWG spec
+        "#webvtt":      "#refsWEBVTT"
+        // this is fictitious but should be blacklisted anyway so we refer to WHATWG HTML for it
+    ,   "#text/ping":   "https://html.spec.whatwg.org/#text/ping"
+        // revisit when this has implementations
+    ,   "#broadcastchannel":    "https://html.spec.whatwg.org/#broadcastchannel"
+        // go see the extension spec
+    ,   "#attr-iframe-longdesc":    "http://www.w3.org/TR/html-longdesc/#longdesc"
+        // lots of references to Microdata
+    ,   "#names:-the-itemprop-attribute":   "http://www.w3.org/TR/microdata/#attr-itemprop"
+    };
     window.cacheID = function ($el, url) {
         $el.each(function () {
-            // window.info("### PROCESSING: " + $(this).attr("id"));
             $(this)
                 .find("[id]")
                 .each(function () {

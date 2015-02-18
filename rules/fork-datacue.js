@@ -15,10 +15,19 @@ exports.transform = function (data) {
         .parent()
         .before(data.datacue)
     ;
+    
+    // in text-tracks
+    $("#text-track-rules-for-extracting-the-chapter-title")
+        .parent()
+        .before(data.dt)
+        .before(data.dd)
+    ;
 };
 exports.params = function () {
     return [{
-        datacue: rfs("res/datacue/datacue.html")
+        datacue:    rfs("res/datacue/datacue.html")
     ,   guidelines: rfs("res/datacue/guidelines.html")
+    ,   dt:         rfs("res/datacue/dt.html")
+    ,   dd:         rfs("res/datacue/dd.html")
     }];
 };

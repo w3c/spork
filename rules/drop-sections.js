@@ -16,5 +16,16 @@ exports.transform = function () {
     window.cacheID($("#microdata").parent(),     "http://www.w3.org/TR/microdata/");
 
     $("#2dcontext, #workers, #webstorage, #comms, #microdata").parent().remove();
+    
+    // removing the intro text about the spec's structure
+    $("#structure-of-this-specification dl:first")
+        .find("dt:contains('Microdata'), dt:contains('Web workers'), dt:contains('The communication APIs'), dt:contains('Web storage')")
+        .each(function () {
+            var $dt = $(this);
+            $dt.next("dd").remove();
+            $dt.remove();
+        })
+    ;
+    
     window.info("Removed sections published as separate specifications.");
 };

@@ -10,7 +10,7 @@ exports.transform = function (data) {
             .append(document.createTextNode(data.extensibility))
     ;
     var $p = $("#other-link-types ~ p:contains('\"Effect on...\" field, whereas values')");
-    $p.html($p.html().replace(/"Effect\s+on\.\.\."\sfield.*?Conformance\s+checkers\s+may\s+cache\s+this/
+    $p.html($p.html().replace(/"Effect\s+on\.\.\."\sfield[\s\S]*?Conformance\s+checkers\s+may\s+cache\s+this/
                             , data.effect));
     $p.after(data.note);
 };

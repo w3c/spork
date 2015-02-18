@@ -25,10 +25,26 @@ exports.transform = function () {
                     .parent()
                     .find("pre.css:first")
     ;
-    $css.html($css.html().replace(/\s+input\[type=datetime-local.*?}/));
+    $css.html($css.html().replace(/\s+input\[type=datetime-local[\s\S]*?}/));
     $("#the-input-element-as-domain-specific-widgets")
         .parent()
         .find("p:contains('input-datetime-local')")
         .remove()
     ;
+    
+    // #input-type-attr-summary needs a column excised
+    $("#input-type-attr-summary")
+        .find("thead:first th:eq(7)").remove().end()
+        .find("tbody tr")
+        .each(function () {
+            $(this).find("td:eq(6)").remove();
+        })
+    ;
+    
+    // #implicit-submission:local-date-and-time-state-(type=datetime-local)
+    var $mention = $("#implicit-submission\\:local-date-and-time-state-\\(type\\=datetime-local\\)")
+    ,   $parent = $mention.parent()
+    ;
+    $mention.remove();
+    $parent.html($parent.html().replace(/,\s*,/, ", "));
 };

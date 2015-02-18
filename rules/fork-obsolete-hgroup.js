@@ -25,7 +25,7 @@ exports.transform = function (data) {
     // (but not lines) in second table
     $("#table-aria-strong tr:contains('hgroup')").remove();
     $("#table-aria-weak td:contains('hgroup ancestor')").each(function () {
-        $(this).html($(this).html().replace(/\s+element\s+that.*?ancestor\s*/, ""));
+        $(this).html($(this).html().replace(/\s+element\s+that[\s\S]*?ancestor\s*/, ""));
     });
 
     // content model of #the-h1,-h2,-h3,-h4,-h5,-and-h6-elements
@@ -40,22 +40,22 @@ exports.transform = function (data) {
 
     // sentence in #headings-and-sections
     var $hsp = $("#headings-and-sections").parent().find("p:first");
-    $hsp.html($hsp.html().replace(/\s+and\s+the.*?element\s+/, ""));
+    $hsp.html($hsp.html().replace(/\s+and\s+the[\s\S]*?element\s+/, ""));
 
     // table under #usage-summary-2
     $("#usage-summary-2").parent().find("table tr:contains('hgroup')").remove();
 
     // sentence in #the-strong-element
     var $tse = $("#the-strong-element").parent().find("p:contains('hgroup')");
-    $tse.html($tse.html().replace(/\(This\s+is\s+distinct.*?\)/, ""));
+    $tse.html($tse.html().replace(/\(This\s+is\s+distinct[\s\S]*?\)/, ""));
 
     // sentence in #the-small-element
     var $tsm = $("#the-small-element").parent().find("p:contains('hgroup')");
-    $tsm.html($tsm.html().replace(/;\s+for\s+that\s+purpose.*?\./, ""));
+    $tsm.html($tsm.html().replace(/;\s+for\s+that\s+purpose[\s\S]*?\./, "."));
 
     // remove mention in table #elements-3, as well as dedicated row
     var $e3 = $("#elements-3").parent().find("table:first td:contains('hgroup'):first");
-    $e3.html($e3.html().replace(/^.*;\s*/, ""));
+    $e3.html($e3.html().replace(/^[\s\S]*;\s*/, ""));
     $("#elements-3").parent().find("table:first th:contains('hgroup')").parent().remove();
 
     // mentions in #element-content-categories
@@ -63,7 +63,7 @@ exports.transform = function (data) {
         .parent()
         .find("table td:contains('hgroup')")
         .each(function () {
-            $(this).html($(this).html().replace(/;\s+.*?hgroup.*?code>/, ""));
+            $(this).html($(this).html().replace(/;\s+[\s\S]*?hgroup[\s\S]*?code>/, ""));
         })
     ;
 

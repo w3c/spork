@@ -47,31 +47,5 @@ exports.transform = function () {
 // warn: Dangling ID reference:#index-aria-complementary
 // warn: Dangling ID reference:#index-aria-note
 // warn: Dangling ID reference:#allowed-aria-roles,-states-and-properties
-
-
-// warn: Dangling ID reference:#names:-the-itemprop-attribute
-//  - need to drop all mentions of itemprop
-
-// warn: Dangling ID reference:#comms
-//  - drop parts of #structure-of-this-specification
-
-// warn: Dangling ID reference:#refsTIMEZONES
-// warn: Dangling ID reference:#refsRUBY-UC
-// warn: Dangling ID reference:#refsINBANDTRACKS
-//  - add references
-
+// this is in ARIA:
 // warn: Dangling ID reference:#local-date-and-time-state-(type=datetime-local)
-//  - need to drop all mentions
-
-// warn: Dangling ID reference:#the-hgroup-element
-// warn: Dangling ID reference:#the-rb-element
-// warn: Dangling ID reference:#the-rtc-element
-// warn: Dangling ID reference:#process-an-rtc-element
-// warn: Dangling ID reference:#hyperlink-auditing
-// warn: Dangling ID reference:#webvtt
-// warn: Dangling ID reference:#text-track-cue-data
-// warn: Dangling ID reference:#text/ping
-// warn: Dangling ID reference:#attr-iframe-longdesc
-// warn: Dangling ID reference:#attr-img-longdesc
-// warn: Dangling ID reference:#rb
-// warn: Dangling ID reference:#broadcastchannel
