@@ -10,7 +10,7 @@ exports.transform = function (data) {
     // example with hgroup in #semantics-2, #the-section-element x2, #the-footer-element, 
     //      #sample-outlines, #the-iframe-element, #the-main-part-of-the-content
     $("#semantics-2").parent().find("div.example:eq(1)").remove();
-    $("#the-section-element").parent().find("div.example:eq(1), div.example:eq(3)").remove();
+    $("#the-section-element").parent().find("div.example:first, div.example:eq(2)").remove();
     $("#the-footer-element").parent().find("div.example:eq(0)").remove();
     $("#sample-outlines").parent().find("div.example:last").remove();
     $("#the-iframe-element").parent().find("div.example:contains('hgroup')").remove();
@@ -31,7 +31,7 @@ exports.transform = function (data) {
     // content model of #the-h1,-h2,-h3,-h4,-h5,-and-h6-elements
     $("#the-h1\\,-h2\\,-h3\\,-h4\\,-h5\\,-and-h6-elements")
         .parent()
-        .find("dl.element dd:contains('group')")
+        .find("dl.element dd:contains('hgroup')")
         .remove()
     ;
 
@@ -40,7 +40,7 @@ exports.transform = function (data) {
 
     // sentence in #headings-and-sections
     var $hsp = $("#headings-and-sections").parent().find("p:first");
-    $hsp.html($hsp.html().replace(/\s+and\s+the[\s\S]*?element\s+/, ""));
+    $hsp.html($hsp.html().replace(/\s+and\s+the[\s\S]*?element\s+/, " "));
 
     // table under #usage-summary-2
     $("#usage-summary-2").parent().find("table tr:contains('hgroup')").remove();
@@ -79,7 +79,7 @@ exports.transform = function (data) {
     $("#other-elements\\,-attributes-and-apis").parent().append(data.semantics);
     
     // drop the SVG Venn diagram (plus mention of it)
-    var $venn = $("object[data$='content-venn.svg']");
+    var $venn = $("object[data$='content-venn.svg'], img[src$='content-venn.svg']");
     $venn.prev("p").remove();
     $venn.remove();
 };

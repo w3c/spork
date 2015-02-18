@@ -34,6 +34,11 @@ exports.transform = function (options) {
                     .replace(/\{\{year}}/g, date.getFullYear())
     ;
     $("body hr").first().before(bp);
+    
+    // XXX
+    //  Abstract!
+    //  SotD!
+    
     window.info("updated boilerplate");
 };
 exports.params = function (conf) {

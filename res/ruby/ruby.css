@@ -6,7 +6,7 @@ rt   {
     font-size: 50%;
     font-variant-east-asian: ruby;
     text-emphasis: none;
-}"
+}
 rbc  { display: ruby-base-container; }
 rtc  { display: ruby-text-container; }
 ruby, rb, rt, rbc, rtc { unicode-bidi: isolate; }

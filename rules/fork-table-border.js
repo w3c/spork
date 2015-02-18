@@ -6,6 +6,9 @@ exports.landscape = "table@border only obsolete in WHATWG HTML.";
 exports.transform = function (data) {
     var $dl = $("#the-table-element").parent().find("dl.element:first");
 
+    // border table in obsolete section
+    $("#attr-table-border").parent().remove();
+
     // add attribute under the-table-element
     $dl.find("dt:contains('Content attributes')")
         .next("dd")
@@ -14,7 +17,7 @@ exports.transform = function (data) {
     
     // add it to IDL
     var $pre = $dl.find("pre.idl");
-    $pre.html($pre.html().replace(/};/, '           attribute DOMString <a href="#dom-table-border-0">border</a>;\n'));
+    $pre.html($pre.html().replace(/};/, '           attribute DOMString <a href="#dom-table-border">border</a>;\n};'));
     
     // § "the border attribute" with dfn
     $dl.nextAll("p.note:eq(1)").after(data.note);
@@ -29,9 +32,6 @@ exports.transform = function (data) {
     
     // add § at the end of #non-conforming-features
     $("#non-conforming-features").parent().append(data.nonconforming);
-
-    // border table in obsolete section
-    $("#attr-table-border").parent().remove();
 
     // drop from IDL and description in #requirements-for-implementations
     var $idl = $("#HTMLTableElement-partial").parent();

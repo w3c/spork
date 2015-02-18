@@ -5,7 +5,8 @@ exports.name = "aria-steve";
 exports.landscape = "Extra information concerning ARIA is added to all elements.";
 exports.transform = function (data) {
     for (var k in data) {
-        var $lastDT = $("#" + k).next("dl.element")
+        var $lastDT = $("#" + window.escSel(k)).parent()
+                                .find("dl.element")
                                 .find("dt")
                                 .last()
         ;

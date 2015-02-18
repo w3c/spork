@@ -8,7 +8,7 @@ exports.transform = function (data) {
                     .parent()
                     .find("pre.css:first")
     ;
-    $pre.html($pre.html().replace(/texarea[\s\S]+?};/, data.input));
+    $pre.html($pre.html().replace(/textarea[\s\S]+?}/, data.input));
 };
 exports.params = function () {
     return [{

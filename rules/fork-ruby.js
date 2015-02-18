@@ -34,18 +34,18 @@ exports.transform = function (data) {
 
     var $eof = $("#parsing-main-inbody")
                     .parent()
-                    .find("dl.switch:first dt:contains('\"end-of-file\"'):first")
+                    .find("dl.switch:first dt:contains('end-of-file'):first")
     ;
     $eof.next("dd").find("ol li:first").html(data.eof);
-    $eof.nextAll("dt:contains('body'):first, dt:contains('body'):first")
+    $eof.nextAll("dt:contains('body'):first, dt:contains('html'):first")
         .each(function () {
-            $(this).next("dd").find("p:eq(2)").html(data.eofOtherwise);
+            $(this).next("dd").find("p:eq(1)").html(data.eofOtherwise);
         })
     ;
 
     // rendering
-    var $phrasingCSS = $("#phrasing-content-0").parent().find("pre.css:first");
-    $phrasingCSS.text($phrasingCSS.text().replace(/ruby[\s\S]+?rt[\s\S]+?\}/, data.css));
+    var $phrasingCSS = $("#phrasing-content-3").parent().find("pre.css:first");
+    $phrasingCSS.html($phrasingCSS.html().replace(/ruby[\s\S]+?rt[\s\S]+?\}/, data.css));
     
     // table of elements
     var $qTR = $("#elements-3").parent().find("table:first tr:contains('Quotation')");
@@ -92,8 +92,8 @@ exports.transform = function (data) {
 
     // optional end tags
     var $ogp = $("#optional-tags").parent().find("p:contains('optgroup'):first");
-    $ogp.prev("tr").remove();
-    $ogp.prev("tr").remove();
+    $ogp.prev("p").remove();
+    $ogp.prev("p").remove();
     $ogp.before(data.optionalRB);
     $ogp.before(data.optionalRT);
     $ogp.before(data.optionalRTC);
@@ -104,7 +104,7 @@ exports.transform = function (data) {
     ,   $rbParent = $rb.parent()
     ;
     $rb.remove();
-    $rbParent.html($rbParent.html().replace(/,[\s\S]+,/, ", "));
+    $rbParent.html($rbParent.html().replace(/,\s+,/, ", "));
 };
 exports.params = function () {
     return [{

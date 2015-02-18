@@ -2,7 +2,7 @@
 exports.name = "outlinify";
 exports.landscape = null;
 exports.transform = function () {
-    $("#configUI, #head, div.status, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
+    $("#configUI, #head, #reviewer, div[itemtype='http://n.whatwg.org/work']").remove();
     window.info("Removed some useless elements");
     
     // note that this is not the HTML outline algorithm but something a lot simpler

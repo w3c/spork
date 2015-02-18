@@ -41,6 +41,7 @@ exports.run = function (profile, outDir) {
     sporkCode += "window.warn = function (str) { window.callPhantom({ warn: str }); };\n";
     sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };";
     sporkCode += "window.unplugResources = function () { window.callPhantom({ unplug: true }); };";
+    sporkCode += "window.escSel = function (sel) { return sel.replace(/([ #;?%&,.+*~':\"!^$[\\]()=>|\\/@])/g,'\\\\$1'); };";
     
     profile.rules.forEach(function (rule) {
         sporkCode += "window.info('~~~~~~~~~~~ " + rule.name + " ~~~~~~~~~~');\n";

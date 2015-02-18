@@ -5,7 +5,6 @@ exports.transform = function () {
     window.idCache = {
         // bugs that don't resolve in the WHATWG spec
         "#webvtt":              "#refsWEBVTT"
-    ,   "#dom-table-border-0":  "#dom-table-border"
         // this is fictitious but should be blacklisted anyway so we refer to WHATWG HTML for it
     ,   "#text/ping":   "https://html.spec.whatwg.org/#text/ping"
         // revisit when this has implementations
