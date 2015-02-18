@@ -33,17 +33,19 @@ exports.transform = function (options) {
                     .replace(/\{\{humanDate}}/g, humanDate)
                     .replace(/\{\{year}}/g, date.getFullYear())
     ;
-    $("body hr").first().before(bp);
-    
-    // XXX
-    //  Abstract!
-    //  SotD!
+    $("body hr:first")
+        .before(bp)
+        .after(options.sotd)
+        .after(options.abstract)
+    ;
     
     window.info("updated boilerplate");
 };
 exports.params = function (conf) {
     return [{
         boilerplate:    conf.boilerplate ? rfs(conf.boilerplate) : ""
+    ,   abstract:       conf.abstract ? rfs(conf.abstract) : ""
+    ,   sotd:           conf.sotd ? rfs(conf.sotd) : ""
     ,   style:          conf.style ? rfs(conf.style) : ""
     ,   title:          conf.title || ""
     }];

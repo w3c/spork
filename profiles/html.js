@@ -7,7 +7,9 @@ exports.url = "https://html.spec.whatwg.org/";
 // exports.url = "http://multifarious.dev/empty-html/"; // local emptied version for optimal dev
 
 exports.configuration = {
-    boilerplate:    "res/boilerplate/html-ed.html"
+    boilerplate:    "res/boilerplate/html-ed-headers.html"
+,   abstract:       "res/boilerplate/html-abstract.html"
+,   sotd:           "res/boilerplate/html-ed-sotd.html"
 ,   style:          "res/boilerplate/html.css"
 ,   title:          "HTML 5.1 Nightly"
 ,   downloads:      {}

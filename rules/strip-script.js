@@ -2,7 +2,7 @@
 exports.name = "strip-script";
 exports.landscape = null;
 exports.transform = function () {
-    $("script, link[rel='stylesheet'], link[rel='icon'], #alert, div.status").remove();
+    $("script, link[rel='stylesheet'], link[rel='icon'], #alert, div.status, #updatesStatus").remove();
     window.info("removed all script and style elements");
 
     // remove on*
@@ -28,7 +28,7 @@ exports.transform = function () {
             width:  $obj.attr("width")
         ,   height: $obj.attr("height")
         ,   src:    $obj.attr("data")
-        }))
+        }));
     });
     
     // the slow version in case XPath doesn't work
