@@ -12,6 +12,10 @@ exports.transform = function () {
     // drop paragraph with the dfn
     $("#ping").parent().remove();
     
+    // HTTP headers
+    $("#ping-from").parent().remove();
+    $("#ping-to").parent().remove();
+    
     // paragraph about informing about ping
     $("#links\\,-forms\\,-and-navigation\\:hyperlink-auditing").parent().remove();
 
@@ -23,7 +27,7 @@ exports.transform = function () {
         }
     ,   linkList = function (id, removalType) {
             $("#" + id)
-                .parent("section")
+                .parent()
                 .find("a[href='#ping']")
                 .each(function (idx) {
                     var $a = $(this).parent()
@@ -54,7 +58,7 @@ exports.transform = function () {
     //      IDL
     //      listed x3 in paragraphs
     elDesc("the-a-element");
-    linkList("the-a-element", ["midlist", "and"]);
+    linkList("the-a-element", ["midlist", "last"]);
     dfn("dom-a-ping");
 
     // #hyperlink-auditing (drop)
@@ -65,7 +69,7 @@ exports.transform = function () {
     //      IDL
     //      listed x3 in paragraphs
     elDesc("the-area-element");
-    linkList("the-a-element", ["and", "midlist"]);
+    linkList("the-area-element", ["last", "midlist"]);
     dfn("dom-area-ping");
 
     // text/ping section (that's its ID)
@@ -85,6 +89,10 @@ exports.transform = function () {
             $a.remove();
             $cell.html($cell.html().replace(/;\s+;/, ";"));
         });
+
+    // #attributes-3
+    //      in table
+    $("#attributes-1 th:contains('ping')").parent().remove();
 
     // #mime-types-2
     //      drop from dl

@@ -51,7 +51,7 @@ exports.params = function () {
     ;
     fs.readdirSync(refsDir)
         .forEach(function (file) {
-            data[file.replace(".html", "")] = rfs(jn(refsDir, file));
+            data[file.replace(".html", "")] = rfs("res/refs/" + file);
         })
     ;
     

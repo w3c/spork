@@ -100,7 +100,7 @@ exports.transform = function (data) {
     $ogp.before(data.optionalRP);
     
     // HTMLUnknownElement
-    var $rb = $("#other-elements,-attributes-and-apis:rb")
+    var $rb = $("#other-elements\\,-attributes-and-apis\\:rb")
     ,   $rbParent = $rb.parent()
     ;
     $rb.remove();

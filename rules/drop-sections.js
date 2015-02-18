@@ -18,7 +18,9 @@ exports.transform = function () {
     $("#2dcontext, #workers, #webstorage, #comms, #microdata").parent().remove();
     
     // removing the intro text about the spec's structure
-    $("#structure-of-this-specification dl:first")
+    $("#structure-of-this-specification")
+        .parent()
+        .find("dl:first")
         .find("dt:contains('Microdata'), dt:contains('Web workers'), dt:contains('The communication APIs'), dt:contains('Web storage')")
         .each(function () {
             var $dt = $(this);
