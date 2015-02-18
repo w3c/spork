@@ -39,12 +39,21 @@ exports.run = function (profile, outDir) {
     sporkCode += "try {\n";
     sporkCode += "window.info = function (str) { window.callPhantom({ info: str }); };\n";
     sporkCode += "window.warn = function (str) { window.callPhantom({ warn: str }); };\n";
-    sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };";
-    sporkCode += "window.unplugResources = function () { window.callPhantom({ unplug: true }); };";
-    sporkCode += "window.escSel = function (sel) { return sel.replace(/([ #;?%&,.+*~':\"!^$[\\]()=>|\\/@])/g,'\\\\$1'); };";
+    sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };\n";
+    sporkCode += "window.unplugResources = function () { window.callPhantom({ unplug: true }); };\n";
+    sporkCode += "window.escSel = function (sel) { return sel.replace(/([ #;?%&,.+*~':\"!^$[\\]()=>|\\/@])/g,'\\\\$1'); };\n";
+    sporkCode += "var curRule = '';\n";
+    sporkCode +=    "var assert = function (desc, $el, num) {\n" +
+                    "    if (typeof num === 'undefined') num = 1;\n" +
+                    "    if ($el.length !== num) window.callPhantom({ assert: desc, curRule: curRule });\n" +
+                    "    return $el;\n" +
+                    "};\n"
+    ;
+                 
     
     profile.rules.forEach(function (rule) {
         sporkCode += "window.info('~~~~~~~~~~~ " + rule.name + " ~~~~~~~~~~');\n";
+        sporkCode += "curRule = '" + rule.name + "';\n";
         sporkCode += "(";
         sporkCode += rule.transform.toString();
         sporkCode += ")(";
@@ -69,7 +78,11 @@ exports.run = function (profile, outDir) {
     });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
-        if (msg.warn) logger.warn(msg.warn);
+        else if (msg.warn) logger.warn(msg.warn);
+        else if (msg.assert) {
+            logger.error("Assertion failed in " + msg.curRule + ": " + msg.assert);
+            // XXX need to also look at the reporter from the profile to figure this out
+        }
         else if (msg.source) {
             logger.info("Saving source");
             wfs(jn(outDir, "index.html"), msg.source);

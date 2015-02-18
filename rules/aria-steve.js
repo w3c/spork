@@ -14,12 +14,10 @@ exports.transform = function (data) {
             window.info("No DL found for " + k);
             return;
         }
-        $lastDT
-            .before("<dt>Allowed <a href='#aria-role-attribute'>ARIA role attribute</a> values:</dt>")
-            .before($("<dd></dd>").html(data[k].role))
-            .before("<dt>Allowed <a href='#state-and-property-attributes'>ARIA State and Property Attributes</a>:</dt>")
-            .before($("<dd></dd>").html(data[k].attr))
-        ;
+        $lastDT.before("<dt>Allowed <a href='#aria-role-attribute'>ARIA role attribute</a> values:</dt>");
+        data[k].role.forEach(function (it) { $lastDT.before($("<dd></dd>").html(it)); });
+        $lastDT.before("<dt>Allowed <a href='#state-and-property-attributes'>ARIA State and Property Attributes</a>:</dt>");
+        data[k].attr.forEach(function (it) { $lastDT.before($("<dd></dd>").html(it)); });
     }
     window.info("Injected all ARIA information into elements. Thanks Steve!");
 };

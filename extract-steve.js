@@ -34,9 +34,15 @@ nm.evaluate(
             }
             aria.name = h.id;
             forEach.call(dl.querySelectorAll("dt"), function (dt) {
-                var dd = dt.nextElementSibling;
-                if (/Allowed\s+ARIA\s+role\s+attribute\s+value/i.test(dt.textContent)) aria.role = dd.innerHTML;
-                if (/Allowed\s+ARIA\s+State\s+and\s+Property\s+Attribute/i.test(dt.textContent)) aria.attr = dd.innerHTML;
+                var dds = []
+                ,   nxt = dt.nextElementSibling
+                ;
+                while (nxt && nxt.localName.toLowerCase() === "dd") {
+                    dds.push(nxt.innerHTML);
+                    nxt = nxt.nextElementSibling;
+                }
+                if (/Allowed\s+ARIA\s+role\s+attribute\s+value/i.test(dt.textContent)) aria.role = dds;
+                if (/Allowed\s+ARIA\s+State\s+and\s+Property\s+Attribute/i.test(dt.textContent)) aria.attr = dds;
             });
             if (!aria.name || !aria.role || !aria.attr) {
                 window.info("Failed to find all fields for element: " + JSON.stringify(aria, null, 4));
