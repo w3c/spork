@@ -1,3 +1,4 @@
+/*global assert*/
 
 exports.name = "toc";
 exports.landscape = null;
@@ -9,13 +10,12 @@ exports.transform = function () {
     ;
     $("section").each(function () {
         var $s = $(this)
-        ,   $hn = $s.children("h2, h3, h4, h5, h6").first()
+        ,   $hn = assert("Section heading", $s.children("h2, h3, h4, h5, h6").first())
         ,   id = $hn.attr("id")
         ,   depth = $s.parents("section").length
         ,   noNum = $hn.hasClass("no-num")
         ,   noToC = $hn.hasClass("no-toc")
         ;
-        if (!$hn.length) window.warn("Found section with no heading!\n" + $s.find("*:first").html());
         if (noToC) return;
         if (depth + 1 > numStack.length) {
             var $ol = $("<ol></ol>");
@@ -64,8 +64,8 @@ exports.transform = function () {
             $li.attr("id", "toc-" + id);
         }
     });
-    $("ol.brief.toc").first().replaceWith($fullToC);
-    $("ol.toc").not(".brief").first().replaceWith($toc);
+    assert("Brief ToC", $("ol.brief.toc").first()).replaceWith($fullToC);
+    assert("Long ToC", $("ol.toc").not(".brief").first()).replaceWith($toc);
 
     window.info("updated ToC");
 };

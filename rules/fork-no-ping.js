@@ -1,34 +1,38 @@
+/*global assert*/
 
 exports.name = "fork-no-ping";
 exports.landscape = "The @ping attribute is not implemented and does not seem to have a future, it is therefore dropped.";
 exports.transform = function () {
     // #dynamic-changes-to-base-urls
     //      drop paragraph that mentions it
+    assert("§ on @ping in Dynamic changes",
     $("#dynamic-changes-to-base-urls")
         .parent("section")
-        .find("p:contains('If the hyperlink has a ping')")
+        .find("p:contains('If the hyperlink has a ping')"))
         .remove();
         
     // drop paragraph with the dfn
-    $("#ping").parent().remove();
+    assert("@ping dfn §", $("#ping").parent()).remove();
     
     // HTTP headers
-    $("#ping-from").parent().remove();
-    $("#ping-to").parent().remove();
+    assert("Ping-From section", $("#ping-from").parent()).remove();
+    assert("Ping-To section", $("#ping-to").parent()).remove();
     
     // paragraph about informing about ping
-    $("#links\\,-forms\\,-and-navigation\\:hyperlink-auditing").parent().remove();
+    assert("Hyperlink auditing in Links, forms...",
+    $("#links\\,-forms\\,-and-navigation\\:hyperlink-auditing").parent()).remove();
 
     // <a> and <area> are quite similar
     var elDesc = function (id) {
-            $("#" + id + " + dl.element > dd:contains('URLs to ping')").remove();
-            var $idl = $("#" + id + " + dl.element pre.idl");
+            assert("URLs to ping in: " + id, $("#" + id + " + dl.element > dd:contains('URLs to ping')")).remove();
+            var $idl = assert("IDL in: " + id, $("#" + id + " + dl.element pre.idl"));
             $idl.html($idl.html().replace(/\[PutForwards[\s\S]*?;\s+/, ""));
         }
     ,   linkList = function (id, removalType) {
+            assert("Reference to @ping in: " + id,
             $("#" + id)
                 .parent()
-                .find("a[href='#ping']")
+                .find("a[href='#ping']"), removalType.length)
                 .each(function (idx) {
                     var $a = $(this).parent()
                     ,   $p = $a.parent();
@@ -37,7 +41,7 @@ exports.transform = function () {
                         $p.html($p.html().replace(/,\s+,/, ","));
                     }
                     else if (removalType[idx] === "last") {
-                        var $prev = $a.prevAll("code").first();
+                        var $prev = assert("<code> before mention of @ping", $a.prevAll("code").first());
                         $a.remove();
                         $p.html($p.html().replace(/,\s+and/, ""));
                         $prev.before(document.createTextNode("and "));
@@ -46,7 +50,7 @@ exports.transform = function () {
             ;
         }
     ,   dfn = function (id) {
-            var $dfn = $("#" + id)
+            var $dfn = assert("ID=" + id, $("#" + id))
             ,   $dfnP = $dfn.parent("p")
             ;
             $dfn.remove();
@@ -62,7 +66,7 @@ exports.transform = function () {
     dfn("dom-a-ping");
 
     // #hyperlink-auditing (drop)
-    $("#hyperlink-auditing").parent("section").remove();
+    assert("Hyperlink auditing section", $("#hyperlink-auditing").parent()).remove();
 
     // <area> element
     //      attr
@@ -73,15 +77,14 @@ exports.transform = function () {
     dfn("dom-area-ping");
 
     // text/ping section (that's its ID)
-    $("#text\\/ping").parent("section").remove();
+    assert("text/ping section", $("#text\\/ping").parent()).remove();
 
     // #elements-3
     //      in table for 'a', 'area'
+    assert("@ping as attribute in elements table",
     $("#elements-3")
-        .parent("section")
-        .find("table")
-        .first()
-        .find("a[href='#ping']")
+        .parent()
+        .find("table:first a[href='#ping']"), 2)
         .each(function () {
             var $a = $(this).parent()
             ,   $cell = $a.parent()
@@ -92,14 +95,15 @@ exports.transform = function () {
 
     // #attributes-3
     //      in table
-    $("#attributes-1 th:contains('ping')").parent().remove();
+    assert("@ping in attributes table", $("#attributes-1 th:contains('ping')").parent()).remove();
 
     // #mime-types-2
     //      drop from dl
-    var $dt = $("#mime-types-2")
-                .parent("section")
-                .find("dt:contains('text/ping')")
+    var $dt = assert("text/ping in MIME types table",
+                $("#mime-types-2")
+                    .parent("section")
+                    .find("dt:contains('text/ping')"))
     ;
-    $dt.next("dd").remove();
+    assert("<dd> after text/ping", $dt.next("dd")).remove();
     $dt.remove();
 };

@@ -1,10 +1,11 @@
+/*global assert*/
 
 exports.name = "id";
 exports.landscape = null;
 exports.transform = function () {
     // check for stray IDs after having remapped known ones
     var seen = {};
-    $("a[href^='#']")
+    assert("Local references", $("a[href^='#']"), "+")
         .each(function () {
             var $a = $(this)
             ,   id = $a.attr("href");

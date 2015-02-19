@@ -1,3 +1,4 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
@@ -5,10 +6,10 @@ exports.name = "boilerplate";
 exports.landscape = "A different title and boilerplate suitable for W3C.";
 exports.transform = function (options) {
     // charset
-    $("head").prepend($("<meta charset='utf8'>"));
+    assert("There's a head", $("head")).prepend($("<meta charset='utf8'>"));
 
     // title
-    $("title").text(options.title);
+    assert("There's a title", $("title")).text(options.title);
     window.info("changed title");
 
     // style
@@ -33,7 +34,7 @@ exports.transform = function (options) {
                     .replace(/\{\{humanDate}}/g, humanDate)
                     .replace(/\{\{year}}/g, date.getFullYear())
     ;
-    $("body hr:first")
+    assert("First <hr>", $("body hr:first"))
         .before(bp)
         .after(options.sotd)
         .after(options.abstract)

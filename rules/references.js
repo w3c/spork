@@ -1,3 +1,4 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs")
 ,   fs = require("fs")
@@ -8,7 +9,8 @@ exports.name = "references";
 exports.landscape = "Unused references are dropped; some are changed to match W3C preferences.";
 exports.transform = function (data) {
     // drop unused references
-    $("#ref-list dt[id]").each(function () {
+    assert("Reference <dt> with IDs",
+    $("#ref-list dt[id]"), "+").each(function () {
         var $dt = $(this)
         ,   $dd = $dt.next("dd")
         ,   id = $dt.attr("id")

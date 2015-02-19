@@ -1,10 +1,11 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-blockquote-cite";
 exports.landscape = "W3C HTML attributes different semantics to cite inside blockquote.";
 exports.transform = function (tmpl) {
-    for (var k in tmpl) $("#" + k).parent().replaceWith(tmpl[k]);
+    for (var k in tmpl) assert("Section: " + k, $("#" + k).parent()).replaceWith(tmpl[k]);
 };
 exports.params = function () {
     return [{

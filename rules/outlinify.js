@@ -1,3 +1,4 @@
+/*global assert*/
 
 exports.name = "outlinify";
 exports.landscape = null;
@@ -8,7 +9,7 @@ exports.transform = function () {
     // note that this is not the HTML outline algorithm but something a lot simpler
     window.info("running outliner");
     // find all h*
-    var headings = $("h2, h3, h4, h5, h6")
+    var headings = assert("Headings h2-h6", $("h2, h3, h4, h5, h6"), "+")
                         .get()
                         .map(function (el) {
                             return {

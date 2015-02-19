@@ -1,10 +1,11 @@
-/* globals URI */
+/* globals URI, assert */
 
 exports.name = "dependencies";
 exports.landscape = null;
 exports.transform = function () {
     window.unplugResources();
-    $("img[src], iframe[src], object[data]").each(function () {
+    assert("Images, iframes, objects",
+    $("img[src], iframe[src], object[data]"), "+").each(function () {
         var field = this.localName.toLowerCase() === "object" ? "data" : "src";
         if (this[field]) {
             var url = new URI(this[field]);

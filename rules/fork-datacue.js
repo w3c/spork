@@ -1,3 +1,4 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
@@ -5,20 +6,23 @@ exports.name = "fork-datacue";
 exports.landscape = "W3C HTML has DataCue in text tracks.";
 exports.transform = function (data) {
     // § at end of guidelines-for-exposing-cues-in-various-formats-as-text-track-cues
+    assert("Guidelines, etc section",
     $("#guidelines-for-exposing-cues-in-various-formats-as-text-track-cues")
-        .parent()
+        .parent())
         .append(data.guidelines)
     ;
     
     // inject a complete section before #text-tracks-describing-chapters
+    assert("Text tracks etc. section",
     $("#text-tracks-describing-chapters")
-        .parent()
+        .parent())
         .before(data.datacue)
     ;
     
     // in text-tracks
+    assert("Text track rules etc. section",
     $("#text-track-rules-for-extracting-the-chapter-title")
-        .parent()
+        .parent())
         .before(data.dt)
         .before(data.dd)
     ;

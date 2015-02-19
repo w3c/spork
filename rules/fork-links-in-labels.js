@@ -1,12 +1,14 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-links-in-labels";
 exports.landscape = "W3C HTML warns against links in labels";
 exports.transform = function (tmpl) {
+    assert("1st example for <label>",
     $("#the-label-element")
         .parent()
-        .find("div.example:first")
+        .find("div.example:first"))
         .after(tmpl.links)
     ;
 };

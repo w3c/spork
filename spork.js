@@ -45,7 +45,7 @@ exports.run = function (profile, outDir) {
     sporkCode += "var curRule = '';\n";
     sporkCode +=    "var assert = function (desc, $el, num) {\n" +
                     "    if (typeof num === 'undefined') num = 1;\n" +
-                    "    if ($el.length !== num) window.callPhantom({ assert: desc, curRule: curRule });\n" +
+                    "    if ((num === '+' && !$el.length) || $el.length !== num) window.callPhantom({ assert: desc, curRule: curRule });\n" +
                     "    return $el;\n" +
                     "};\n"
     ;

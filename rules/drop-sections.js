@@ -1,3 +1,4 @@
+/*global assert*/
 
 exports.name = "drop-sections";
 exports.landscape = "The sections 'The 2D rendering context', 'Web workers', 'Web storage', " +
@@ -15,13 +16,15 @@ exports.transform = function () {
     // there's also #broadcasting-to-other-browsing-contexts under #comms, but it's not real ATM
     window.cacheID($("#microdata").parent(),     "http://www.w3.org/TR/microdata/");
 
-    $("#2dcontext, #workers, #webstorage, #comms, #microdata").parent().remove();
+    assert("Section being dropped",
+    $("#2dcontext, #workers, #webstorage, #comms, #microdata").parent(), 5).remove();
     
     // removing the intro text about the spec's structure
+    assert("Mentions in Structure of this spec",
     $("#structure-of-this-specification")
         .parent()
         .find("dl:first")
-        .find("dt:contains('Microdata'), dt:contains('Web workers'), dt:contains('The communication APIs'), dt:contains('Web storage')")
+        .find("dt:contains('Microdata'), dt:contains('Web workers'), dt:contains('The communication APIs'), dt:contains('Web storage')"), 4)
         .each(function () {
             var $dt = $(this);
             $dt.next("dd").remove();

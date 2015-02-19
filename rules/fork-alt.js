@@ -1,10 +1,11 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-alt";
 exports.landscape = "Different advice for image alternative text.";
 exports.transform = function (tmpl) {
-    $("#alt").parent().replaceWith(tmpl.alt);
+    assert("Section: alt", $("#alt").parent()).replaceWith(tmpl.alt);
 };
 exports.params = function () {
     return [{

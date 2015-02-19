@@ -1,3 +1,4 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
@@ -5,8 +6,8 @@ exports.name = "fork-ruby";
 exports.landscape = "W3C HTML has a ruby model that matches both users' needs and implementations.";
 exports.transform = function (data) {
     // remove from obsolete
-    var $objDT = $("#rb").parent();
-    $objDT.next("dd").remove();
+    var $objDT = assert("<rb> in obsolete", $("#rb").parent());
+    assert("<dd> after #rb", $objDT.next("dd")).remove();
     $objDT.remove();
     
     // replace element sections
@@ -15,59 +16,64 @@ exports.transform = function (data) {
     ,   "the-rp-element"
     ,   "the-rt-element"
     ,   "the-ruby-element"
-    ].forEach(function (sec) { $("#" + sec).parent().replaceWith(data[sec]); });
-    $("#the-ruby-element").parent().after(data["the-rb-element"]);
-    $("#the-rt-element").parent().after(data["the-rtc-element"]);
+    ].forEach(function (sec) { assert("Section " + sec, $("#" + sec).parent()).replaceWith(data[sec]); });
+    assert("<ruby>", $("#the-ruby-element").parent()).after(data["the-rb-element"]);
+    assert("<rt>", $("#the-rt-element").parent()).after(data["the-rtc-element"]);
 
     // various changes to the parsing algorithm
-    var $og = $("#parsing-main-inbody")
+    var $og = assert("First <dt> with 'math' in parsing-main-inbody",
+                $("#parsing-main-inbody")
                     .parent()
-                    .find("dl.switch:first dt:contains('\"math\"'):first")
+                    .find("dl.switch:first dt:contains('\"math\"'):first"))
     ;
     // remove previous variant
-    $og.prev("dd").remove();
-    $og.prev("dt").remove();
+    assert("<dd> before the math <dt>", $og.prev("dd")).remove();
+    assert("<dt> before the math <dt>", $og.prev("dt")).remove();
     $og.before(data.stRbRtc);
     $og.before(data.stRbRtcDD);
     $og.before(data.stRtRp);
     $og.before(data.stRtRpDD);
 
-    var $eof = $("#parsing-main-inbody")
+    var $eof = assert("First <dt> with 'end-of-file' in parsing-main-inbody",
+                $("#parsing-main-inbody")
                     .parent()
-                    .find("dl.switch:first dt:contains('end-of-file'):first")
+                    .find("dl.switch:first dt:contains('end-of-file'):first"))
     ;
-    $eof.next("dd").find("ol li:first").html(data.eof);
-    $eof.nextAll("dt:contains('body'):first, dt:contains('html'):first")
+    assert("first ol>li in <dd> after eof", $eof.next("dd").find("ol li:first")).html(data.eof);
+    assert("<dt> after eof containing 'body', 'html'", $eof.nextAll("dt:contains('body'):first, dt:contains('html'):first"), 2)
         .each(function () {
             $(this).next("dd").find("p:eq(1)").html(data.eofOtherwise);
         })
     ;
 
     // rendering
-    var $phrasingCSS = $("#phrasing-content-3").parent().find("pre.css:first");
+    var $phrasingCSS = assert("<pre> for phrasing CSS", $("#phrasing-content-3").parent().find("pre.css:first"));
     $phrasingCSS.html($phrasingCSS.html().replace(/ruby[\s\S]+?rt[\s\S]+?\}/, data.css));
     
     // table of elements
-    var $qTR = $("#elements-3").parent().find("table:first tr:contains('Quotation')");
+    var $qTR = assert("<tr> with 'Quotation' in elements table", $("#elements-3").parent().find("table:first tr:contains('Quotation')"));
     $qTR.after(data.elRB);
+    assert("Third cell with 'ruby' two rows down from 'Quotation' <tr>",
     $qTR
         .next("tr")
         .next("tr") // rp
-        .find("td:eq(2) code:contains('ruby')")
+        .find("td:eq(2) code:contains('ruby')"))
         .after('<code><a href="#the-rtc-element">rtc</a></code>')
         .after(document.createTextNode("; "))
     ;
-    var $rtTR = $qTR.next("tr").next("tr").next("tr");
+    var $rtTR = assert("Three rows down from 'Quotation'", $qTR.next("tr").next("tr").next("tr"));
+    assert("Third cell with 'ruby' in <rt> row",
     $rtTR
-        .find("td:eq(2) code:contains('ruby')")
+        .find("td:eq(2) code:contains('ruby')"))
         .after('<code><a href="#the-rtc-element">rtc</a></code>')
         .after(document.createTextNode("; "))
     ;
     $rtTR.after(data.elRTC);
+    assert("Fourth cell with 'rp' two rows down from <rt> row",
     $rtTR
         .next("tr")
         .next("tr") // ruby
-        .find("td:eq(3) code:contains('rp')")
+        .find("td:eq(3) code:contains('rp')"))
         .after('<code><a href="#the-rb-element">rb</a></code>')
         .after(document.createTextNode("; "))
         .after('<code><a href="#the-rtc-element">rtc</a></code>')
@@ -75,32 +81,34 @@ exports.transform = function (data) {
     ;
     
     // table of interfaces
-    var $rpTr = $("#element-interfaces")
+    var $rpTr = assert("Link to <rp> in interfaces table",
+                $("#element-interfaces")
                     .parent()
-                    .find("table:first a[href='#the-rp-element']")
+                    .find("table:first a[href='#the-rp-element']"))
                     .parent().parent().parent()
     ;
     $rpTr.before(data.ifRB);
-    $rpTr.next("tr").after(data.ifRTC);
+    assert("Row after <rp> in interfaces table", $rpTr.next("tr")).after(data.ifRTC);
     
     // usage summary
+    assert("Row about 'ruby' in usage summary table".
     $("#usage-summary")
         .parent()
-        .find("table:first tr:contains('ruby'):first")
+        .find("table:first tr:contains('ruby'):first"))
         .replaceWith(data.usage)
     ;
 
     // optional end tags
-    var $ogp = $("#optional-tags").parent().find("p:contains('optgroup'):first");
-    $ogp.prev("p").remove();
-    $ogp.prev("p").remove();
+    var $ogp = assert("§ about 'optgroup' in optional end tags", $("#optional-tags").parent().find("p:contains('optgroup'):first"));
+    assert("§ before 'optgroup' (1)", $ogp.prev("p")).remove();
+    assert("§ before 'optgroup' (2)", $ogp.prev("p")).remove();
     $ogp.before(data.optionalRB);
     $ogp.before(data.optionalRT);
     $ogp.before(data.optionalRTC);
     $ogp.before(data.optionalRP);
     
     // HTMLUnknownElement
-    var $rb = $("#other-elements\\,-attributes-and-apis\\:rb")
+    var $rb = assert("<rb> in other elements, etc.", $("#other-elements\\,-attributes-and-apis\\:rb"))
     ,   $rbParent = $rb.parent()
     ;
     $rb.remove();

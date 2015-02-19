@@ -1,15 +1,17 @@
+/*global assert*/
 
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-section-headings";
 exports.landscape = "W3C HTML has a SHOULD on using headings for sections.";
 exports.transform = function (data) {
-    var $p = $("#the-section-element").parent().find("p:first");
+    var $p = assert("First § of <section>", $("#the-section-element").parent().find("p:first"));
     $p.html($p.html().replace(/,\s+typically\s+with\s+a\s+heading./, data.typically));
 
+    assert("First example in <hN>",
     $("#the-h1\\,-h2\\,-h3\\,-h4\\,-h5\\,-and-h6-elements")
         .parent()
-        .find("div.example")
+        .find("div.example:first"))
         .before(data.subheadings)
     ;
 };

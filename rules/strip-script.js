@@ -1,8 +1,12 @@
+/*global assert*/
 
 exports.name = "strip-script";
 exports.landscape = null;
 exports.transform = function () {
-    $("script, link[rel='stylesheet'], link[rel='icon'], #alert, div.status, #updatesStatus").remove();
+    // remove some interactive parts we don't need
+    assert("Interactive parts", $("#alert, div.status, #updatesStatus"), 3).remove();
+
+    $("script, link[rel='stylesheet'], link[rel='icon']").remove();
     window.info("removed all script and style elements");
 
     // remove on*
