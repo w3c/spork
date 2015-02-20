@@ -72,7 +72,7 @@ exports.run = function (profile, outDir) {
         else if (msg.assert) {
             logger.error("Assertion failed in " + msg.curRule + ": " + msg.assert);
             if (!fails[msg.curRule]) fails[msg.curRule] = [];
-            fails[msg.curRule].push(msg.assert);
+            fails[msg.curRule].push(msg);
         }
         else if (msg.source) {
             logger.info("Saving source");
@@ -101,7 +101,11 @@ exports.run = function (profile, outDir) {
             var str = ["There were assertion errors during processing."];
             for (var k in fails) {
                 str.push("Rule " + k + ":");
-                fails[k].forEach(function (ass) { str.push("\t" + ass); });
+                fails[k].forEach(function (msg) {
+                            str.push("\t" + msg.assert +
+                                     " (Expected " + msg.expected +
+                                     ", got " + msg.got + ")");
+                        });
             }
             logger.error(str.join("\n"));
         }

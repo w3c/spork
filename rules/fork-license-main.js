@@ -12,6 +12,7 @@ exports.transform = function (data) {
     ;
     assert("3rd § in rel=license",
     $("#link-type-license")
+        .parent()
         .find("p:eq(2)"))
         .replaceWith(data.main)
     ;

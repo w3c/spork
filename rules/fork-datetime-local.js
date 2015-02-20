@@ -19,7 +19,7 @@ exports.transform = function () {
     assert("datetime-local example in Date and time state",
     $("#date-and-time-state-\\(type\\=datetime\\)")
         .parent()
-        .find("div.example p:contains('datetime-local')"))
+        .find("div.example p:contains('datetime-local')"), 2)
         .remove()
     ;
     
@@ -43,7 +43,7 @@ exports.transform = function () {
         .find("thead:first th:eq(7)")).remove().end()
         .find("tbody tr")
         .each(function () {
-            if ($(this).find("td").length === 1) return;
+            if ($(this).find("td").length < 7) return;
             assert("datetime-local cell for each <input> summary row",
             $(this).find("td:eq(6)")).remove();
         })

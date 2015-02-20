@@ -48,7 +48,7 @@ exports.transform = function (data) {
 
     // table under #usage-summary-2
     assert("Row with 'hgroup' in Usage summary",
-    $("#usage-summary-2").parent().find("table tr:contains('hgroup')")).remove();
+    $("#usage-summary-2").parent().find("table tr:contains('hgroup')"), 2).remove();
 
     // sentence in #the-strong-element
     var $tse = assert("§ with 'hgroup' in <strong>", $("#the-strong-element").parent().find("p:contains('hgroup')"));
