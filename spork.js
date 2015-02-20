@@ -28,6 +28,7 @@ var Nightmare = require("nightmare")
 exports.run = function (profile, outDir) {
     var processResources = true
     ,   copy = {}
+    ,   fails = {}
     ;
     logger.info("Loading " + profile.url);
     
@@ -70,7 +71,8 @@ exports.run = function (profile, outDir) {
         else if (msg.warn) logger.warn(msg.warn);
         else if (msg.assert) {
             logger.error("Assertion failed in " + msg.curRule + ": " + msg.assert);
-            // XXX need to also look at the reporter from the profile to figure this out
+            if (!fails[msg.curRule]) fails[msg.curRule] = [];
+            fails[msg.curRule].push(msg.assert);
         }
         else if (msg.source) {
             logger.info("Saving source");
@@ -91,6 +93,21 @@ exports.run = function (profile, outDir) {
         }
     );
     
+    var done = function () {
+        if (Object.keys(fails).length) {
+            // XXX
+            //  - here we can report errors more aggressively depending on the profile's configuration
+            //  - we should also report on dangling IDs
+            var str = ["There were assertion errors during processing."];
+            for (var k in fails) {
+                str.push("Rule " + k + ":");
+                fails[k].forEach(function (ass) { str.push("\t" + ass); });
+            }
+            logger.error(str.join("\n"));
+        }
+        else logger.info("Ok!");
+    };
+    
     nm.run(function (err) {
         if (err) die(err);
         logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
@@ -108,10 +125,10 @@ exports.run = function (profile, outDir) {
             curl.on("exit", function () {
                 logger.info("Copying");
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(outDir, copy[k]));
-                logger.info("Ok!");
+                done();
             });
         }
-        else logger.info("Ok!");
+        else done();
     });
 };
 
