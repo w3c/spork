@@ -37,18 +37,7 @@ exports.run = function (profile, outDir) {
     // Phantom doesn't support new URL(), Rodney to the rescue!
     sporkCode += rfs("node_modules/URIjs/src/URI.js") + "\n";
     sporkCode += "try {\n";
-    sporkCode += "window.info = function (str) { window.callPhantom({ info: str }); };\n";
-    sporkCode += "window.warn = function (str) { window.callPhantom({ warn: str }); };\n";
-    sporkCode += "window.saveSource = function () { window.callPhantom({ source: '<!DOCTYPE html>\\n' + document.documentElement.outerHTML }); };\n";
-    sporkCode += "window.unplugResources = function () { window.callPhantom({ unplug: true }); };\n";
-    sporkCode += "window.escSel = function (sel) { return sel.replace(/([ #;?%&,.+*~':\"!^$[\\]()=>|\\/@])/g,'\\\\$1'); };\n";
-    sporkCode += "var curRule = '';\n";
-    sporkCode +=    "var assert = function (desc, $el, num) {\n" +
-                    "    if (typeof num === 'undefined') num = 1;\n" +
-                    "    if ((num === '+' && !$el.length) || $el.length !== num) window.callPhantom({ assert: desc, curRule: curRule });\n" +
-                    "    return $el;\n" +
-                    "};\n"
-    ;
+    sporkCode += rfs("lib/injected-helpers.js") + "\n";
                  
     
     profile.rules.forEach(function (rule) {

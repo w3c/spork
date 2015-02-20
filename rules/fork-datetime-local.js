@@ -43,7 +43,8 @@ exports.transform = function () {
         .find("thead:first th:eq(7)")).remove().end()
         .find("tbody tr")
         .each(function () {
-            assert("datetime-local cell for each <input summary row",
+            if ($(this).find("td").length === 1) return;
+            assert("datetime-local cell for each <input> summary row",
             $(this).find("td:eq(6)")).remove();
         })
     ;

@@ -4,11 +4,11 @@ var rfs = require("../lib/rfs");
 
 exports.name = "fork-main-element";
 exports.landscape = "W3C HTML has a different definition for the <main> element.";
-exports.transform = function (tmpl) {
+exports.transform = function (data) {
     assert("<main>",
     $("#the-main-element")
         .parent())
-        .replaceWith(tmpl.main)
+        .replaceWith(data.main)
     ;
     // body isn't the main content
     var $p = assert("<p> with 'main' in <body>", $("#the-body-element").parent().find("> p:contains('main'):first"));

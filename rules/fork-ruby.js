@@ -91,7 +91,7 @@ exports.transform = function (data) {
     assert("Row after <rp> in interfaces table", $rpTr.next("tr")).after(data.ifRTC);
     
     // usage summary
-    assert("Row about 'ruby' in usage summary table".
+    assert("Row about 'ruby' in usage summary table",
     $("#usage-summary")
         .parent()
         .find("table:first tr:contains('ruby'):first"))
