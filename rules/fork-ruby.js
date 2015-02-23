@@ -42,7 +42,7 @@ exports.transform = function (data) {
     assert("first ol>li in <dd> after eof", $eof.next("dd").find("ol li:first")).html(data.eof);
     assert("<dt> after eof containing 'body', 'html'", $eof.nextAll("dt:contains('body'):first, dt:contains('html'):first"), 2)
         .each(function () {
-            $(this).next("dd").find("p:eq(1)").html(data.eofOtherwise);
+            $(this).next("dd").find("p:eq(1)").replaceWith(data.eofOtherwise);
         })
     ;
 
