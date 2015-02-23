@@ -7,5 +7,5 @@ exports.transform = function () {
         .attr("alt", "An overview of the parsing model.")
     ;
     var $if = assert("Silly embedded HTML", $("iframe[src^='data:text/html']"));
-    $if.attr("src", $if.attr("src").replace(/&quot;/g, "%22"));
+    $if.attr("src", $if.attr("src").replace(/\"/g, "%22"));
 };
