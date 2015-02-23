@@ -49,7 +49,7 @@ exports.transform = function () {
         })
     ;
     assert("colspan=16 in <input> summary",
-    $("#input-type-attr-summary th[colspan=16]"))
+    $("#input-type-attr-summary th[colspan=16]"), 3)
         .each(function () {
             $(this).attr("colspan", "15");
         })
