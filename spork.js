@@ -7,17 +7,7 @@ var Nightmare = require("nightmare")
 ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
 ,   spawn = require("child_process").spawn
-,   winston = require("winston")
-,   logger = new (winston.Logger)({
-                        transports: [
-                            new (winston.transports.Console)({
-                                    handleExceptions:   true
-                                ,   colorize:           true
-                                ,   maxsize:            200000000
-                                })
-                        ]
-                    }
-    )
+,   logger = require("./lib/logger")
 ,   die = function (str) {
         // XXX here is where reporting takes place if needed
         logger.error(str);
