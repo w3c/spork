@@ -11,6 +11,7 @@
     "nightmare": "1.6.5",
     "nopt": "^3.0.1",
     "octokit": "^0.10.4",
+    "phantomjs": "^1.9.15",
     "winston": "0.8.3",
     "winston-mail": "^0.3.1"
   },

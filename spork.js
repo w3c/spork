@@ -2,8 +2,10 @@
 /*jshint -W054 */
 
 var Nightmare = require("nightmare")
+,   phantomjs = require("phantomjs")
 ,   fs = require("fs-extra")
-,   jn = require("path").join
+,   pth = require("path")
+,   jn = pth.join
 ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
 ,   spawn = require("child_process").spawn
@@ -19,6 +21,9 @@ exports.run = function (profile, config, reporter) {
             // XXX here is where reporting takes place if needed
             logger.error(str);
             process.exit(1);
+        }
+    ,   hasFailure = function () {
+            return Object.keys(fails).length || dangles.length;
         }
     ;
     logger.info("Loading " + profile.url);
@@ -55,7 +60,8 @@ exports.run = function (profile, config, reporter) {
     sporkCode += "} catch (e) { return { error: e }; }\n";
     
     var nm = new Nightmare({
-        cookieFile: jn(__dirname, "data/cookies.txt")
+        cookieFile:     jn(__dirname, "data/cookies.txt")
+    ,   phantomPath:    pth.dirname(phantomjs.path) + "/"
     });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
@@ -66,6 +72,7 @@ exports.run = function (profile, config, reporter) {
             fails[msg.curRule].push(msg);
         }
         else if (msg.source) {
+            if (hasFailure()) return logger.error("There are errors, not saving despite request.");
             logger.info("Saving source");
             wfs(jn(config.outDir, "index.html"), msg.source);
         }
@@ -75,7 +82,7 @@ exports.run = function (profile, config, reporter) {
         if (processResources) profile.resources(res);
     });
     nm.goto(profile.url);
-    wfs(jn(__dirname, "debug-script.js"), sporkCode);
+    // wfs(jn(__dirname, "debug-script.js"), sporkCode);
     nm.evaluate(
         new Function(sporkCode)
     ,   function (res) {
@@ -85,30 +92,33 @@ exports.run = function (profile, config, reporter) {
     );
     
     var done = function () {
-        if (Object.keys(fails).length) {
-            var str = ["There were assertion errors during processing."];
-            for (var k in fails) {
-                str.push("Rule " + k + ":");
-                fails[k].forEach(function (msg) {
-                            str.push("\t" + msg.assert +
-                                     " (Expected " + msg.expected +
-                                     ", got " + msg.got + ")");
-                        });
+            if (Object.keys(fails).length) {
+                var str = ["There were assertion errors during processing."];
+                for (var k in fails) {
+                    str.push("Rule " + k + ":");
+                    fails[k].forEach(function (msg) {
+                                str.push("\t" + msg.assert +
+                                         " (Expected " + msg.expected +
+                                         ", got " + msg.got + ")");
+                            });
+                }
+                logger.error(str.join("\n"));
+                reporter("[spork] Assertion errors", str.join("\n"));
             }
-            logger.error(str.join("\n"));
-            reporter("[spork] Assertion errors", str.join("\n"));
+            if (dangles.length) {
+                logger.error("Dangling IDs:\n" + dangles.map(function (id) { return "\t" + id; }).join("\n"));
+                reporter("[spork] Dangling IDs", dangles.map(function (id) { return "  • " + id; }).join("\n"));
+            }
+            else logger.info("Ok!");
         }
-        if (dangles.length) {
-            logger.error("Dangling IDs:\n" + dangles.map(function (id) { return "\t" + id; }).join("\n"));
-            reporter("[spork] Dangling IDs", dangles.map(function (id) { return "  • " + id; }).join("\n"));
-        }
-        else logger.info("Ok!");
-    };
+    ;
     
     nm.run(function (err) {
         if (err) die(err);
+        // don't bother downloading if we have failures
+        if (hasFailure()) return done();
         logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
-        var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
+        var curlFile = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
                         .map(function (it) {
                             return  'url = "' + it + '"\n' +
                                     'output = "' + jn(config.outDir, profile.configuration.downloads[it]) + '"\n' +
@@ -116,9 +126,9 @@ exports.run = function (profile, config, reporter) {
                         }).join("\n\n")
         ;
         // change the second and third "pipe" to 1, 2 to get stdout/stderr back out to the console
-        if (config) {
+        if (curlFile) {
             var curl = spawn("curl", ["-L", "--config", "-"], { stdio: ["pipe", "pipe", "pipe"] });
-            curl.stdin.end(config);
+            curl.stdin.end(curlFile);
             curl.on("exit", function () {
                 logger.info("Copying");
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
