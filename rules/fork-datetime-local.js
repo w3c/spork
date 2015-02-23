@@ -48,6 +48,12 @@ exports.transform = function () {
             $(this).find("td:eq(6)")).remove();
         })
     ;
+    assert("colspan=16 in <input> summary",
+    $("#input-type-attr-summary th[colspan=16]"))
+        .each(function () {
+            $(this).attr("colspan", "15");
+        })
+    ;
     
     // #implicit-submission:local-date-and-time-state-(type=datetime-local)
     var $mention = $("#implicit-submission\\:local-date-and-time-state-\\(type\\=datetime-local\\)")
