@@ -6,7 +6,7 @@ exports.name = "boilerplate";
 exports.landscape = "A different title and boilerplate suitable for W3C.";
 exports.transform = function (options) {
     // charset
-    assert("There's a head", $("head")).prepend($("<meta charset='utf8'>"));
+    assert("There's a head", $("head")).prepend($("<meta charset='utf-8'>"));
 
     // title
     assert("There's a title", $("title")).text(options.title);

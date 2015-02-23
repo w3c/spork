@@ -17,7 +17,7 @@ exports.transform = function () {
     window.cacheID($("#microdata").parent(),     "http://www.w3.org/TR/microdata/");
 
     assert("Section being dropped",
-    $("#2dcontext, #workers, #webstorage, #comms, #microdata").parent(), 5).remove();
+    $("#abstract, #2dcontext, #workers, #webstorage, #comms, #microdata").parent(), 6).remove();
     
     // removing the intro text about the spec's structure
     assert("Mentions in Structure of this spec",
