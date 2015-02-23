@@ -6,9 +6,9 @@ var spork = require("./spork")
 ,   exec = require("child_process").exec
 ,   jn = pth.join
 ,   nopt = require("nopt")
+,   email   = require("emailjs")
 ,   Octokit = require("octokit")
 ,   gh = Octokit.new()
-,   log = require("./lib/logger")
 ,   knownOpts = {
                 config:     pth
             ,   force:      Boolean
@@ -20,21 +20,54 @@ var spork = require("./spork")
 ,   options = nopt(knownOpts, shortHands, process.argv, 2)
 ,   config = require(options.config)
 ,   cacheFile = jn(config.outDir, "last-html-sha.txt")
+,   log = require("./lib/logger").getLog(config)
 ;
 
 function nullifyCache () {
     log.info("Creating/resetting cache file: " + cacheFile);
     fs.writeFileSync(cacheFile, "this is not a sha", "utf8");
 }
-
 if (!fs.existsSync(cacheFile)) nullifyCache();
 
-// give spork a reporter; on error send email
+// produce a reporter
+var reporter = function (subject, failMessage) {
+    log.error("REPORTING FAILURE: " + subject);
+    log.error(failMessage);
+    if (config.email) {
+        var em = config.email
+        ,   message = email.message.create({
+                from:       em.from
+            ,   to:         em.to
+            ,   subject:    subject
+            ,   text:       failMessage
+        });
+        email.server
+            .connect({
+                user:       em.username
+            ,   password:   em.password
+            ,   port:       em.port
+            ,   host:       em.host
+            ,   ssl:        em.ssl
+            ,   tls:        em.tls
+            })
+            .send(
+                message
+            ,   function (err) {
+                    if (err) log.error("EMAIL: " + err);
+                    log.info("Reported okay");
+                }
+            )
+        ;
+    }
+};
+
+// run spork
 function run () {
     log.info("Running Spork");
     spork.run(
         require("./profiles/html")
-    ,   config.outDir
+    ,   config
+    ,   reporter
     );
 }
 if (options.force) return run();

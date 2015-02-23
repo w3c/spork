@@ -7,18 +7,19 @@ var Nightmare = require("nightmare")
 ,   rfs = function (file) { return fs.readFileSync(jn(__dirname, file), "utf8"); }
 ,   wfs = function (file, content) { return fs.writeFileSync(file, content, "utf8"); }
 ,   spawn = require("child_process").spawn
-,   logger = require("./lib/logger")
-,   die = function (str) {
-        // XXX here is where reporting takes place if needed
-        logger.error(str);
-        process.exit(1);
-    }
 ;
 
-exports.run = function (profile, outDir) {
+exports.run = function (profile, config, reporter) {
     var processResources = true
+    ,   logger = require("./lib/logger").getLog(config)
     ,   copy = {}
     ,   fails = {}
+    ,   dangles = []
+    ,   die = function (str) {
+            // XXX here is where reporting takes place if needed
+            logger.error(str);
+            process.exit(1);
+        }
     ;
     logger.info("Loading " + profile.url);
     
@@ -58,7 +59,7 @@ exports.run = function (profile, outDir) {
     });
     nm.on("callback", function (msg) {
         if (msg.info) logger.info(msg.info);
-        else if (msg.warn) logger.warn(msg.warn);
+        else if (msg.dangling) dangles.push(msg.dangling);
         else if (msg.assert) {
             logger.error("Assertion failed in " + msg.curRule + ": " + msg.assert);
             if (!fails[msg.curRule]) fails[msg.curRule] = [];
@@ -66,7 +67,7 @@ exports.run = function (profile, outDir) {
         }
         else if (msg.source) {
             logger.info("Saving source");
-            wfs(jn(outDir, "index.html"), msg.source);
+            wfs(jn(config.outDir, "index.html"), msg.source);
         }
         else if (msg.unplug) processResources = false;
     });
@@ -85,9 +86,6 @@ exports.run = function (profile, outDir) {
     
     var done = function () {
         if (Object.keys(fails).length) {
-            // XXX
-            //  - here we can report errors more aggressively depending on the profile's configuration
-            //  - we should also report on dangling IDs
             var str = ["There were assertion errors during processing."];
             for (var k in fails) {
                 str.push("Rule " + k + ":");
@@ -98,6 +96,11 @@ exports.run = function (profile, outDir) {
                         });
             }
             logger.error(str.join("\n"));
+            reporter("[spork] Assertion errors", str.join("\n"));
+        }
+        if (dangles.length) {
+            logger.error("Dangling IDs:\n" + dangles.map(function (id) { return "\t" + id; }).join("\n"));
+            reporter("[spork] Dangling IDs", dangles.map(function (id) { return "  • " + id; }).join("\n"));
         }
         else logger.info("Ok!");
     };
@@ -108,7 +111,7 @@ exports.run = function (profile, outDir) {
         var config = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
                         .map(function (it) {
                             return  'url = "' + it + '"\n' +
-                                    'output = "' + jn(outDir, profile.configuration.downloads[it]) + '"\n' +
+                                    'output = "' + jn(config.outDir, profile.configuration.downloads[it]) + '"\n' +
                                     'create-dirs';
                         }).join("\n\n")
         ;
@@ -118,7 +121,7 @@ exports.run = function (profile, outDir) {
             curl.stdin.end(config);
             curl.on("exit", function () {
                 logger.info("Copying");
-                for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(outDir, copy[k]));
+                for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
                 done();
             });
         }
@@ -131,9 +134,9 @@ if (!module.parent) {
     var profile = process.argv[2]
     ,   outDir = process.argv[3]
     ;
-    if (!profile || !outDir) die("Usage: spork profile outdir");
+    if (!profile || !outDir) console.error("Usage: spork profile outdir");
     try         { profile = require("./profiles/" + profile); }
-    catch (e)   { die("Profile '" + profile + "' failed to load.\n" + e); }
-    if (!fs.existsSync(outDir)) die("Directory " + outDir + " not found.");
-    exports.run(profile, outDir);
+    catch (e)   { console.error("Profile '" + profile + "' failed to load.\n" + e); }
+    if (!fs.existsSync(outDir)) console.error("Directory " + outDir + " not found.");
+    exports.run(profile, { outDir: outDir });
 }
