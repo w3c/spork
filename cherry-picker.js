@@ -10,18 +10,22 @@ var spork = require("./spork")
 ,   Octokit = require("octokit")
 ,   gh = Octokit.new()
 ,   knownOpts = {
-                config:     pth
-            ,   force:      Boolean
+                config: pth
+            ,   force:  Boolean
+            ,   quiet:  Boolean
     }
 ,   shortHands = {
                 f:      ["--force"]
             ,   c:      ["--config"]
+            ,   q:      ["--quiet"]
     }
 ,   options = nopt(knownOpts, shortHands, process.argv, 2)
 ,   config = require(options.config)
 ,   cacheFile = jn(config.outDir, "last-html-sha.txt")
-,   log = require("./lib/logger").getLog(config)
 ;
+
+if (options.quiet) config.quiet = true;
+var log = require("./lib/logger").getLog(config);
 
 function nullifyCache () {
     log.info("Creating/resetting cache file: " + cacheFile);
