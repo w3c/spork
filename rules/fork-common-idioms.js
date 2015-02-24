@@ -15,7 +15,7 @@ exports.params = function () {
     }];
 };
 exports.copy = {};
-"breadcrumbs.png htmlheading.png lotr.png ramones.png themonth.gif title-tagline.jpg"
+"breadcrumb.png htmlheading.png lotr.png ramones.png themonth.gif title-tagline.jpg"
     .split(" ")
     .forEach(function (it) {
         exports.copy["common-idioms/" + it] = "images/" + it;
