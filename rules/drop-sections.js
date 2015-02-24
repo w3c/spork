@@ -1,8 +1,8 @@
 /*global assert*/
 
 exports.name = "drop-sections";
-exports.landscape = "The sections 'Where does this specification fit?', 'The 2D rendering context', 'Web workers', 'Web storage', " +
-                    "'Communication', and 'Microdata' are not present in W3C HTML.";
+exports.landscape = "The sections 'Where does this specification fit?', 'The 2D rendering context', 'Is this HTML5?', " +
+                    "'Web workers', 'Web storage', 'Communication', and 'Microdata' are not present in W3C HTML.";
 exports.transform = function () {
     window.cacheID($("#2dcontext").parent(),     "http://www.w3.org/html/wg/drafts/2dcontext/master/");
     window.cacheID($("#workers").parent(),       "http://www.w3.org/TR/workers/");
@@ -16,8 +16,8 @@ exports.transform = function () {
     // there's also #broadcasting-to-other-browsing-contexts under #comms, but it's not real ATM
     window.cacheID($("#microdata").parent(),     "http://www.w3.org/TR/microdata/");
 
-    assert("Section being dropped",
-    $("#abstract, #2dcontext, #workers, #webstorage, #comms, #microdata").parent(), 6).remove();
+    assert("Sections being dropped",
+    $("#abstract, #is-this-html5, #2dcontext, #workers, #webstorage, #comms, #microdata").parent(), 7).remove();
     
     // removing the intro text about the spec's structure
     assert("Mentions in Structure of this spec",
