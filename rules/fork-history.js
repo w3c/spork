@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-history";
-exports.landscape = "W3C HTML has a different definition for the <main> element.";
+exports.landscape = "W3C HTML presents the history of HTML slightly differently.";
 exports.transform = function (data) {
     assert("The History section",
     $("#history-2")

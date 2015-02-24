@@ -131,6 +131,7 @@ exports.run = function (profile, config, reporter) {
             curl.stdin.end(curlFile);
             curl.on("exit", function () {
                 logger.info("Copying");
+                console.log(JSON.stringify(copy, null, 4));
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
                 done();
             });

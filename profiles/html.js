@@ -54,6 +54,8 @@ exports.rules = [
 
     // actual changes - ideally this is the list that most needs to be reduced
 ,   require("../rules/fork-history")
+,   require("../rules/fork-outline")
+,   require("../rules/fork-article")
 ,   require("../rules/fork-link-rel-url")
 ,   require("../rules/fork-metaextensions")
 ,   require("../rules/fork-aria")
