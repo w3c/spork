@@ -74,6 +74,7 @@ exports.rules = [
 ,   require("../rules/fork-header")
 ,   require("../rules/fork-tz-warning")
 ,   require("../rules/fork-local-floating")
+,   require("../rules/landscape")(exports)
 
     // make this a W3C spec and finalise basics
 ,   require("../rules/references")
