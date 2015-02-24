@@ -17,15 +17,15 @@ exports.transform = function () {
             if (url.hostname() === "resources.whatwg.org") return;
             if (url.hostname() === "code.jquery.com") return;
             if (url.hostname() === "html.spec.whatwg.org") {
-                window.info("Mapping " + this[field] + " to " + unslash(url.pathname()));
+                // window.info("Mapping " + this[field] + " to " + unslash(url.pathname()));
                 this[field] = unslash(url.pathname()); // this just ensures that things stay relative
             }
             if (url.hostname() === "images.whatwg.org") {
-                window.info("Mapping " + this[field] + " to img" + url.pathname());
+                // window.info("Mapping " + this[field] + " to img" + url.pathname());
                 this[field] = "img" + url.pathname();
             }
             if (url.hostname() === "whatwg.org" && /^\/demos/i.test(url.pathname())) {
-                window.info("Mapping " + this[field] + " to " + unslash(url.pathname()));
+                // window.info("Mapping " + this[field] + " to " + unslash(url.pathname()));
                 this[field] = unslash(url.pathname());
             }
         }
