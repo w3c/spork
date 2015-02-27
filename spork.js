@@ -136,9 +136,7 @@ exports.run = function (profile, config, reporter) {
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
                 // curl creates directories with minimal permissions
                 var chmod = spawn("find", [config.outDir, "-type", "d", "-exec", "chmod", "755", "{}", "+"]);
-                chmod.on("exit", function () {
-                    done();
-                });
+                chmod.on("exit", done);
             });
         }
         else done();

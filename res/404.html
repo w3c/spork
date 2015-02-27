@@ -3,20 +3,59 @@
   <head>
     <meta charset='utf-8'>
     <title>HTML: 404</title>
+    <style>
+      body {
+          display:    flex;
+          align-items:  center;
+          justify-content:  center;
+          min-height: 100vh;
+          background: linear-gradient(#ff725e, #ff452b);
+      }
+      figure {
+          display:  block;
+          width:  500px;
+          background: #fff;
+          border-radius:  100px;
+          text-align: center;
+          padding:  50px;
+          box-shadow: 2px 2px 5px #666;
+      }
+      figcaption {
+          font-family:  "Comic Sans MS", fantasy;
+          font-size:  14px;
+          margin:  30px 10px 0 10px;
+      }
+    </style>
   </head>
   <body>
     <figure>
-      <img src="images/crocoduck1.png" width="200" height="245" alt="Crocodile's angry, chomping head">
-      <img src="images/crocoduck2.png" width="227" height="245" alt="Duck's soft, feathery body">
-      <figcaption>Please wait while the crocoduck redirects you to the section you are looking for</figcaption>
+      <img src="http://www.w3.org/html/wg/drafts/html/master/images/crocoduck1.png" width="200" height="245" alt="Crocodile's angry, chomping head"
+      ><img src="http://www.w3.org/html/wg/drafts/html/master/images/crocoduck2.png" width="227" height="245" alt="Duck's soft, feathery body">
+      <figcaption>Stand by as the crocoduck redirects you.</figcaption>
     </figure>
     <script>
-      // XXX
-      // check frag
-      // if there, redirect to that
-      // if not, check the last step in the URL
-      // map it to whereever we're going
-      //  Overview.html: /
+      function fnord () {
+          var path = location.pathname
+          ,   file = path.replace(/^.*\//, "")
+          ,   frag = location.hash
+          ,   file2frag = function (file) {
+                  if ("Overview.html" === file) return "";
+                  return "#" + file.replace(/\.html$/, "");
+              }
+          ,   canon
+          ;
+          if (/html\/wg\/drafts\/html\/master/.test(path))
+              canon = "http://www.w3.org/html/wg/drafts/html/master/";
+          else if (/\/TR\/html[\d\.-]*\//.test(path))
+              canon = location.href.replace(/(^.*?\/TR\/html[\d\.-]*\/).*/, "$1");
+          else if (/\/TR\/\d{4}\/\w{2,4}-html[\d\.-]*?-\d{8}\//.test(path))
+              canon = location.href.replace(/(^.*?\/TR\/\d{4}\/\w{2,4}-html[\d\.-]*?-\d{8}\/).*/, "$1");
+          else
+              return; // give up
+          if ("404.html" === file) return; // don't redirect from ourselves
+          location.assign(canon + (frag || file2frag(file)));
+      };
+      setTimeout(fnord, 1000);
     </script>
   </body>
 </html>
