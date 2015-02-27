@@ -11,7 +11,7 @@ var Nightmare = require("nightmare")
 ,   spawn = require("child_process").spawn
 ;
 
-exports.run = function (profile, config, reporter) {
+function run (profile, config, reporter) {
     var processResources = true
     ,   logger = require("./lib/logger").getLog(config)
     ,   copy = {}
@@ -141,6 +141,16 @@ exports.run = function (profile, config, reporter) {
         }
         else done();
     });
+}
+
+exports.run = function (profile, config, reporter) {
+    if (profile.setup) {
+        profile.setup(function (err) {
+            if (err) die(err);
+            run(profile, config, reporter);
+        });
+    }
+    else return run(profile, config, reporter);
 };
 
 // running directly

@@ -51,6 +51,8 @@ exports.params = function (conf) {
         ,   status:         statuses[conf.specStatus]
         ,   year:           date.getFullYear()
         ,   hasVersions:    (conf.specStatus === "WD")
+        ,   previousYear:   conf.previousYear
+        ,   previousDate:   conf.previousDate
         }
     ,   template = function (str) {
             return hb.compile(str)(data);
