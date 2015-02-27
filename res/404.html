@@ -39,7 +39,7 @@
           ,   file = path.replace(/^.*\//, "")
           ,   frag = location.hash
           ,   file2frag = function (file) {
-                  if ("Overview.html" === file) return "";
+                  if ("Overview.html" === file || "single-page.html" === file) return "";
                   return "#" + file.replace(/\.html$/, "");
               }
           ,   canon
