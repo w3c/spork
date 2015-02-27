@@ -39,19 +39,21 @@ exports.run = function (profile, config, reporter) {
     
     profile.rules.forEach(function (rule) {
         sporkCode += "window.info('~~~~~~~~~~~ " + rule.name + " ~~~~~~~~~~');\n";
-        sporkCode += "curRule = '" + rule.name + "';\n";
-        sporkCode += "(";
-        sporkCode += rule.transform.toString();
-        sporkCode += ")(";
-        if (rule.params) {
-            sporkCode += rule.params(profile.configuration)
-                            .map(function (prm) {
-                                return JSON.stringify(prm, null, 4);
-                            })
-                            .join(", ")
-            ;
+        if (rule.transform) {
+            sporkCode += "curRule = '" + rule.name + "';\n";
+            sporkCode += "(";
+            sporkCode += rule.transform.toString();
+            sporkCode += ")(";
+            if (rule.params) {
+                sporkCode += rule.params(profile.configuration)
+                                .map(function (prm) {
+                                    return JSON.stringify(prm, null, 4);
+                                })
+                                .join(", ")
+                ;
+            }
+            sporkCode += ");\n";
         }
-        sporkCode += ");\n";
         if (rule.landscape) sporkCode += "window.info(\"" + rule.landscape + "\");\n";
         sporkCode += "window.info('___________ /" + rule.name + " ___________');\n";
         if (rule.copy) for (var k in rule.copy) copy[k] = rule.copy[k];
@@ -67,12 +69,12 @@ exports.run = function (profile, config, reporter) {
         if (msg.info) logger.info(msg.info);
         else if (msg.dangling) dangles.push(msg.dangling);
         else if (msg.assert) {
-            logger.error("Assertion failed in " + msg.curRule + ": " + msg.assert);
+            logger.warn("Assertion failed in " + msg.curRule + ": " + msg.assert);
             if (!fails[msg.curRule]) fails[msg.curRule] = [];
             fails[msg.curRule].push(msg);
         }
         else if (msg.source) {
-            if (hasFailure()) return logger.error("There are errors, not saving despite request.");
+            if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source");
             wfs(jn(config.outDir, "index.html"), msg.source);
         }
@@ -132,7 +134,11 @@ exports.run = function (profile, config, reporter) {
             curl.on("exit", function () {
                 logger.info("Copying");
                 for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
-                done();
+                // curl creates directories with minimal permissions
+                var chmod = spawn("find", config.outDir, "-type", "d", "-exec", "chmod", "755", "{}", "+");
+                chmod.on("exit", function () {
+                    done();
+                });
             });
         }
         else done();

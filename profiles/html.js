@@ -87,6 +87,7 @@ exports.rules = [
 ,   require("../rules/fixes")
 ,   require("../rules/toc")
 ,   require("../rules/id")
+,   require("../rules/404")
 ,   require("../rules/dependencies")
 ,   require("../rules/report") // send the source
 ];
