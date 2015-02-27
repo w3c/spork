@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-placeholder-label";
-exports.landscape = "W3C HTML warns more strongly about using @placeholder for labelling.";
+exports.landscape = "W3C HTML warns more strongly about using <code><a href='#the-placeholder-attribute'>placeholder</a></code> for labelling.";
 exports.transform = function (data) {
     assert("Second § in the placeholder attribute",
     $("#the-placeholder-attribute")

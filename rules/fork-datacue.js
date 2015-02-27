@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-datacue";
-exports.landscape = "W3C HTML has DataCue in text tracks.";
+exports.landscape = "W3C HTML has <code><a href='#datacue'>DataCue</a></code> in text tracks.";
 exports.transform = function (data) {
     // § at end of guidelines-for-exposing-cues-in-various-formats-as-text-track-cues
     assert("Guidelines, etc section",

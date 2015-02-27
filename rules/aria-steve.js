@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "aria-steve";
-exports.landscape = "Extra information concerning ARIA is added to all elements.";
+exports.landscape = "Extra information concerning ARIA is added to every single element summary.";
 exports.transform = function (data) {
     assert("Checking number of elements matches expectations", $("dl.element"), Object.keys(data).length);
     for (var k in data) {

@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-table-border";
-exports.landscape = "table@border only obsolete in WHATWG HTML.";
+exports.landscape = "<code><a href='#attr-table-border'>table@border</a></code> is only obsolete in WHATWG HTML.";
 exports.transform = function (data) {
     var $dl = assert("Element description in <table>", $("#the-table-element").parent().find("dl.element:first"));
 

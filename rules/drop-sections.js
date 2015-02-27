@@ -1,8 +1,8 @@
 /*global assert*/
 
 exports.name = "drop-sections";
-exports.landscape = "The sections 'Where does this specification fit?', 'The 2D rendering context', 'Is this HTML5?', " +
-                    "'Web workers', 'Web storage', 'Communication', and 'Microdata' are not present in W3C HTML.";
+exports.landscape = "The sections '<em>Where does this specification fit?</em>', '<em>The 2D rendering context</em>', '<em>Is this HTML5?</em>', " +
+                    "'<em>Web workers</em>', '<em>Web storage</em>', '<em>Communication</em>', and '<em>Microdata</em>' are not present in W3C HTML.";
 exports.transform = function () {
     window.cacheID($("#2dcontext").parent(),     "http://www.w3.org/html/wg/drafts/2dcontext/master/");
     window.cacheID($("#workers").parent(),       "http://www.w3.org/TR/workers/");

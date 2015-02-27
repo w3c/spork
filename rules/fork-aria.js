@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-aria";
-exports.landscape = "Different ARIA role constraints in W3C HTML.";
+exports.landscape = "W3C HTML has a completely different <a href='#wai-aria'>ARIA section</a>.";
 exports.transform = function (data) {
     assert("#wai-aria",
     $("#wai-aria")

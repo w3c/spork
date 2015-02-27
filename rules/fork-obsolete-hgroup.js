@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-obsolete-hgroup";
-exports.landscape = "In W3C HTML, the hgroup element is obsolete.";
+exports.landscape = "In W3C HTML, the <code><a href='#the-hgroup-element'>hgroup</a></code> element is obsolete.";
 exports.transform = function (data) {
     // drop section #the-hgroup-element
     assert("<hgroup>", $("#the-hgroup-element").parent()).remove();

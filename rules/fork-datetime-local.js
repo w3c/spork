@@ -1,7 +1,7 @@
 /*global assert*/
 
 exports.name = "fork-datetime-local";
-exports.landscape = "W3C HTML has dropped <input type=datetime-local>.";
+exports.landscape = "W3C HTML has dropped <code>&lt;input type=datetime-local></code>.";
 exports.transform = function () {
     // drop section #local-date-and-time-state-(type=datetime-local)
     assert("datetime-local section", $("#local-date-and-time-state-\\(type\\=datetime-local\\)").parent()).remove();

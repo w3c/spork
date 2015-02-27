@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-focus-ring-css";
-exports.landscape = "W3C HTML does not recommend using CSS to hide the focus ring.";
+exports.landscape = "W3C HTML does not recommend using CSS to hide the <a href='#focus-management-apis'>focus ring</a>.";
 exports.transform = function (data) {
     assert("Blur example in Focus management",
     $("#focus-management-apis")

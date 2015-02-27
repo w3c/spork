@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-ruby";
-exports.landscape = "W3C HTML has a ruby model that matches both users' needs and implementations.";
+exports.landscape = "W3C HTML has a <a href='#the-ruby-element'>ruby model</a> that matches both users' needs and implementations.";
 exports.transform = function (data) {
     // remove from obsolete
     var $objDT = assert("<rb> in obsolete", $("#rb").parent());

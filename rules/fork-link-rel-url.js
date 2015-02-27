@@ -3,7 +3,8 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-link-rel-url";
-exports.landscape = "URL allowed in link@rel in W3C HTML (https://github.com/w3c/html/commit/954203e085e601122a2df38207bfdd6d852a0963).";
+exports.landscape = "URL allowed in <code>link[rel]</code> in W3C HTML " +
+                    "(<a href='https://github.com/w3c/html/commit/954203e085e601122a2df38207bfdd6d852a0963'>https://github.com/w3c/html/commit/954203e085e601122a2df38207bfdd6d852a0963</a>).";
 exports.transform = function (data) {
     assert("Microdata in extensibility",
     $("#extensibility ~ ul")

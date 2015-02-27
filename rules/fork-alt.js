@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-alt";
-exports.landscape = "Different advice for image alternative text.";
+exports.landscape = "W3C HTML has completely different <a href='#alt'>advice for image alternative text</a>.";
 exports.transform = function (tmpl) {
     assert("Section: alt", $("#alt").parent()).replaceWith(tmpl.alt);
 };

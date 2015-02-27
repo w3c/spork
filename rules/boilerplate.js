@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "boilerplate";
-exports.landscape = "A different title and boilerplate suitable for W3C.";
+exports.landscape = "A different title and boilerplate corresponding to a W3C publication.";
 exports.transform = function (options) {
     // charset
     assert("There's a head", $("head")).prepend($("<meta charset='utf-8'>"));

@@ -1,7 +1,7 @@
 /*global assert*/
 
 exports.name = "fork-link-types";
-exports.landscape = "W3C HTML has no link types: sidebar, external, pingback.";
+exports.landscape = "W3C HTML has no link types: <code>sidebar</code>, <code>external</code>, <code>pingback</code>.";
 exports.transform = function () {
     // drop sections: link-type-{sidebar,external,pingback}
     assert("Link type: sidebar", $("#link-type-sidebar")).parent().remove();

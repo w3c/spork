@@ -1,7 +1,7 @@
 /*global assert*/
 
 exports.name = "fork-no-ping";
-exports.landscape = "The @ping attribute is not implemented and does not seem to have a future, it is therefore dropped.";
+exports.landscape = "The <code>ping</code> attribute is not implemented and does not seem to have a future, it is therefore dropped.";
 exports.transform = function () {
     // #dynamic-changes-to-base-urls
     //      drop paragraph that mentions it

@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-main-element";
-exports.landscape = "W3C HTML has a different definition for the <main> element.";
+exports.landscape = "W3C HTML has a different definition for the <code><a href='#the-main-element'>main</a></code> element.";
 exports.transform = function (data) {
     assert("<main>",
     $("#the-main-element")

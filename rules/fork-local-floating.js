@@ -3,7 +3,7 @@
 var rfs = require("../lib/rfs");
 
 exports.name = "fork-local-floating";
-exports.landscape = "W3C HTML has “local” date terminology renamed to “floating”.";
+exports.landscape = "W3C HTML has “local” date terminology renamed to “<a href='#floating-dates-and-times'>floating</a>”.";
 exports.transform = function (data) {
     // #local-dates-and-times has all instances of local replaced with floating
     var $sec = assert("Local dates and times", $("#local-dates-and-times").parent());

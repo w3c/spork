@@ -6,7 +6,7 @@ var rfs = require("../lib/rfs")
 ;
 
 exports.name = "references";
-exports.landscape = "Unused references are dropped; some are changed to match W3C preferences.";
+exports.landscape = "Unused bibliographical references are dropped; some are changed to match W3C preferences.";
 exports.transform = function (data) {
     // drop unused references
     assert("Reference <dt> with IDs",
