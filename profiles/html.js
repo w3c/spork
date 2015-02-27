@@ -43,6 +43,8 @@ exports.resources = function (res) {
 };
 
 exports.setup = function (cb) {
+    return cb();
+    // XXX this is broken
     sua.get("http://www.w3.org/2002/01/tr-automation/tr.rdf")
         .buffer(true)
         .end(function (res) {
