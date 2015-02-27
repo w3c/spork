@@ -32,6 +32,17 @@ exports.transform = function (data) {
     
     window.info("updated boilerplate");
 };
+
+// XXX
+//  - needs testing
+//  - the SotD needs to be reduced to the simple version as well
+//  - run through Specberus
+//  - wire into Echidna
+//  - run a cron job for the WD profile as well, installed into a different location
+//  - generate the manifest at the end
+//  - make sure that the URL can be updated
+//  - also publish in W3C space, s/master/wd/
+
 exports.params = function (conf) {
     var date = new Date()
     ,   humanMonths = "January February March April May June July August September October November December".split(" ")
