@@ -35,8 +35,6 @@ if (!fs.existsSync(cacheFile)) nullifyCache();
 
 // produce a reporter
 var reporter = function (subject, failMessage) {
-    log.error("REPORTING FAILURE: " + subject);
-    log.error(failMessage);
     if (config.email) {
         var em = config.email
         ,   message = email.message.create({

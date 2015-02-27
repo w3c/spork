@@ -4,7 +4,7 @@ var rfs = require("../lib/rfs");
 
 exports.name = "fork-common-idioms";
 exports.landscape = "Different advice for some common idioms like <a href='#rel-up'>breadcrumbs</a>" +
-                    " and <a href='#the-main-part-of-the-content'>subheadings</a>.";
+                    " and <a href='#sub-head'>subheadings</a>.";
 exports.transform = function (data) {
     assert("Section: The main part...", $("#the-main-part-of-the-content").parent()).replaceWith(data.subHeadings);
     assert("Section: Breadcrumbs", $("#rel-up").parent()).replaceWith(data.breadcrumbs);
