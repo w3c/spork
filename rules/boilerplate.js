@@ -45,10 +45,12 @@ exports.params = function (conf) {
         ,   WD: "Working Draft"
         }
     ,   data = {
-            humanDate:  pad(date.getDate()) + " " + humanMonths[date.getMonth()] + " " + date.getFullYear()
-        ,   title:      conf.title || ""
-        ,   status:     statuses[conf.specStatus]
-        ,   year:       date.getFullYear()
+            humanDate:      pad(date.getDate()) + " " + humanMonths[date.getMonth()] + " " + date.getFullYear()
+        ,   date:           date.getFullYear() + pad(date.getMonth() + 1) + pad(date.getDate())
+        ,   title:          conf.title || ""
+        ,   status:         statuses[conf.specStatus]
+        ,   year:           date.getFullYear()
+        ,   hasVersions:    (conf.specStatus === "WD")
         }
     ,   template = function (str) {
             return hb.compile(str)(data);
