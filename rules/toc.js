@@ -67,5 +67,10 @@ exports.transform = function () {
     assert("Brief ToC", $("ol.brief.toc").first()).replaceWith($fullToC);
     assert("Long ToC", $("ol.toc").not(".brief").first()).replaceWith($toc);
 
+    // fix titles
+    assert("Heading for brief ToC", $("#table-of-contents")).text("Table of Contents");
+    assert("Heading for long ToC", $("#contents")).text("Full Table of Contents");
+
+
     window.info("updated ToC");
 };
