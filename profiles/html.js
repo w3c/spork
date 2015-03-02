@@ -18,6 +18,9 @@ exports.configuration = {
 ,   downloads:      {}
 };
 
+// prime the pump for entities.json
+exports.configuration.downloads[exports.url + "entities.json"] = "entities.json";
+
 var seen = {};
 exports.resources = function (res) {
     var url = u.parse(res.url)
