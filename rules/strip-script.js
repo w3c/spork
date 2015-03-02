@@ -6,7 +6,7 @@ exports.transform = function () {
     // remove some interactive parts we don't need
     assert("Interactive parts", $("#alert, div.status, #updatesStatus"), "+").remove();
 
-    $("script, link[rel='stylesheet'], link[rel='icon']").remove();
+    $("script, link[rel='stylesheet'], link[rel='icon'], style").remove();
     window.info("removed all script and style elements");
 
     // remove on*

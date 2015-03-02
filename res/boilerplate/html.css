@@ -1,4 +1,135 @@
+/* WHAT 1 */
+[hidden] { display: none; }
 
+.proposal { border: blue solid; padding: 1em; }
+.bad, .bad *:not(.X\58X) { color: gray; border-color: gray; background: transparent; }
+#updatesStatus { display: none; z-index: 10; }
+#updatesStatus.relevant { display: block; position: fixed; right: 1em; top: 1em; padding: 0.5em; font: bold small sans-serif; min-width: 25em; width: 30%; max-width: 40em; height: auto; border: ridge 4px gray; background: #EEEEEE; color: black; }
+div.head .logo { width: 11em; margin-bottom: 20em; }
+
+@media print { #configUI, #alert { display: none; } }
+
+.fingerprint { position: absolute; right: 0; z-index: 5; }
+
+.panel { position: fixed; z-index: 30; top: 10%; left: 0; margin: auto; right: 0; width: 35em; border: double thick; background: #EEEEEE; color: black; padding: 1em; font: 1em sans-serif; max-height: 70%; overflow: auto; }
+.panel h2 { margin: 0; text-align: center; }
+.panel ul { min-height: 6em; }
+.panel p { text-align: right; margin: 0; }
+.panel form { background: transparent; color: black; margin: 0.5em -0.5em 1em; padding: 0.5em; }
+.panel form.changed { background: yellow; color: black; }
+.panel form p { text-align: left; margin: 1em 0 0; }
+.panel form p:first-child { margin-top: 0; }
+.panel form p:last-child { margin-bottom: 0; }
+.panel form p textarea { width: 100% /* need the keyword that makes it fit to the parent here XXX */; min-height: 4em; display: block; }
+.panel form dl { line-height: 1.5em; }
+.panel form dt { display: inline-block; width: 20em; white-space: nowrap; text-align: right; font-weight: normal; margin: 0; padding: 0; }
+.panel form dd { display: inline; margin: 0 0 0 1em; padding: 0; }
+.panel form dd:after { display: block; }
+ul.checkboxes { list-style-type: none; }
+.progress { text-decoration: blink; }
+
+.applies .yes { background: yellow; }
+
+/* WHAT 2 */
+
+.applies thead th > * { display: block; }
+.applies thead code { display: block; }
+.applies td { text-align: center; }
+
+.matrix, .matrix td { border: hidden; text-align: right; }
+.matrix { margin-left: 2em; }
+
+.vertical-summary-table tr > th[rowspan="2"]:first-child + th,
+.vertical-summary-table tr > td[rowspan="2"]:first-child + td { border-bottom: hidden; }
+
+.dice-example { border-collapse: collapse; border-style: hidden solid solid hidden; border-width: thin; margin-left: 3em; }
+.dice-example caption { width: 30em; font-size: smaller; font-style: italic; padding: 0.75em 0; text-align: left; }
+.dice-example td, .dice-example th { border: solid thin; width: 1.35em; height: 1.05em; text-align: center; padding: 0; }
+
+td.eg { border-width: thin; text-align: center; }
+
+#table-example-1 { border: solid thin; border-collapse: collapse; margin-left: 3em; }
+#table-example-1 caption { padding-bottom: 0.5em; }
+#table-example-1 thead, #table-example-1 tbody { border: none; }
+#table-example-1 th, #table-example-1 td { border: solid thin; }
+#table-example-1 th { font-weight: normal; }
+#table-example-1 td { border-style: none solid; vertical-align: top; }
+#table-example-1 th { padding: 0.5em; vertical-align: middle; text-align: center; }
+#table-example-1 tbody tr:first-child td { padding-top: 0.5em; }
+#table-example-1 tbody tr:last-child td { padding-bottom: 1.5em; }
+#table-example-1 tbody td:first-child { padding-left: 2.5em; padding-right: 0; width: 9em; }
+#table-example-1 tbody td { padding-left: 2em; padding-right: 2em; }
+#table-example-1 tbody td:first-child + td { width: 10em; }
+#table-example-1 tbody td:first-child + td ~ td { width: 2.5em; }
+#table-example-1 tbody td:first-child + td + td + td ~ td { width: 1.25em; }
+
+.apple-table-examples { border: none; border-collapse: separate; border-spacing: 1.5em 0em; width: 40em; margin-left: 3em; }
+.apple-table-examples * { font-family: "Times", serif; }
+.apple-table-examples td, .apple-table-examples th { border: none; white-space: nowrap; padding-top: 0; padding-bottom: 0; }
+.apple-table-examples tbody th:first-child { border-left: none; width: 100%; }
+.apple-table-examples thead th:first-child ~ th { font-size: smaller; font-weight: bolder; border-bottom: solid 2px; text-align: center; }
+.apple-table-examples tbody th, .apple-table-examples tfoot th { font: inherit; text-align: left; }
+.apple-table-examples td { text-align: right; vertical-align: top; }
+.apple-table-examples.e1 tbody tr:last-child td { border-bottom: solid 1px; }
+.apple-table-examples.e1 tbody + tbody tr:last-child td { border-bottom: double 3px; }
+.apple-table-examples.e2 th[scope=row] { padding-left: 1em; }
+.apple-table-examples sup { line-height: 0; }
+
+.three-column-nowrap tr > td:first-child,
+.three-column-nowrap tr > td:first-child + td,
+.three-column-nowrap tr > td:first-child + td + td { white-space: nowrap; }
+
+.details-example img { vertical-align: top; }
+
+#base64-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 6em;
+ column-count: 5;
+ column-gap: 1em;
+}
+#base64-table thead { display: none; }
+#base64-table * { border: none; }
+#base64-table tbody td:first-child:after { content: ':'; }
+#base64-table tbody td:last-child { text-align: right; }
+
+#named-character-references-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 30em;
+ column-gap: 1em;
+}
+#named-character-references-table > table > tbody > tr > td:first-child + td,
+#named-character-references-table > table > tbody > tr > td:last-child { text-align: center; }
+#named-character-references-table > table > tbody > tr > td:last-child:hover > span { position: absolute; top: auto; left: auto; margin-left: 0.5em; line-height: 1.2; font-size: 5em; border: outset; padding: 0.25em 0.5em; background: white; width: 1.25em; height: auto; text-align: center; }
+#named-character-references-table > table > tbody > tr#entity-CounterClockwiseContourIntegral > td:first-child { font-size: 0.5em; }
+
+.glyph.control { color: red; }
+
+/* WHAT 3 */
+#table-example-1 * { font-family: "Essays1743", serif; line-height: 1.01em; }
+@font-face {
+    font-family: 'Essays1743';
+    src: url('fonts/Essays1743.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-weight: bold;
+    src: url('fonts/Essays1743-Bold.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    src: url('fonts/Essays1743-Italic.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    font-weight: bold;
+    src: url('fonts/Essays1743-BoldItalic.ttf');
+}
+
+/* HTML */
 pre { margin-left: 2em; white-space: pre-wrap; }
 h2 { margin: 3em 0 1em 0; }
 h3 { margin: 2.5em 0 1em 0; }
