@@ -73,7 +73,7 @@ var reporter = function (subject, failMessage) {
 function run () {
     log.info("Running Spork");
     spork.run(
-        require("./profiles/html")
+        require(options.publish ? "./profiles/html-wd" : "./profiles/html")
     ,   config
     ,   reporter
     );
