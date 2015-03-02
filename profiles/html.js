@@ -51,7 +51,7 @@ exports.setup = function (cb) {
         .end(function (res) {
             if (!res.ok) return console.log("Failed to load");
             var prev = /\brdf:about=\"([^"]+html51[^"]+)\"/.exec(res.text)[1];
-            exports.configuration.previousYear = prev.replace(/.*(\d{4}).*/, "$1");
+            exports.configuration.previousYear = prev.replace(/.*\/(\d{4})\/.*/, "$1");
             exports.configuration.previousDate = prev.replace(/.*(\d{8}).*/, "$1");
             cb();
         })
