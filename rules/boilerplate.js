@@ -19,7 +19,7 @@ exports.transform = function (data) {
         .text(data.style)
         .appendTo($("head"))
     ;
-    $('<link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">')
+    $('<link href="http://www.w3.org/StyleSheets/TR/W3C-' + data.specStatus + '" rel="stylesheet" type="text/css">')
         .appendTo($("head"));
     window.info("injected style");
 
@@ -81,5 +81,6 @@ exports.params = function (conf) {
     ,   sotd:           template(conf.sotd ? rfs(conf.sotd) : "")
     ,   style:          conf.style ? rfs(conf.style) : ""
     ,   title:          conf.title || ""
+    ,   specStatus:     conf.specStatus
     }];
 };
