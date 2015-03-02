@@ -10,19 +10,25 @@ var spork = require("./spork")
 ,   Octokit = require("octokit")
 ,   gh = Octokit.new()
 ,   knownOpts = {
-                config: pth
-            ,   force:  Boolean
-            ,   quiet:  Boolean
+                config:     pth
+            ,   force:      Boolean
+            ,   quiet:      Boolean
+            ,   publish:    Boolean
     }
 ,   shortHands = {
                 f:      ["--force"]
             ,   c:      ["--config"]
             ,   q:      ["--quiet"]
+            ,   p:      ["--publish"]
     }
 ,   options = nopt(knownOpts, shortHands, process.argv, 2)
 ,   config = require(options.config)
-,   cacheFile = jn(config.outDir, "last-html-sha.txt")
 ;
+if (options.publish) {
+    config.outDir = config.pubDir;
+    config.logFile = config.pubLogFile;
+}
+var cacheFile = jn(config.outDir, "last-html-sha.txt");
 
 if (options.quiet) config.quiet = true;
 var log = require("./lib/logger").getLog(config);
