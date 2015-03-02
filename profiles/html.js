@@ -1,7 +1,6 @@
 
 var u = require("url")
 ,   sua = require("superagent")
-,   libxml = require("libxmljs")
 ;
 
 // Mainline HTML
@@ -12,7 +11,7 @@ exports.url = "https://html.spec.whatwg.org/";
 exports.configuration = {
     boilerplate:    "res/boilerplate/html-headers.html"
 ,   abstract:       "res/boilerplate/html-abstract.html"
-,   sotd:           "res/boilerplate/html-ed-sotd.html"
+,   sotd:           "res/boilerplate/html-sotd.html"
 ,   style:          "res/boilerplate/html.css"
 ,   title:          "HTML 5.1 Nightly"
 ,   specStatus:     "ED"
@@ -43,23 +42,15 @@ exports.resources = function (res) {
 };
 
 exports.setup = function (cb) {
-    return cb();
-    // XXX this is broken
+    // NOTE
+    //  The data is provided in RDF. There are no good RDF implementations in JS.
+    //  I initially tried processing this as XML, but apparently the Node XML implementations
+    //  aren't all that great either. The regular expression works.
     sua.get("http://www.w3.org/2002/01/tr-automation/tr.rdf")
         .buffer(true)
         .end(function (res) {
-            if (!res.ok) return cb("Failed to load tr.rdf");
-            var prev = libxml.parseXml(res.text)
-                            .get(
-                                "//x:WD[./doc:versionOf[@rdf:ressource='http://www.w3.org/TR/html51/']]"
-                            ,   {
-                                    x:      "http://www.w3.org/2001/02pd/rec54#"
-                                ,   doc:    "http://www.w3.org/2000/10/swap/pim/doc#"
-                                ,   rdf:    "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                                }
-                            )
-                            .attr("rdf:about")
-            ;
+            if (!res.ok) return console.log("Failed to load");
+            var prev = /\brdf:about=\"([^"]+html51[^"]+)\"/.exec(res.text)[1];
             exports.configuration.previousYear = prev.replace(/.*(\d{4}).*/, "$1");
             exports.configuration.previousDate = prev.replace(/.*(\d{8}).*/, "$1");
             cb();

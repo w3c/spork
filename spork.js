@@ -74,7 +74,7 @@ function run (profile, config, reporter) {
             fails[msg.curRule].push(msg);
         }
         else if (msg.source) {
-            if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
+            // if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source");
             wfs(jn(config.outDir, "index.html"), msg.source);
         }
@@ -146,7 +146,7 @@ function run (profile, config, reporter) {
 exports.run = function (profile, config, reporter) {
     if (profile.setup) {
         profile.setup(function (err) {
-            if (err) die(err);
+            if (err) throw(err);
             run(profile, config, reporter);
         });
     }
@@ -162,5 +162,7 @@ if (!module.parent) {
     try         { profile = require("./profiles/" + profile); }
     catch (e)   { console.error("Profile '" + profile + "' failed to load.\n" + e); }
     if (!fs.existsSync(outDir)) console.error("Directory " + outDir + " not found.");
-    exports.run(profile, { outDir: outDir });
+    exports.run(profile, { outDir: outDir }, function (str) {
+        console.error("[REPORTER]", str);
+    });
 }

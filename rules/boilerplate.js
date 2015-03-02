@@ -55,6 +55,10 @@ exports.params = function (conf) {
             ED: "Editor's Draft"
         ,   WD: "Working Draft"
         }
+    ,   articles = {
+            ED: "an"
+        ,   WD: "a"
+        }
     ,   data = {
             humanDate:      pad(date.getDate()) + " " + humanMonths[date.getMonth()] + " " + date.getFullYear()
         ,   date:           date.getFullYear() + pad(date.getMonth() + 1) + pad(date.getDate())
@@ -64,6 +68,7 @@ exports.params = function (conf) {
         ,   hasVersions:    (conf.specStatus === "WD")
         ,   previousYear:   conf.previousYear
         ,   previousDate:   conf.previousDate
+        ,   article:        articles[conf.specStatus]
         }
     ,   template = function (str) {
             return hb.compile(str)(data);
