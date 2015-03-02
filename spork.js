@@ -74,7 +74,7 @@ function run (profile, config, reporter) {
             fails[msg.curRule].push(msg);
         }
         else if (msg.source) {
-            // if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
+            if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source");
             wfs(jn(config.outDir, "index.html"), msg.source);
         }
