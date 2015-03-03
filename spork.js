@@ -17,6 +17,8 @@ function run (profile, config, reporter) {
     ,   copy = {}
     ,   fails = {}
     ,   dangles = []
+    ,   specFiles = [] // the first one gets to be the index
+    ,   otherFiles = []
     ,   die = function (str) {
             // XXX here is where reporting takes place if needed
             logger.error(str);
@@ -76,6 +78,7 @@ function run (profile, config, reporter) {
         else if (msg.source) {
             if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source");
+            specFiles.push("index.html");
             wfs(jn(config.outDir, "index.html"), msg.source);
         }
         else if (msg.unplug) processResources = false;
@@ -111,7 +114,17 @@ function run (profile, config, reporter) {
                 logger.error("Dangling IDs:\n" + dangles.map(function (id) { return "\t" + id; }).join("\n"));
                 reporter("[spork] Dangling IDs", dangles.map(function (id) { return "  • " + id; }).join("\n"));
             }
-            else logger.info("Ok!");
+            else {
+                if (profile.finalise) {
+                    profile.finalise(
+                        config
+                    ,   specFiles
+                    ,   otherFiles
+                    ,   function () { logger.info("Ok!"); }
+                    );
+                }
+                else logger.info("Ok!");
+            }
         }
     ;
     
@@ -122,6 +135,7 @@ function run (profile, config, reporter) {
         logger.info("There are " + Object.keys(profile.configuration.downloads).length + " items to download");
         var curlFile = Object.keys(profile.configuration.downloads) // XXX here we could filter out resource we have
                         .map(function (it) {
+                            otherFiles.push(profile.configuration.downloads[it]);
                             return  'url = "' + it + '"\n' +
                                     'output = "' + jn(config.outDir, profile.configuration.downloads[it]) + '"\n' +
                                     'create-dirs';
@@ -133,7 +147,10 @@ function run (profile, config, reporter) {
             curl.stdin.end(curlFile);
             curl.on("exit", function () {
                 logger.info("Copying");
-                for (var k in copy) fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
+                for (var k in copy) {
+                    otherFiles.push(copy[k]);
+                    fs.copySync(jn(__dirname, "res", k), jn(config.outDir, copy[k]));
+                }
                 // curl creates directories with minimal permissions
                 var chmod = spawn("find", [config.outDir, "-type", "d", "-exec", "chmod", "755", "{}", "+"]);
                 chmod.on("exit", done);

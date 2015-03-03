@@ -35,13 +35,9 @@ exports.transform = function (data) {
 
 // XXX
 //  - needs testing
-//  - the SotD needs to be reduced to the simple version as well
-//  - run through Specberus
+//  - generate the manifest at the end
 //  - wire into Echidna
 //  - run a cron job for the WD profile as well, installed into a different location
-//  - generate the manifest at the end
-//  - make sure that the URL can be updated
-//  - also publish in W3C space, s/master/wd/
 
 exports.params = function (conf) {
     var date = new Date()

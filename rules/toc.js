@@ -71,6 +71,5 @@ exports.transform = function () {
     assert("Heading for brief ToC", $("#table-of-contents")).text("Table of Contents");
     assert("Heading for long ToC", $("#contents")).text("Full Table of Contents");
 
-
     window.info("updated ToC");
 };
