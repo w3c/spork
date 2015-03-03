@@ -8,6 +8,7 @@ var spork = require("./spork")
 ,   nopt = require("nopt")
 ,   email   = require("emailjs")
 ,   Octokit = require("octokit")
+,   sua = require("superagent")
 ,   gh = Octokit.new()
 ,   knownOpts = {
                 config:     pth
@@ -41,31 +42,53 @@ if (!fs.existsSync(cacheFile)) nullifyCache();
 
 // produce a reporter
 var reporter = function (subject, failMessage) {
-    if (config.email) {
-        var em = config.email
-        ,   message = email.message.create({
-                from:       em.from
-            ,   to:         em.to
-            ,   subject:    subject
-            ,   text:       failMessage
-        });
-        email.server
-            .connect({
-                user:       em.username
-            ,   password:   em.password
-            ,   port:       em.port
-            ,   host:       em.host
-            ,   ssl:        em.ssl
-            ,   tls:        em.tls
+    // error
+    if (subject) {
+        if (config.email) {
+            var em = config.email
+            ,   message = email.message.create({
+                    from:       em.from
+                ,   to:         em.to
+                ,   subject:    subject
+                ,   text:       failMessage
+            });
+            email.server
+                .connect({
+                    user:       em.username
+                ,   password:   em.password
+                ,   port:       em.port
+                ,   host:       em.host
+                ,   ssl:        em.ssl
+                ,   tls:        em.tls
+                })
+                .send(
+                    message
+                ,   function (err) {
+                        if (err) log.error("EMAIL: " + err);
+                        log.info("Reported okay");
+                    }
+                )
+            ;
+        }
+    }
+    else if (options.publish) {
+        // hit Echidna
+        // curl 'https://labs.w3.org/echidna/api/request' --data 'url=<documentUrl>&decision=<decisionUrl>&token=<token>'
+        sua.post("https://labs.w3.org/echidna/api/request")
+            .send({
+                url:        config.echidnaURL
+            ,   decision:   config.decisionURL
+            ,   token:      config.token
             })
-            .send(
-                message
-            ,   function (err) {
-                    if (err) log.error("EMAIL: " + err);
-                    log.info("Reported okay");
-                }
-            )
+            .buffer(true)
+            .end(function (res) {
+                if (res.ok) return log.info("Echidna ok, ID=" + res.text);
+                log.error("Echidna failure: " + res.text);
+            })
         ;
+    }
+    else {
+        console.log("Ok!");
     }
 };
 

@@ -120,10 +120,10 @@ function run (profile, config, reporter) {
                         config
                     ,   specFiles
                     ,   otherFiles
-                    ,   function () { logger.info("Ok!"); }
+                    ,   reporter
                     );
                 }
-                else logger.info("Ok!");
+                else reporter();
             }
         }
     ;
@@ -180,6 +180,7 @@ if (!module.parent) {
     catch (e)   { console.error("Profile '" + profile + "' failed to load.\n" + e); }
     if (!fs.existsSync(outDir)) console.error("Directory " + outDir + " not found.");
     exports.run(profile, { outDir: outDir }, function (str) {
-        console.error("[REPORTER]", str);
+        if (str) console.error("[REPORTER]", str);
+        else console.log("Ok!");
     });
 }

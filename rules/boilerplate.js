@@ -33,10 +33,6 @@ exports.transform = function (data) {
     window.info("updated boilerplate");
 };
 
-// XXX
-//  - wire into Echidna
-//  - run a cron job for the WD profile as well, installed into a different location
-
 exports.params = function (conf) {
     var date = new Date()
     ,   humanMonths = "January February March April May June July August September October November December".split(" ")
