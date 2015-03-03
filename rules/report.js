@@ -3,7 +3,7 @@
 exports.name = "report";
 exports.landscape = null;
 exports.transform = function (data) {
-    window.info("Sending source to be saved.");
+    window.info("Sending single-page to be saved.");
     window.saveSource("single-page.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML);
     
     // splitting happens here
@@ -39,7 +39,7 @@ exports.transform = function (data) {
         ;
     });
     assert("Links to IDs",
-    $("a[href^=#]")).each(function () {
+    $("a[href^=#]"), "+").each(function () {
         var $a = $(this)
         ,   id = $a.attr("href")
         ;
@@ -77,8 +77,8 @@ exports.transform = function (data) {
         // keep only that section and ToC part
         $sec.prevAll("section").each(function () {
             var $s = $(this);
-            if ($s.find("> #contents").length) {
-                var $li = assert("Toc group for " + sec, $s.find("ul #toc-" + sec));
+            if ($s.find("#contents").length) {
+                var $li = assert("Toc group for " + sec, $s.find("#toc-" + sec));
                 $li.prevAll("li").remove();
                 $li.nextAll("li").remove();
                 return;
@@ -94,12 +94,14 @@ exports.transform = function (data) {
         assert("There's a title", $("title")).text($h.text() + " | " + data.title);
         
         // save!
+        window.info("Sending " + sec + " to be saved.");
         window.saveSource(sec + ".html", "<!DOCTYPE html>\n" + doc.documentElement.outerHTML);
     });
     
     // save Overview too
     var doc = document.cloneNode(true);
     $("#contents", doc).nextAll("section").remove();
+    window.info("Sending Overview to be saved.");
     window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.documentElement.outerHTML);
 };
 exports.params = function (conf) {
