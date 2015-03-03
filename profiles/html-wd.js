@@ -9,6 +9,6 @@ module.exports.configuration.specStatus = "WD";
 
 module.exports.finalise = function (config, specFiles, otherFiles, cb) {
     var content = specFiles.join("\n") + "\n" + otherFiles.join("\n") + "\n";
-    fs.writeFileSync(jn(content.outDir, "manifest.txt"), content, "utf8");
+    fs.writeFileSync(jn(config.outDir, "manifest.txt"), content, "utf8");
     cb();
 };

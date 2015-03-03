@@ -34,8 +34,6 @@ exports.transform = function (data) {
 };
 
 // XXX
-//  - needs testing
-//  - generate the manifest at the end
 //  - wire into Echidna
 //  - run a cron job for the WD profile as well, installed into a different location
 
