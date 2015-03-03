@@ -4,6 +4,7 @@ var fs = require("fs")
 ;
 
 module.exports = require("./html");
+module.exports.name = "HTML-WD";
 module.exports.configuration.title = "HTML 5.1";
 module.exports.configuration.specStatus = "WD";
 
