@@ -10,9 +10,6 @@ exports.transform = function (data) {
         var scr = doc.createElement("script");
         scr.src = "redirection.js";
         $("body", doc).append(scr);
-        var scrRun = doc.createElement("script");
-        scrRun.textContent = "fnord();";
-        $("body", doc).append(scrRun);
     };
     
     // splitting happens here
