@@ -19,11 +19,13 @@ function fnord () {
     var path = location.pathname
     ,   file = path.replace(/^.*\//, "")
     ,   frag = location.hash
+    ,   id = frag.replace("#", "")
+    ,   key = function (str) { return str.substr(0, 5).replace(/\W/g, "_"); }
     ,   xhr = new XMLHttpRequest();
     if (!frag) return;
     if (file === "404.html") return;
-    if (document.getElementById(frag.replace("#", ""))) return;
-    xhr.open("GET", base + "id-map.json");
+    if (document.getElementById(id)) return;
+    xhr.open("GET", base + "id-maps" + key(id) + ".json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var idMap = JSON.parse(xhr.responseText)

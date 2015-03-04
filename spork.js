@@ -82,6 +82,20 @@ function run (profile, config, reporter) {
             wfs(jn(config.outDir, msg.file), msg.source);
         }
         else if (msg.unplug) processResources = false;
+        else if (msg.idMap) {
+            var idMap = msg.idMap
+            ,   data = {}
+            ,   dir = jn(config.outDir, "id-maps")
+            ,   key = function (str) { return str.replace(/^#/, "").substr(0, 5).replace(/\W/g, "_"); }
+            ;
+            for (var k in idMap) {
+                var file = key(k);
+                if (!data[file]) data[file] = {};
+                data[file][k] = idMap[k];
+            }
+            fs.mkdirp(dir);
+            for (var k in data) wfs(jn(dir, k + ".json"), JSON.stringify(data[k]));
+        }
     });
     if (profile.resources) nm.on("resourceRequested", function (res) {
         if (processResources) profile.resources(res);

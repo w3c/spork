@@ -38,7 +38,7 @@ exports.transform = function (data) {
             })
         ;
     });
-    window.saveSource("id-map.json", JSON.stringify(idMap));
+    window.callPhantom({ idMap: idMap });
     assert("Links to IDs",
     $("a[href^=#]"), "+").each(function () {
         var $a = $(this)
