@@ -39,4 +39,4 @@ function fnord () {
     xhr.send();
 }
 if (document.documentElement.hasAttribute("data-404")) setTimeout(fnord, 1000);
-else window.addEventListener("DOMContentLoaded", fnord);
+else fnord();
