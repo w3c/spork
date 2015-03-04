@@ -5,6 +5,15 @@ exports.landscape = null;
 exports.transform = function (data) {
     window.info("Sending single-page to be saved.");
     window.saveSource("single-page.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML);
+    var scriptify = function (doc) {
+        // inject script
+        var scr = doc.createElement("script");
+        scr.src = "redirection.js";
+        $("body", doc).append(scr);
+        var scrRun = doc.createElement("script");
+        scrRun.textContent = "fnord();";
+        $("body", doc).append(scrRun);
+    };
     
     // splitting happens here
     var sections = [
@@ -99,13 +108,7 @@ exports.transform = function (data) {
         $("#contents", doc).parent().before($nav);
         $("body", doc).append($nav.clone());
         
-        // inject script
-        var scr = document.createElement("script");
-        scr.src = "redirection.js";
-        $("body", doc).append(scr);
-        var scrRun = document.createElement("script");
-        scrRun.textContent = "fnord();";
-        $("body", doc).append(scrRun);
+        scriptify(doc.ownerDocument);
         
         // save!
         window.info("Sending " + sec + " to be saved.");
@@ -115,6 +118,7 @@ exports.transform = function (data) {
     // save Overview too
     var doc = document.documentElement.cloneNode(true);
     $("#contents", doc).parent().nextAll("section").remove();
+    scriptify(doc.ownerDocument);
     window.info("Sending Overview to be saved.");
     window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.outerHTML);
 };
