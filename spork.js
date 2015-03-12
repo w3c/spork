@@ -93,8 +93,10 @@ function run (profile, config, reporter) {
                 if (!data[file]) data[file] = {};
                 data[file][k] = idMap[k];
             }
-            fs.mkdirp(dir);
-            for (var k in data) wfs(jn(dir, k + ".json"), JSON.stringify(data[k]));
+            fs.mkdirp(dir, function (err) {
+                if (err) throw err;
+                for (var k in data) wfs(jn(dir, k + ".json"), JSON.stringify(data[k]));
+            });
         }
     });
     if (profile.resources) nm.on("resourceRequested", function (res) {
