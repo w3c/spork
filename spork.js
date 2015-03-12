@@ -189,13 +189,15 @@ exports.run = function (profile, config, reporter) {
 // running directly
 if (!module.parent) {
     var profile = process.argv[2]
-    ,   outDir = process.argv[3]
+    ,   config = process.argv[3]
     ;
-    if (!profile || !outDir) console.error("Usage: spork profile outdir");
-    try         { profile = require("./profiles/" + profile); }
-    catch (e)   { console.error("Profile '" + profile + "' failed to load.\n" + e); }
-    if (!fs.existsSync(outDir)) console.error("Directory " + outDir + " not found.");
-    exports.run(profile, { outDir: outDir }, function (str) {
+    if (!profile || !config) console.error("Usage: spork profile config");
+    try         {
+        profile = require("./profiles/" + profile);
+        config = require(config);
+    }
+    catch (e)   { console.error("Profile '" + profile + "' or configuration failed to load.\n" + e); }
+    exports.run(profile, config, function (str) {
         if (str) console.error("[REPORTER]", str);
         else console.log("Ok!");
     });

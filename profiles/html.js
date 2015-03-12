@@ -1,6 +1,7 @@
 
 var u = require("url")
 ,   sua = require("superagent")
+,   rsync = require("../lib/rsync")
 ;
 
 // Mainline HTML
@@ -60,6 +61,11 @@ exports.setup = function (cb) {
         })
     ;
 };
+
+module.exports.finalise = function (config, specFiles, otherFiles, cb) {
+    rsync(config, cb);
+};
+
 
 exports.rules = [
     // basic processing
