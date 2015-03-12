@@ -196,7 +196,7 @@ if (!module.parent) {
         profile = require("./profiles/" + profile);
         config = require(config);
     }
-    catch (e)   { console.error("Profile '" + profile + "' or configuration failed to load.\n" + e); }
+    catch (e)   { console.error("Profile or configuration failed to load.\n" + e); }
     exports.run(profile, config, function (str) {
         if (str) console.error("[REPORTER]", str);
         else console.log("Ok!");

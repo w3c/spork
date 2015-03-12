@@ -63,7 +63,7 @@ exports.setup = function (cb) {
 };
 
 module.exports.finalise = function (config, specFiles, otherFiles, cb) {
-    rsync(config, cb);
+    rsync.rsync(config, cb);
 };
 
 
