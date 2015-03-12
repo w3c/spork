@@ -13,6 +13,12 @@ function canon () {
         return; // give up
 }
 
+function giveUp () {
+    var base = canon();
+    if (!base) return;
+    location.assing(base);
+}
+
 function fnord () {
     var base = canon();
     if (!base) return;
@@ -22,7 +28,7 @@ function fnord () {
     ,   id = frag.replace("#", "")
     ,   key = function (str) { return str.substr(0, 5).replace(/\W/g, "_"); }
     ,   xhr = new XMLHttpRequest();
-    if (!frag) return;
+    if (!frag) return giveUp();
     if (file === "404.html") return;
     if (document.getElementById(id)) return;
     xhr.open("GET", base + "id-maps/" + key(id) + ".json");
@@ -31,7 +37,7 @@ function fnord () {
             var idMap = JSON.parse(xhr.responseText)
             ,   page = idMap[frag]
             ;
-            if (!page) return;
+            if (!page) return giveUp();
             if (page + ".html" === file) return;
             location.assign(base + page + ".html" + frag);
         }
