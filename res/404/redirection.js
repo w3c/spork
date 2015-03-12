@@ -33,13 +33,18 @@ function fnord () {
     if (document.getElementById(id)) return;
     xhr.open("GET", base + "id-maps/" + key(id) + ".json");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var idMap = JSON.parse(xhr.responseText)
-            ,   page = idMap[frag]
-            ;
-            if (!page) return giveUp();
-            if (page + ".html" === file) return;
-            location.assign(base + page + ".html" + frag);
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var idMap = JSON.parse(xhr.responseText)
+                ,   page = idMap[frag]
+                ;
+                if (!page) return giveUp();
+                if (page + ".html" === file) return;
+                location.assign(base + page + ".html" + frag);
+            }
+            else { // 404 and friends
+                return giveUp();
+            }
         }
     };
     xhr.send();
