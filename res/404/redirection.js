@@ -16,7 +16,7 @@ function canon () {
 function giveUp () {
     var base = canon();
     if (!base) return;
-    location.assing(base);
+    location.assign(base);
 }
 
 function fnord () {
