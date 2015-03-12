@@ -1,4 +1,6 @@
 
+var is404 = document.documentElement.hasAttribute("data-404");
+
 function canon () {
     var path = location.pathname;
     if (/html\/wg\/drafts\/html\/master/.test(path))
@@ -28,7 +30,10 @@ function fnord () {
     ,   id = frag.replace("#", "")
     ,   key = function (str) { return str.substr(0, 5).replace(/\W/g, "_"); }
     ,   xhr = new XMLHttpRequest();
-    if (!frag) return giveUp();
+    if (!frag) {
+        if (is404) return giveUp();
+        return;
+    }
     if (file === "404.html") return;
     if (document.getElementById(id)) return;
     xhr.open("GET", base + "id-maps/" + key(id) + ".json");
@@ -49,5 +54,5 @@ function fnord () {
     };
     xhr.send();
 }
-if (document.documentElement.hasAttribute("data-404")) setTimeout(fnord, 1000);
+if (is404) setTimeout(fnord, 1000);
 else fnord();
