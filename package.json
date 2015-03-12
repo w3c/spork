@@ -12,7 +12,7 @@
     "nightmare": "1.6.5",
     "nopt": "^3.0.1",
     "octokit": "^0.10.4",
-    "phantomjs": "^1.9.15",
+    "phantomjs": "^1.9.16",
     "superagent": "^0.21.0",
     "winston": "0.8.3",
     "winston-mail": "^0.3.1"
