@@ -46,7 +46,7 @@ exports.transform = function (data) {
     });
     window.callPhantom({ idMap: idMap });
     assert("Links to IDs",
-    $("a[href^=#]"), "+").each(function () {
+    $("#contents").parent().find("a[href^=#]"), "+").each(function () {
         var $a = $(this)
         ,   id = $a.attr("href")
         ;
