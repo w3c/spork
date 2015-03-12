@@ -48,7 +48,8 @@ function fnord () {
                 location.assign(base + page + ".html" + frag);
             }
             else { // 404 and friends
-                return giveUp();
+                if (is404) return giveUp();
+                return;
             }
         }
     };
