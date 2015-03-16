@@ -75,6 +75,7 @@ var reporter = function (subject, failMessage) {
         // hit Echidna
         // curl 'https://labs.w3.org/echidna/api/request' --data 'url=<documentUrl>&decision=<decisionUrl>&token=<token>'
         sua.post("https://labs.w3.org/echidna/api/request")
+            .type("form")
             .send({
                 url:        config.echidnaURL
             ,   decision:   config.decisionURL
