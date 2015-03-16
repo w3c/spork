@@ -10,13 +10,6 @@ exports.transform = function (data) {
         $("body", el).append(scr);
     };
 
-    // save Overview
-    var doc = document.documentElement.cloneNode(true);
-    $("#contents", doc).parent().nextAll("section").remove();
-    scriptify(doc);
-    window.info("Sending Overview to be saved.");
-    window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.outerHTML);
-
     // save single-page
     window.info("Sending single-page to be saved.");
     window.saveSource("single-page.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML);
@@ -61,6 +54,14 @@ exports.transform = function (data) {
         ;
         $a.attr("href", idMap[id] + ".html" + id);
     });
+    
+    // save Overview
+    var doc = document.documentElement.cloneNode(true);
+    $("#contents", doc).parent().nextAll("section").remove();
+    scriptify(doc);
+    window.info("Sending Overview to be saved.");
+    window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.outerHTML);
+
     
     // process all sections
     sections.forEach(function (sec, idx) {

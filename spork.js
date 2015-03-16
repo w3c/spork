@@ -78,7 +78,8 @@ function run (profile, config, reporter) {
         else if (msg.source) {
             if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source for " + msg.file);
-            specFiles.push(msg.file);
+            if (msg.file === "Overview.html") specFiles.unshift("Overview.html");
+            else specFiles.push(msg.file);
             wfs(jn(config.outDir, msg.file), msg.source);
         }
         else if (msg.unplug) processResources = false;
