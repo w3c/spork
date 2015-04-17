@@ -48,10 +48,11 @@ exports.transform = function (data) {
     });
     window.callPhantom({ idMap: idMap });
     assert("Links to IDs",
-    $("#contents").parent().find("a[href^=#]"), "+").each(function () {
+    $("a[href^=#]"), "+").each(function () {
         var $a = $(this)
         ,   id = $a.attr("href")
         ;
+        if ($a.parents(".brief.toc").length) return; // don't rewrite the top ToC
         $a.attr("href", idMap[id] + ".html" + id);
     });
     
