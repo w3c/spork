@@ -16,8 +16,9 @@ its root.
 ## `spork`
 
 This gets installed with `npm install` (or `npm link` from the repo, which is likely better). It
-takes the name of a profile (currently `html` or `html-wd`) and the path to the configuration file
-(e.g. `spork html ./config.json`).
+takes the name of a profile (currently `html` or `html-wd`) and the path to the configuration file. For example:
+
+`spork html ./config.json`
 
 This can also be used as a library, exposing a `run()` method. It is the primary entry point that
 will manage the profile, handle some common tasks, and use that to process the document.
@@ -33,6 +34,18 @@ will manage the profile, handle some common tasks, and use that to process the d
   logging takes place.
 * `pubLogFile`. Same as `logFile` but for `publish` mode.
 * `production`. Set to false for the development copy
+
+For example:
+
+```
+{
+    "outDir":       "/Projects/spork/out/html/"
+,   "pubDir":       "/Projects/spork/out/html-wd/"
+,   "logFile":      "/Projects/spork/out/logs.txt"
+,   "pubLogFile":   "/Projects/spork/out/logs-wd.txt"
+,   "production":   false
+}
+```
 
 ## Profiles
 
