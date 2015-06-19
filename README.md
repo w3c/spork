@@ -16,8 +16,8 @@ its root.
 ## `spork`
 
 This gets installed with `npm install` (or `npm link` from the repo, which is likely better). It
-takes the name of a profile (currently `html` or `html-wd`) and the path to an output directory
-(which must exist).
+takes the name of a profile (currently `html` or `html-wd`) and the path to the configuration file
+(e.g. `spork html ./config.json`).
 
 This can also be used as a library, exposing a `run()` method. It is the primary entry point that
 will manage the profile, handle some common tasks, and use that to process the document.
@@ -40,7 +40,7 @@ It accepts the following arguments:
 
 ### Configuration
 
-The cherry picker needs a configuration file with the following:
+Spork and the cherry picker needs a configuration file with the following:
 
 * `outDir`. Required when not in `publish` mode. The path to the directory to which to save the
   generated spec.
@@ -69,6 +69,8 @@ The cherry picker needs a configuration file with the following:
       get you an email for every run of the tool.
     * `handleExceptions`. Set to true to get exceptions (that kill the process) sent to you in email.
       Recommended.
+
+For spork, you only really need `outDir`, `pubDir`, `logFile`, `publogFile`, and `production`.
 
 ## Profiles
 
