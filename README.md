@@ -72,6 +72,10 @@ Profiles export a specific interface.
   call when processing it done. All files are given relative to the output directory. A typical
   usage is to generate the manifest for Echidna.
 
+## Editing
+
+To edit the HTML specification, you should edit files in res/ or rules/. res/ files are resources that are injected into the specification. rules contains transformation code (see below).
+
 ## Rules
 
 Rules are specific objects that implement a basic transformation to a spec. They have the following
