@@ -23,6 +23,7 @@ The cherry picker needs the additional properties in the configuration file:
   copy) this causes the picker to check *itself* for updates, and to `git pull` if needed. When this
   happens, on the next invocation of the cron job the HTML will also get regenerated.
 * `pubDir`. Required in `publish` mode, replaces `outDir`.
+* `pubLogFile`. Same as `logFile` but for `publish` mode.
 * `token`. The Echidna token. If absent, automatic publication will fail.
 * `echidnaURL`. The URL to give to Echidna for publication. For HTML this is a manifest file.
 * `decisionURL`. The link to a decision by the group to publish.
