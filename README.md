@@ -74,7 +74,8 @@ To edit the HTML specification, you should edit files in `res/` or `rules/`.
 * `res/` files are resources that are injected into the specification using rules.
 * `rules/` contains transformation code (see below).
 
-If you create a new rule, make sure to add it to 'profiles/html.js'
+If you create a new rule, make sure to add it to
+ https://github.com/w3c/spork/blob/master/profiles/html.js
 
 For each change, do a pull request with the associated link to the bug, if any.
 
