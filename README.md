@@ -29,10 +29,8 @@ will manage the profile, handle some common tasks, and use that to process the d
 
 * `outDir`. Required when not in `publish` mode. The path to the directory to which to save the
   generated spec.
-* `pubDir`. Required in `publish` mode, replaces `outDir`.
 * `logFile`. The file to which to log when not in `publish` mode. Optional, if absent no file
   logging takes place.
-* `pubLogFile`. Same as `logFile` but for `publish` mode.
 * `production`. Set to false for the development copy
 
 For example:
@@ -40,9 +38,7 @@ For example:
 ```
 {
     "outDir":       "/Projects/spork/out/html/"
-,   "pubDir":       "/Projects/spork/out/html-wd/"
 ,   "logFile":      "/Projects/spork/out/logs.txt"
-,   "pubLogFile":   "/Projects/spork/out/logs-wd.txt"
 ,   "production":   false
 }
 ```
