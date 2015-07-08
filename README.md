@@ -70,7 +70,12 @@ Profiles export a specific interface.
 
 ## Editing
 
-To edit the HTML specification, you should edit files in res/ or rules/. res/ files are resources that are injected into the specification. rules contains transformation code (see below).
+To edit the HTML specification, you should edit files in `res/` or `rules/`.
+
+* `res/` files are resources that are injected into the specification using rules.
+* `rules/` contains transformation code (see below).
+
+For each change, do a pull request with the associated link to the bug, if any.
 
 ## Rules
 
