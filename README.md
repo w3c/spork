@@ -28,7 +28,7 @@ will manage the profile, handle some common tasks, and use that to process the d
 `spork` needs a configuration file with the following:
 
 * `outDir`. Required when not in `publish` mode. The path to the directory to which to save the
-  generated spec.
+  generated spec. Make sure the directory exists before launching the command.
 * `logFile`. The file to which to log when not in `publish` mode. Optional, if absent no file
   logging takes place.
 * `production`. Set to false for the development copy
