@@ -77,6 +77,7 @@ exports.rules = [
 ,   require("../rules/drop-sections")
 ,   require("../rules/fork-link-types")
 ,   require("../rules/fork-datetime-local")
+,   require("../rules/fork-stepUpAndDown")
 ,   require("../rules/fork-wheel")
 ,   require("../rules/fork-obsolete-hgroup")
 ,   require("../rules/fork-no-ping")
