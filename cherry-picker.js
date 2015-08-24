@@ -124,7 +124,7 @@ repo.getCommits()
 
 // check for self-updates
 if (config.production) {
-    var repo = gh.getRepo("darobin", "spork");
+    var repo = gh.getRepo("w3c", "spork");
     repo.getCommits()
         .then(function (commits) {
             exec("git log -1", { cwd: __dirname }, function (err, stdout) {
