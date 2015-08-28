@@ -105,7 +105,7 @@ function run () {
 if (options.force) return run();
 
 // check last commit
-var repo = gh.getRepo("whatwg", "html-mirror");
+var repo = gh.getRepo("whatwg", "html");
 repo.getCommits()
     .then(function (commits) {
         var lastRun = fs.readFileSync(cacheFile, "utf8")
