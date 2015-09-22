@@ -7,9 +7,11 @@ exports.landscape = "W3C HTML has a <a href='#the-ruby-element'>ruby model</a> t
 exports.transform = function (data) {
     // remove from obsolete
     var $objDT = assert("<rb> in obsolete", $("#rb").parent());
-    assert("<dd> after #rb", $objDT.next("dd")).remove();
+    var $objRTC = assert("<rtc> in obsolete", $("#rtc").parent());
+    assert("<dd> after #rtc", $objRTC.next("dd")).remove();
+    $objRTC.remove();
     $objDT.remove();
-    
+
     // replace element sections
     [
         "closing-elements-that-have-implied-end-tags"
@@ -49,7 +51,7 @@ exports.transform = function (data) {
     // rendering
     var $phrasingCSS = assert("<pre> for phrasing CSS", $("#phrasing-content-3").parent().find("pre.css:first"));
     $phrasingCSS.html($phrasingCSS.html().replace(/ruby[\s\S]+?rt[\s\S]+?\}/, data.css));
-    
+
     // table of elements
     var $qTR = assert("<tr> with 'Quotation' in elements table", $("#elements-3").parent().find("table:first tr:contains('Quotation')"));
     $qTR.after(data.elRB);
@@ -79,7 +81,7 @@ exports.transform = function (data) {
         .after('<code><a href="#the-rtc-element">rtc</a></code>')
         .after(document.createTextNode("; "))
     ;
-    
+
     // table of interfaces
     var $rpTr = assert("Link to <rp> in interfaces table",
                 $("#element-interfaces")
@@ -89,7 +91,7 @@ exports.transform = function (data) {
     ;
     $rpTr.before(data.ifRB);
     assert("Row after <rp> in interfaces table", $rpTr.next("tr")).after(data.ifRTC);
-    
+
     // usage summary
     assert("Row about 'ruby' in usage summary table",
     $("#usage-summary")
@@ -106,13 +108,13 @@ exports.transform = function (data) {
     $ogp.before(data.optionalRT);
     $ogp.before(data.optionalRTC);
     $ogp.before(data.optionalRP);
-    
+
     // HTMLUnknownElement
-    var $rb = assert("<rb> in other elements, etc.", $("#other-elements\\,-attributes-and-apis\\:rb"))
-    ,   $rbParent = $rb.parent()
-    ;
-    $rb.remove();
-    $rbParent.html($rbParent.html().replace(/,\s+,/, ", "));
+    // var $rb = assert("<rb> in other elements, etc.", $("#other-elements\\,-attributes-and-apis\\:rb"))
+    // ,   $rbParent = $rb.parent()
+    // ;
+    // $rb.remove();
+    // $rbParent.html($rbParent.html().replace(/,\s+,/, ", "));
 };
 exports.params = function () {
     return [{
