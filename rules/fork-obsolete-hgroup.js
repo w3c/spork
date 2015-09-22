@@ -7,8 +7,8 @@ exports.landscape = "In W3C HTML, the <code><a href='#the-hgroup-element'>hgroup
 exports.transform = function (data) {
     // drop section #the-hgroup-element
     assert("<hgroup>", $("#the-hgroup-element").parent()).remove();
-    
-    // example with hgroup in #semantics-2, #the-section-element x2, #the-footer-element, 
+
+    // example with hgroup in #semantics-2, #the-section-element x2, #the-footer-element,
     //      #sample-outlines, #the-iframe-element, #the-main-part-of-the-content
     assert("2nd example in semantics section", $("#semantics-2").parent().find("div.example:eq(1)")).remove();
     assert("1st & 3rd example in <section>", $("#the-section-element").parent().find("div.example:first, div.example:eq(2)"), 2).remove();
@@ -23,12 +23,12 @@ exports.transform = function (data) {
         assert("li with 'hgroup'", $(this).parent().find("ul li:contains('hgroup')")).remove();
     });
 
-    // drop from table in #wai-aria, as well as "that does not have an hgroup ancestor" sentences 
+    // drop from table in #wai-aria, as well as "that does not have an hgroup ancestor" sentences
     // (but not lines) in second table
-    assert("Row with 'hgroup' in strong ARIA table", $("#table-aria-strong tr:contains('hgroup')")).remove();
-    assert("Cells with 'hgroup ancestor' in weak ARIA table", $("#table-aria-weak td:contains('hgroup ancestor')"), 6).each(function () {
-        $(this).html($(this).html().replace(/\s+element\s+that[\s\S]*?ancestor\s*/, ""));
-    });
+    // assert("Row with 'hgroup' in strong ARIA table", $("#table-aria-strong tr:contains('hgroup')")).remove();
+    // assert("Cells with 'hgroup ancestor' in weak ARIA table", $("#table-aria-weak td:contains('hgroup ancestor')"), 6).each(function () {
+    //     $(this).html($(this).html().replace(/\s+element\s+that[\s\S]*?ancestor\s*/, ""));
+    // });
 
     // content model of #the-h1,-h2,-h3,-h4,-h5,-and-h6-elements
     assert("Elements <dl> with 'hgroup' in <hN>",
@@ -85,7 +85,7 @@ exports.transform = function (data) {
     // add § at the end of other-elements,-attributes-and-apis
     assert("Other elements, etc. section",
     $("#other-elements\\,-attributes-and-apis").parent()).append(data.semantics);
-    
+
     // drop the SVG Venn diagram (plus mention of it)
     var $venn = assert("Venn diagram", $("object[data$='content-venn.svg'], img[src$='content-venn.svg']"));
     $venn.prev("p").remove();
