@@ -10,14 +10,14 @@ exports.transform = function () {
         .parent("section")
         .find("p:contains('If the hyperlink has a ping')"))
         .remove();
-        
+
     // drop paragraph with the dfn
     assert("@ping dfn §", $("#ping").parent()).remove();
-    
+
     // HTTP headers
-    assert("Ping-From section", $("#ping-from").parent()).remove();
-    assert("Ping-To section", $("#ping-to").parent()).remove();
-    
+    assert("Ping-From section", $("#\\`ping-from\\`").parent()).remove();
+    assert("Ping-To section", $("#\\`ping-to\\`").parent()).remove();
+
     // paragraph about informing about ping
     assert("Hyperlink auditing in Links, forms...",
     $("#links\\,-forms\\,-and-navigation\\:hyperlink-auditing").parent()).remove();
