@@ -15,8 +15,8 @@ exports.transform = function () {
     assert("@ping dfn §", $("#ping").parent()).remove();
 
     // HTTP headers
-    assert("Ping-From section", $("#\\`ping-from\\`").parent()).remove();
-    assert("Ping-To section", $("#\\`ping-to\\`").parent()).remove();
+    assert("Ping-From section", $("#ping-from").parent()).remove();
+    assert("Ping-To section", $("#ping-to").parent()).remove();
 
     // paragraph about informing about ping
     assert("Hyperlink auditing in Links, forms...",
