@@ -75,6 +75,7 @@ var reporter = function (subject, failMessage) {
         // hit Echidna
         // curl 'https://labs.w3.org/echidna/api/request' --data 'url=<documentUrl>&decision=<decisionUrl>&token=<token>'
         sua.post("https://labs.w3.org/echidna/api/request")
+            .type("form")
             .send({
                 url:        config.echidnaURL
             ,   decision:   config.decisionURL
@@ -82,7 +83,7 @@ var reporter = function (subject, failMessage) {
             })
             .buffer(true)
             .end(function (res) {
-                if (res.ok) return log.info("Echidna ok, ID=" + res.text);
+                if (res.ok) return log.info("Echidna ok, check https://labs.w3.org/echidna/api/status?id=" + res.text);
                 log.error("Echidna failure: " + res.text);
             })
         ;

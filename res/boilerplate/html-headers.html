@@ -4,27 +4,23 @@
       <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a>
     </p>
     <h1 id="big-title">{{title}}</h1>
-    <p class="no-num no-toc subline">{{status}} {{humanDate}}</p>
+    <h2 class="no-num no-toc subline">W3C {{status}} {{humanDate}}</h2>
   </header>
   
   <dl>
+    {{#if hasVersions}}
+    <dt>This Version:</dt>
+    <dd><a href="http://www.w3.org/TR/{{year}}/WD-html51-{{date}}/">http://www.w3.org/TR/{{year}}/WD-html51-{{date}}/</a></dd>
+    {{/if}}
+
     <dt>Latest Published Version:</dt>
     <dd><a href="http://www.w3.org/TR/html51/">http://www.w3.org/TR/html51/</a></dd>
     
     {{#if hasVersions}}
-    <dt>This Version:</dt>
-    <dd><a href="http://www.w3.org/TR/{{year}}/WD-html51-{{date}}/">http://www.w3.org/TR/{{year}}/WD-html51-{{date}}/</a></dd>
-
     <dt>Previous Version:</dt>
     <dd><a href="http://www.w3.org/TR/{{previousYear}}/WD-html51-{{previousDate}}/">http://www.w3.org/TR/{{previousYear}}/WD-html51-{{previousDate}}/</a></dd>
     {{/if}}
     
-    <!--
-      XXX
-      this version
-      previous version
-    -->
-
     <dt id="specification-editors">Editors:</dt>
     <dd>WHATWG:</dd>
     <dd data-editor-id='15392'><a href="mailto:ian@hixie.ch">Ian Hickson</a>, Google, Inc.</dd>

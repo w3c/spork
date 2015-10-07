@@ -32,3 +32,6 @@ data/cookies.txt
 TODO.txt
 debug-script.js
 remote-config.json
+out
+local-config.json
+cron-html.sh

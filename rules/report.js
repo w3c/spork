@@ -3,14 +3,16 @@
 exports.name = "report";
 exports.landscape = null;
 exports.transform = function (data) {
-    window.info("Sending single-page to be saved.");
-    window.saveSource("single-page.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML);
     var scriptify = function (el) {
         // inject script
         var scr = el.ownerDocument.createElement("script");
         scr.src = "redirection.js";
         $("body", el).append(scr);
     };
+
+    // save single-page
+    window.info("Sending single-page to be saved.");
+    window.saveSource("single-page.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML);
     
     // splitting happens here
     var sections = [
@@ -50,8 +52,17 @@ exports.transform = function (data) {
         var $a = $(this)
         ,   id = $a.attr("href")
         ;
+        if ($a.parents(".brief.toc").length) return; // don't rewrite the top ToC
         $a.attr("href", idMap[id] + ".html" + id);
     });
+    
+    // save Overview
+    var doc = document.documentElement.cloneNode(true);
+    $("#contents", doc).parent().nextAll("section").remove();
+    scriptify(doc);
+    window.info("Sending Overview to be saved.");
+    window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.outerHTML);
+
     
     // process all sections
     sections.forEach(function (sec, idx) {
@@ -111,13 +122,6 @@ exports.transform = function (data) {
         window.info("Sending " + sec + " to be saved.");
         window.saveSource(sec + ".html", "<!DOCTYPE html>\n" + doc.outerHTML);
     });
-    
-    // save Overview too
-    var doc = document.documentElement.cloneNode(true);
-    $("#contents", doc).parent().nextAll("section").remove();
-    scriptify(doc);
-    window.info("Sending Overview to be saved.");
-    window.saveSource("Overview.html", "<!DOCTYPE html>\n" + doc.outerHTML);
 };
 exports.params = function (conf) {
     return [{

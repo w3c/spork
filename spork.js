@@ -78,7 +78,8 @@ function run (profile, config, reporter) {
         else if (msg.source) {
             if (hasFailure()) return logger.warn("There are errors, not saving despite request.");
             logger.info("Saving source for " + msg.file);
-            specFiles.push(msg.file);
+            if (msg.file === "Overview.html") specFiles.unshift("Overview.html");
+            else specFiles.push(msg.file);
             wfs(jn(config.outDir, msg.file), msg.source);
         }
         else if (msg.unplug) processResources = false;
@@ -93,8 +94,10 @@ function run (profile, config, reporter) {
                 if (!data[file]) data[file] = {};
                 data[file][k] = idMap[k];
             }
-            fs.mkdirp(dir);
-            for (var k in data) wfs(jn(dir, k + ".json"), JSON.stringify(data[k]));
+            fs.mkdirp(dir, function (err) {
+                if (err) throw err;
+                for (var k in data) wfs(jn(dir, k + ".json"), JSON.stringify(data[k]));
+            });
         }
     });
     if (profile.resources) nm.on("resourceRequested", function (res) {
@@ -187,13 +190,18 @@ exports.run = function (profile, config, reporter) {
 // running directly
 if (!module.parent) {
     var profile = process.argv[2]
-    ,   outDir = process.argv[3]
+    ,   config = process.argv[3]
     ;
-    if (!profile || !outDir) console.error("Usage: spork profile outdir");
-    try         { profile = require("./profiles/" + profile); }
-    catch (e)   { console.error("Profile '" + profile + "' failed to load.\n" + e); }
-    if (!fs.existsSync(outDir)) console.error("Directory " + outDir + " not found.");
-    exports.run(profile, { outDir: outDir }, function (str) {
+    if (!profile || !config) console.error("Usage: spork profile config");
+    try         {
+        profile = require("./profiles/" + profile);
+        config = require(config);
+    }
+    catch (e)   {
+        console.error("Profile or configuration failed to load.\n" + e);
+        process.exit(1);
+    }
+    exports.run(profile, config, function (str) {
         if (str) console.error("[REPORTER]", str);
         else console.log("Ok!");
     });
